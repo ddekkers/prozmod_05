@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
+    
+    <persistence-unit name="pmod">   
+      <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+      
+      <class>de.fhwedel.om.model.Customer</class>
+      <class>de.fhwedel.om.model.Order</class>
+      <class>de.fhwedel.om.model.OrderPosition</class>
+      <class>de.fhwedel.om.model.Article</class>
+      
+    </persistence-unit>  
+    
+</persistence>
