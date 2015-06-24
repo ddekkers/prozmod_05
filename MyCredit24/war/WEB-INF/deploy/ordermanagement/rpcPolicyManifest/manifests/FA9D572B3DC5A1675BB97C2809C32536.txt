@@ -1,0 +1,2 @@
+serviceClass: de.fhwedel.om.services.OMService
+path: C02D298525E9A7E638EED0807B2812DF.gwt.rpc
