@@ -67,9 +67,9 @@ implements OMService {
          em.persist( new Article("Artikel 1", 100) );
          em.persist( new Article("Artikel 2", 1000) );
          em.persist( new Article("Artikel 3", 500) );
-         em.persist( new Customer("", "Kunde 1", 25) );
-         em.persist( new Customer("", "Kunde 2", 30) );
-         em.persist( new Customer("", "Kunde 3", 55) ); 
+         em.persist( new Customer("Daniel", "Dekkers", 25) );
+         em.persist( new Customer("Jonas", "Hübner", 30) );
+         em.persist( new Customer("Jonas", "Thomsen", 55) ); 
          em.getTransaction().commit();
       }      
    }
@@ -111,6 +111,7 @@ implements OMService {
    synchronized public List<Customer> searchCustomersBy(Integer id, String prename,
 		   												String surname, int age) {
 	   List<Customer> allCustomers = getAllCustomers();
+
 	   List<Customer> filteredCustomers = allCustomers.stream().filter(c -> c.getID().equals(id)
 			   															 || c.getPrename().equals(prename)
 			   															 || c.getSurname().equals(surname)

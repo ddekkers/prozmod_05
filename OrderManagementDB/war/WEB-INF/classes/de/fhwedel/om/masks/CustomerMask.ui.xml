@@ -5,41 +5,48 @@
    <ui:style>
    
    </ui:style>   
-      <g:AbsolutePanel height="400px" width="1000px">   
+      <g:AbsolutePanel height="500px" width="1000px">   
          
          <!-- Suchen -->         
          <g:at top="0" left="20">
-            <g:Label text="Name:"/>
+            <g:Label text="ID:"/>
          </g:at>
          <g:at top="0" left="100">
+            <g:IntegerBox pixelSize="50,20" ui:field="search_id"/>
+         </g:at>
+         
+         <g:at top="40" left="20">
+            <g:Label text="Name:"/>
+         </g:at>
+         <g:at top="40" left="100">
             <g:TextBox pixelSize="200,20" ui:field="search_sname"/>
          </g:at>
 
-         <g:at top="40" left="20">
+         <g:at top="80" left="20">
             <g:Label text="Vorname:"/>
          </g:at>
-         <g:at top="40" left="100">
+         <g:at top="80" left="100">
             <g:TextBox pixelSize="200,20" ui:field="search_pname"/>
          </g:at>
 
-         <g:at top="80" left="20">
+         <g:at top="120" left="20">
             <g:Label text="Alter:"/>
          </g:at>
-         <g:at top="80" left="100">
-            <g:IntegerBox pixelSize="200,20" ui:field="search_age"/>
+         <g:at top="120" left="100">
+            <g:TextBox pixelSize="200,20" ui:field="search_age"/>
          </g:at>
          
-         <g:at top="120" left="100">
+         <g:at top="160" left="100">
          	<g:Button pixelSize="100,50" ui:field="search_customer">Kunden suchen</g:Button>
          </g:at>
 		 
-		 <g:at top="200" left="20">
-            <g:Label text="Suchergebnisse:"/>
+		 <g:at top="240" left="20">
+            <g:Label text="Ergebnisse:"/>
          </g:at>
-		 <g:at top="200" left="100">
-            <fhw:BOSelectListBox pixelSize="200,100" ui:field="customers"></fhw:BOSelectListBox>
+		 <g:at top="240" left="100">
+            <fhw:BOSelectListBox pixelSize="200,120" ui:field="customers"></fhw:BOSelectListBox>
          </g:at>
-         <g:at top="320" left="100">
+         <g:at top="360" left="100">
             <g:Button pixelSize="100,50" ui:field="select_customer">Kunde auswählen</g:Button>
          </g:at>
          
@@ -66,10 +73,6 @@
             <g:IntegerBox pixelSize="200,20" ui:field="age"/>
          </g:at>
          
-         
-         
-         
-         
          <!-- Auftragsübersicht des Kunden -->
          
          <g:at top="200" left="720">
@@ -81,7 +84,7 @@
          
          <!-- Auftragsbezogene Buttons (Neu, Bearbeiten) -->
 
-         <g:at top="320" left="100">
+         <g:at top="320" left="600">
             <g:Button pixelSize="100,50" visible="true" ui:field="new_order">Neuer Auftrag </g:Button>
          </g:at>
          <g:at top="320" left="200">
