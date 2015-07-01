@@ -44,9 +44,9 @@
             <g:Label text="Ergebnisse:"/>
          </g:at>
 		 <g:at top="240" left="100">
-            <fhw:BOSelectListBox pixelSize="200,120" ui:field="customers"></fhw:BOSelectListBox>
+            <fhw:BOSelectListBox pixelSize="200,150" ui:field="customers"></fhw:BOSelectListBox>
          </g:at>
-         <g:at top="360" left="100">
+         <g:at top="370" left="100">
             <g:Button pixelSize="100,50" ui:field="select_customer">Kunde auswählen</g:Button>
          </g:at>
          
@@ -74,7 +74,6 @@
          </g:at>
          
          <!-- Auftragsübersicht des Kunden -->
-         
          <g:at top="200" left="720">
             <g:Label text="Aufträge:" ui:field="order_label"/>
          </g:at>
@@ -87,7 +86,7 @@
          <g:at top="320" left="600">
             <g:Button pixelSize="100,50" visible="true" ui:field="new_order">Neuer Auftrag </g:Button>
          </g:at>
-         <g:at top="320" left="200">
+         <g:at top="320" left="400">
             <g:Button pixelSize="100,50" visible="true" ui:field="edit_order">Auftrag bearbeiten</g:Button>
          </g:at>         
          

@@ -172,8 +172,10 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    protected void onSearchCustomerClick(ClickEvent event) {
 	   String age = search_age.getText();
 	   int ageAsInt = age.equals("")?0:Integer.parseInt(age);
-	   this.getService().searchCustomersBy(search_id.getValue(), search_sname.getText(), search_pname.getText(),
-			   				ageAsInt, (new AsyncCallback<List<Customer>>() {         
+	   this.getService().searchCustomersBy( search_id.getValue(),
+			   								search_sname.getText(),
+			   								search_pname.getText(),
+			   								ageAsInt, (new AsyncCallback<List<Customer>>() {         
 	         @Override
 	         public void onSuccess(List<Customer> result) {
 	            customers.setAcceptableValues(result);            
