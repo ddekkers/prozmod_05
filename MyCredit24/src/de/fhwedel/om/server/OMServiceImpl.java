@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -19,7 +20,9 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.fhwedel.om.model.BusinessObject;
+import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
+import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.services.OMService;
 
 @SuppressWarnings("serial")
@@ -61,9 +64,9 @@ implements OMService {
       if(OMServiceImpl.props.getProperty("regenerate", "0").equals("1")) {            
          EntityManager em = OMServiceImpl.getEM();
          em.getTransaction().begin();
-         em.persist( new Customer(1, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg") );
-         em.persist( new Customer(2, "Jonas", "Hübner", "Blink 128", "12345", "Hetlingen") );
-         em.persist( new Customer(3, "Jonas", "Thomsen", "Blink 129", "12345", "Hetlingen") ); 
+         em.persist( new Customer(1, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
+         em.persist( new Customer(2, "Jonas", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
+         em.persist( new Customer(3, "Jonas", "Thomsen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
          em.getTransaction().commit();
       }      
    }
@@ -103,7 +106,13 @@ implements OMService {
 			   															 || c.getPrename().equals(prename)
 			   															 || c.getSurname().equals(surname)).
 			   															 collect(Collectors.toList());
-
+//	   for (Customer customer : filteredCustomers) {
+//		if (!filteredCustomers.isEmpty()) {
+//		   Window.alert(customer.getSurname()); }
+//		else {
+//			Window.alert("Nixe drin");
+//		}
+//	}
 	   return filteredCustomers;
    }
    

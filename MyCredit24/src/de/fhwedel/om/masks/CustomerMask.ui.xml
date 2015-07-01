@@ -64,25 +64,7 @@
          </g:at>
          <g:at top="80" left="500">
             <g:IntegerBox pixelSize="200,20" ui:field="age"/>
-         </g:at>
-         
-         <!-- Auftragsübersicht des Kunden -->
-         <g:at top="200" left="720">
-            <g:Label text="Aufträge:" ui:field="order_label"/>
-         </g:at>
-         <g:at top="200" left="800">
-            <fhw:BOSelectListBox pixelSize="200,100" ui:field="orders"></fhw:BOSelectListBox>
-         </g:at>
-         
-         <!-- Auftragsbezogene Buttons (Neu, Bearbeiten) -->
-
-         <g:at top="320" left="600">
-            <g:Button pixelSize="100,50" visible="true" ui:field="new_order">Neuer Auftrag </g:Button>
-         </g:at>
-         <g:at top="320" left="400">
-            <g:Button pixelSize="100,50" visible="true" ui:field="edit_order">Auftrag bearbeiten</g:Button>
-         </g:at>         
-         
+         </g:at>      
 
          
       </g:AbsolutePanel>      
