@@ -33,6 +33,8 @@ public class Payment implements BusinessObject<Integer> {
    
    private PaymentType type; 
    
+   private CreditContract credit_contract;
+
    public Date getDate() {
 	   return date;
    }
@@ -56,17 +58,25 @@ public class Payment implements BusinessObject<Integer> {
    public void setType(PaymentType type) {
 	   this.type = type;
    }
+   
+   public CreditContract getCreditContract() {
+	   return credit_contract;
+   }
 
+   public void setCreditContract(CreditContract credit_contract) {
+	   this.credit_contract = credit_contract;
+   }
    
    public Payment() {
-	   this(null, 0, PaymentType.outpayment);
+	   this(null, 0, null, null);
    }
       
-   public Payment(Date date, int amount, PaymentType type) {
+   public Payment(Date date, int amount, PaymentType type, CreditContract credit_contract) {
 	   
 	   this.date = date;
 	   this.amount = amount;
 	   this.type = type;
+	   this.credit_contract = credit_contract;
    }
 
    @Override

@@ -27,23 +27,23 @@ public class CreditContract implements BusinessObject<Integer> {
 	@Id
    	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CUST_SEQ")
    	@Column(name="credit_contract_id")
-   	private int credit_contract_id;
+   	private Integer credit_contract_id;
    
    	private String contract_number;
 
 	private CreditContractStatus status;
 	
-	private int runtime;
+	private Integer runtime;
   
-	private int credit_amount;
+	private Integer credit_amount;
   
 	private Date contract_begin;
   
 	// Tilgungsrate
-	private int annuity_rental;
+	private Integer annuity_rental;
   
 	// Restschuld
-	private int residual_debt;
+	private Integer residual_debt;
   
 	private String iban;
 	
@@ -53,11 +53,13 @@ public class CreditContract implements BusinessObject<Integer> {
 
 	private Rate rate;
 	
+	private Customer customer;
+
 	public CreditContract() {
-		this("", CreditContractStatus.proposal, 0, 0, null, 0, 0, "", "", new ArrayList<Payment>());
+		this(null, null, null, null, null, null, null, null, null, new ArrayList<Payment>(), null, null);
 	}
 	
-	public CreditContract(String contract_number, CreditContractStatus status, int runtime, int credit_amount, Date contract_begin, int annuity_rental, int residual_debt, String iban, String bic, List<Payment> payments) {
+	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, Date contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, List<Payment> payments, Rate rate, Customer customer) {
 		
 		this.contract_number = contract_number;
 		this.status = status;
@@ -69,22 +71,24 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.iban = iban;
 		this.bic = bic;	
 		this.payments = payments;
+		this.rate = rate;
+		this.customer = customer;
 	}
-   
-	public int getCredit_contract_id() {
+
+	public Integer getCreditContractId() {
 	
 		return credit_contract_id;
 	}
 
-	public void setCredit_contract_id(int credit_contract_id) {
+	public void setCreditContractId(Integer credit_contract_id) {
 		this.credit_contract_id = credit_contract_id;
 	}
 	
-	public String getContract_number() {
+	public String getContractNumber() {
 		return contract_number;
 	}
 	
-	public void setContract_number(String contract_number) {
+	public void setContractNumber(String contract_number) {
 		this.contract_number = contract_number;
 	}
 	
@@ -100,39 +104,39 @@ public class CreditContract implements BusinessObject<Integer> {
 		return runtime;
 	}
 	
-	public void setRuntime(int runtime) {
+	public void setRuntime(Integer runtime) {
 		this.runtime = runtime;
 	}
 	
-	public int getCredit_amount() {
+	public int getCreditAmount() {
 		return credit_amount;
 	}
 	
-	public void setCredit_amount(int credit_amount) {
+	public void setCreditAmount(Integer credit_amount) {
 		this.credit_amount = credit_amount;
 	}
 	
-	public Date getContract_begin() {
+	public Date getContractBegin() {
 		return contract_begin;
 	}
 	
-	public void setContract_begin(Date contract_begin) {
+	public void setContractBegin(Date contract_begin) {
 		this.contract_begin = contract_begin;
 	}
 	
-	public int getAnnuity_rental() {
+	public int getAnnuityRental() {
 		return annuity_rental;
 	}
 	
-	public void setAnnuity_rental(int annuity_rental) {
+	public void setAnnuityRental(Integer annuity_rental) {
 		this.annuity_rental = annuity_rental;
 	}
 	
-	public int getResidual_debt() {
+	public int getResidualDebt() {
 		return residual_debt;
 	}
 	
-	public void setResidual_debt(int residual_debt) {
+	public void setResidualDebt(int residual_debt) {
 		this.residual_debt = residual_debt;
 	}
 	
@@ -158,6 +162,22 @@ public class CreditContract implements BusinessObject<Integer> {
 
 	public void setPayments(List<Payment> payments) {
 		this.payments = payments;
+	}
+	
+	public Rate getRate() {
+		return rate;
+	}
+
+	public void setRate(Rate rate) {
+		this.rate = rate;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	
    @Override

@@ -27,7 +27,7 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CUST_SEQ")
 	@Column(name="self_disclosure_id")
-	private int self_disclosure_id;
+	private Integer self_disclosure_id;
 
 	private Date registration;
 	
@@ -35,17 +35,19 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	
 	private ModeOfEmployment mode_of_employment;
 	
-	private boolean terminable;
+	private Boolean terminable;
 	
 	private String employer;
 	
-	private int month_net;
+	private Integer month_net;
 	
 	private Date classification;
 	
-	private int credit_limit;
+	private Integer credit_limit;
 	
 	private ValidityLevel validity;
+	
+	private Customer customer;
 	
 	public Date getRegistration() {
 		return registration;
@@ -71,11 +73,11 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 		this.mode_of_employment = mode_of_employment;
 	}
 
-	public boolean isTerminable() {
+	public Boolean isTerminable() {
 		return terminable;
 	}
 
-	public void setTerminable(boolean terminable) {
+	public void setTerminable(Boolean terminable) {
 		this.terminable = terminable;
 	}
 
@@ -87,11 +89,11 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 		this.employer = employer;
 	}
 
-	public int getMonthNet() {
+	public Integer getMonthNet() {
 		return month_net;
 	}
 
-	public void setMonthNet(int month_net) {
+	public void setMonthNet(Integer month_net) {
 		this.month_net = month_net;
 	}
 
@@ -103,20 +105,46 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 		this.classification = classification;
 	}
 
-	public int getCreditLimit() {
+	public Integer getCreditLimit() {
 		return credit_limit;
 	}
 
-	public void setCreditLimit(int credit_limit) {
+	public void setCreditLimit(Integer credit_limit) {
 		this.credit_limit = credit_limit;
 	}
 
 	public ValidityLevel getValidity() {
 		return validity;
 	}
-
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+	
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	
 	public void setValidity(ValidityLevel validity) {
 		this.validity = validity;
+	}
+	
+	public SelfDisclosure() {
+		this(null, null, null, null, null, null, null, null, null, null);
+	}
+	
+	public SelfDisclosure(Date registration, String occupation, ModeOfEmployment mode_of_employment, Boolean terminable, String employer, Integer month_net, Date classification, Integer credit_limit, ValidityLevel validity, Customer customer) {
+		
+		this.registration = registration;
+		this.occupation = occupation;
+		this.mode_of_employment = mode_of_employment;
+		this.terminable = terminable;
+		this.employer = employer;
+		this.month_net = month_net;
+		this.classification = classification;
+		this.credit_limit = credit_limit;
+		this.validity = validity;
+		this.customer = customer;
 	}
 
 	@Override
@@ -129,7 +157,6 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 	
 	
 }
