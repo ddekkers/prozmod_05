@@ -56,7 +56,7 @@ public class CreditContract implements BusinessObject<Integer> {
 	private Customer customer;
 
 	public CreditContract() {
-		this(null, null, null, null, null, null, null, null, null, new ArrayList<Payment>(), null, null);
+		this(null, CreditContractStatus.proposal, null, null, null, null, null, null, null, new ArrayList<Payment>(), null, null);
 	}
 	
 	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, Date contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, List<Payment> payments, Rate rate, Customer customer) {
