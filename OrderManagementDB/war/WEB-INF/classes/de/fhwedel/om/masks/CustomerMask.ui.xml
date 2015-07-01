@@ -5,66 +5,90 @@
    <ui:style>
    
    </ui:style>   
-      <g:AbsolutePanel height="400px" width="600px">   
+      <g:AbsolutePanel height="400px" width="1000px">   
          
-         <!-- Kundenübersicht -->
-          
-         <g:at top="0" left="400">
-            <fhw:BOSelectListBox pixelSize="200,100" ui:field="customers"></fhw:BOSelectListBox>
-         </g:at>
-         <g:at top="120" left="450">
-            <g:Button pixelSize="100,50" ui:field="select_customer">Kunde auswählen</g:Button>
-         </g:at>         
-
-         <!-- Attribute (Name, Vorname, Alter) -->
-         
+         <!-- Suchen -->         
          <g:at top="0" left="20">
             <g:Label text="Name:"/>
          </g:at>
          <g:at top="0" left="100">
-            <g:TextBox pixelSize="200,20" ui:field="sname"/>
+            <g:TextBox pixelSize="200,20" ui:field="search_sname"/>
          </g:at>
 
          <g:at top="40" left="20">
             <g:Label text="Vorname:"/>
          </g:at>
          <g:at top="40" left="100">
-            <g:TextBox pixelSize="200,20" ui:field="pname"/>
+            <g:TextBox pixelSize="200,20" ui:field="search_pname"/>
          </g:at>
 
          <g:at top="80" left="20">
             <g:Label text="Alter:"/>
          </g:at>
          <g:at top="80" left="100">
+            <g:IntegerBox pixelSize="200,20" ui:field="search_age"/>
+         </g:at>
+         
+         <g:at top="120" left="100">
+         	<g:Button pixelSize="100,50" ui:field="search_customer">Kunden suchen</g:Button>
+         </g:at>
+		 
+		 <g:at top="200" left="20">
+            <g:Label text="Suchergebnisse:"/>
+         </g:at>
+		 <g:at top="200" left="100">
+            <fhw:BOSelectListBox pixelSize="200,100" ui:field="customers"></fhw:BOSelectListBox>
+         </g:at>
+         <g:at top="320" left="100">
+            <g:Button pixelSize="100,50" ui:field="select_customer">Kunde auswählen</g:Button>
+         </g:at>
+         
+         
+         <!-- Kundenübersicht (Name, Vorname, Alter) -->
+         <g:at top="0" left="400">
+            <g:Label text="Name:"/>
+         </g:at>
+         <g:at top="0" left="500">
+            <g:TextBox pixelSize="200,20" ui:field="sname"/>
+         </g:at>
+         
+         <g:at top="40" left="400">
+            <g:Label text="Vorname:"/>
+         </g:at>
+         <g:at top="40" left="500">
+            <g:TextBox pixelSize="200,20" ui:field="pname"/>
+         </g:at>
+         
+         <g:at top="80" left="400">
+            <g:Label text="Alter:"/>
+         </g:at>
+         <g:at top="80" left="500">
             <g:IntegerBox pixelSize="200,20" ui:field="age"/>
          </g:at>
          
-         <!-- Kundenbezogene Buttons (Neu, Speichern) -->
-          
-         <g:at top="120" left="100">
-            <g:Button pixelSize="100,50" ui:field="new_customer">Neuer Kunde</g:Button>
-         </g:at>
-         <g:at top="120" left="200">
-            <g:Button pixelSize="100,50" ui:field="save_customer">Kunde speichern</g:Button>
-         </g:at>
-
+         
+         
+         
+         
          <!-- Auftragsübersicht des Kunden -->
          
-         <g:at top="200" left="20">
+         <g:at top="200" left="720">
             <g:Label text="Aufträge:" ui:field="order_label"/>
          </g:at>
-         <g:at top="200" left="100">
+         <g:at top="200" left="800">
             <fhw:BOSelectListBox pixelSize="200,100" ui:field="orders"></fhw:BOSelectListBox>
          </g:at>
          
          <!-- Auftragsbezogene Buttons (Neu, Bearbeiten) -->
 
          <g:at top="320" left="100">
-            <g:Button pixelSize="100,50" visible="false" ui:field="new_order">Neuer Auftrag </g:Button>
+            <g:Button pixelSize="100,50" visible="true" ui:field="new_order">Neuer Auftrag </g:Button>
          </g:at>
          <g:at top="320" left="200">
-            <g:Button pixelSize="100,50" visible="false" ui:field="edit_order">Auftrag bearbeiten</g:Button>
+            <g:Button pixelSize="100,50" visible="true" ui:field="edit_order">Auftrag bearbeiten</g:Button>
          </g:at>         
+         
+
          
       </g:AbsolutePanel>      
 </ui:UiBinder> 

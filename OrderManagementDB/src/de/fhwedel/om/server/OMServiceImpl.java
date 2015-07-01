@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,6 +15,7 @@ import javax.persistence.Persistence;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.fhwedel.om.model.Article;
@@ -102,6 +104,20 @@ implements OMService {
       }
       EntityManager em = OMServiceImpl.getEM();
       return (TYPE)em.find(cl, id);
+   }
+   
+   @SuppressWarnings("unchecked")
+   @Override
+   synchronized public List<Customer> searchCustomersBy(Integer id, String prename,
+		   												String surname, int age) {
+	   List<Customer> allCustomers = getAllCustomers();
+	   List<Customer> filteredCustomers = allCustomers.stream().filter(c -> c.getID().equals(id)
+			   															 || c.getPrename().equals(prename)
+			   															 || c.getSurname().equals(surname)
+			   															 || c.getAge() == age).
+			   															 collect(Collectors.toList());
+
+	   return filteredCustomers;
    }
    
    @Override

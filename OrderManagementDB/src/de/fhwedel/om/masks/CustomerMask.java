@@ -40,15 +40,23 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField IntegerBox age;
    @Ignore @UiField BOSelectListBox<Customer, Integer> customers;
    @Ignore @UiField BOSelectListBox<Order, Integer> orders;
-    
+   @Ignore @UiField TextBox search_sname;
+   @Ignore @UiField TextBox search_pname;
+   
+   
    @Ignore @UiField Label order_label;
-
-   @UiField Button new_customer;
-   @UiField Button save_customer;
+   
+   
+   //Buttons
+   @UiField Button search_customer;
+   
    @UiField Button select_customer;
    @UiField Button new_order;
    @UiField Button edit_order;
            
+   //Labels
+   
+   
    public CustomerMask() {
 	   this(new Customer());	   
    }
@@ -76,8 +84,8 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.age.setEnabled(!show_only);
       this.orders.setVisible(!show_only);
       this.order_label.setVisible(!show_only);
-      this.new_customer.setVisible(!show_only);
-      this.save_customer.setVisible(!show_only);
+      
+      this.search_customer.setVisible(!show_only);
    }
     
    public void setBO(Customer c) {
@@ -115,7 +123,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
          }
       });      
    }
-    
+   
    private void refreshOrders() {
       if(this.getBO() != null)
          orders.setAcceptableValues(this.getBO().getOrders());
@@ -124,21 +132,12 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.edit_order.setVisible( !this.show_only && this.orders.getValue() != null );
    }    
     
-   @UiHandler("save_customer")
-   protected void onSaveCustomerClick(ClickEvent event) {
-      this.saveBO();
-   }
     
    @UiHandler("orders")
    protected void onSelectOrderClick(ClickEvent event) {
       this.edit_order.setVisible( !this.show_only && this.orders.getValue() != null );
    }
    
-   @UiHandler("new_customer")
-   protected void onNewCustomerClick(ClickEvent event) {
-      this.setBO(new Customer());
-   }
-    
    @UiHandler("select_customer")
    protected void onSelectCustomerClick(ClickEvent event) {
       this.setBO(this.customers.getValue());
@@ -166,6 +165,21 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    protected void onEditOrderClick(ClickEvent event) {
       Order order = this.orders.getValue();
       this.getFlowControl().forward( new OrderMask(order) );
+   }
+   
+   @UiHandler("search_customer")
+   protected void onSearchCustomerClick(ClickEvent event) {
+	   this.getService().searchCustomersBy(1, search_sname.getText(), search_pname.getText(),
+			   						55, (new AsyncCallback<List<Customer>>() {         
+	         @Override
+	         public void onSuccess(List<Customer> result) {
+	            customers.setAcceptableValues(result);            
+	         }         
+	         @Override
+	         public void onFailure(Throwable caught) {
+	            Window.alert("Fehler beim Laden der Kunden.");        
+	         }
+	   }));
    }
    
    @Override
