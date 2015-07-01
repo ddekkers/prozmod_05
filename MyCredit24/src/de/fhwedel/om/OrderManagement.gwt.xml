@@ -29,6 +29,7 @@
   <source path='masks'/>
   <source path='services'/>
   <source path='widgets'/>
+  <source path='types'/>
 
   <!-- allow Super Dev Mode -->
   <add-linker name="xsiframe"/>
