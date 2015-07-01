@@ -1,6 +1,8 @@
 package de.fhwedel.om.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,14 +46,18 @@ public class CreditContract implements BusinessObject<Integer> {
 	private int residual_debt;
   
 	private String iban;
-  
+	
 	private String bic;
-  
+	
+	private List<Payment> payments;
+
+	private Rate rate;
+	
 	public CreditContract() {
-		this("", CreditContractStatus.proposal, 0, 0, null, 0, 0, "", "");
+		this("", CreditContractStatus.proposal, 0, 0, null, 0, 0, "", "", new ArrayList<Payment>());
 	}
 	
-	public CreditContract(String contract_number, CreditContractStatus status, int runtime, int credit_amount, Date contract_begin, int annuity_rental, int residual_debt, String iban, String bic) {
+	public CreditContract(String contract_number, CreditContractStatus status, int runtime, int credit_amount, Date contract_begin, int annuity_rental, int residual_debt, String iban, String bic, List<Payment> payments) {
 		
 		this.contract_number = contract_number;
 		this.status = status;
@@ -61,7 +67,8 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.annuity_rental = annuity_rental;
 		this.residual_debt = residual_debt;
 		this.iban = iban;
-		this.bic = bic;		
+		this.bic = bic;	
+		this.payments = payments;
 	}
    
 	public int getCredit_contract_id() {
@@ -143,6 +150,14 @@ public class CreditContract implements BusinessObject<Integer> {
 	
 	public void setBic(String bic) {
 		this.bic = bic;
+	}
+	  
+	public List<Payment> getPayments() {
+		return payments;
+	}
+
+	public void setPayments(List<Payment> payments) {
+		this.payments = payments;
 	}
 	
    @Override
