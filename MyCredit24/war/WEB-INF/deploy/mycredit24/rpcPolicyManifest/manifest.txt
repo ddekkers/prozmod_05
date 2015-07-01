@@ -1,2 +1,2 @@
-# Module ordermanagement
+# Module mycredit24
 # RPC service class, partial path of RPC policy file
