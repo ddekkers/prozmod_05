@@ -19,6 +19,7 @@ public interface OMService extends RemoteService {
    public <TYPE extends BusinessObject<?>> List<TYPE> getQuery(String query);
    public List<Article> getAllArticles();
    public List<Customer> getAllCustomers(); 
+   public List<Customer> searchCustomersBy(Integer id, String prename, String surname, int age);
    
    public <TYPE extends BusinessObject<?>> TYPE save(TYPE entity);
    public Order save(Order o);

@@ -17,6 +17,7 @@ public interface OMServiceAsync {
    <TYPE extends BusinessObject<?>> void getQuery(String query, AsyncCallback<List<TYPE>> callback);
    void getAllArticles(AsyncCallback<List<Article>> callback);   
    void getAllCustomers(AsyncCallback<List<Customer>> callback);
+   <TYPE extends BusinessObject<?>> void searchCustomersBy(Integer id, String prename, String surname, int age,  AsyncCallback<List<TYPE>> callback);
    
    <TYPE extends BusinessObject<?>> void save(TYPE entity, AsyncCallback<TYPE> callback);
    void save(Order o, AsyncCallback<Order> callback);
