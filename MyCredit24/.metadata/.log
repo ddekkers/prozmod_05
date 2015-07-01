@@ -4,7 +4,7 @@ java.version=1.8.0_05
 java.vendor=Oracle Corporation
 BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=de_DE
 Framework arguments:  -product org.eclipse.epp.package.java.product
-Command-line arguments:  -data C:\Users\JonasDesk\Desktop\FH Wedel\Semester_6\Prozessmodellierung\Aufgabe 5\prozmod_05\trunk\OrderManagementDB -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+Command-line arguments:  -data C:\Users\JonasDesk\Desktop\FH Wedel\Semester_6\Prozessmodellierung\Aufgabe 5\prozmod_05\trunk\MyCredit24 -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
 
 !ENTRY org.eclipse.ui.navigator 2 0 2015-06-24 10:40:07.802
 !MESSAGE Can't find Navigator Content Descriptor with id: org.eclipse.jst.servlet.ui.EnhancedJavaRendering
