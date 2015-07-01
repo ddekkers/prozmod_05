@@ -44,19 +44,19 @@ public class Rate implements BusinessObject<Integer> {
    private Date valid_to;
    
    
-   public String getRate_number() {
+   public String getRateNumber() {
 	return rate_number;
    }
 
-   public void setRate_number(String rate_number) {
+   public void setRateNumber(String rate_number) {
 	   this.rate_number = rate_number;
    }
 
-   public float getInterest_rate() {
+   public float getInterestRate() {
 	   return interest_rate;
    }
 	
-   public void setInterest_rate(float interest_rate) {
+   public void setInterestRate(float interest_rate) {
 	   this.interest_rate = interest_rate;
    }
 	
@@ -64,52 +64,52 @@ public class Rate implements BusinessObject<Integer> {
 	   return runtime;
    }
 	
-   public void setRuntime_in_years(int runtime) {
+   public void setRuntimeInYears(int runtime) {
 		this.runtime = runtime;
    }
 	
-   public int getCredit_amount_from() {
+   public int getCreditAmountFrom() {
 	   return credit_amount_from;
    }
 	
-   public void setCredit_amount_from(int credit_amount_from) {
+   public void setCreditAmountFrom(int credit_amount_from) {
 	   this.credit_amount_from = credit_amount_from;
    }
 	
-   public int getCredit_amount_to() {
+   public int getCreditAmountTo() {
 	   return credit_amount_to;
    }
 	
-   public void setCredit_amount_to(int credit_amount_to) {
+   public void setCreditAmountTo(int credit_amount_to) {
 	   this.credit_amount_to = credit_amount_to;
    }
 	
-   public ValidityLevel getValidity_level() {
+   public ValidityLevel getValidityLevel() {
 	   return validity_level;
 	}
 	
-   public void setValidity_level(ValidityLevel validity_level) {
+   public void setValidityLevel(ValidityLevel validity_level) {
 	   this.validity_level = validity_level;
    }
 	
-   public Date getValid_from() {
+   public Date getValidFrom() {
 	   return valid_from;
    }
 	
-   public void setValid_from(Date valid_from) {
+   public void setValidFrom(Date valid_from) {
 	   this.valid_from = valid_from;
    }
 	
-   public Date getValid_to() {
+   public Date getValidTo() {
 	   return valid_to;
    }
 	
-   public void setValid_to(Date valid_to) {
+   public void setValidTo(Date valid_to) {
 	   this.valid_to = valid_to;
    }
 
    public Rate() {
-	   this("", (float) 0.0, 0, 0, 0, ValidityLevel.A, null, null);
+	   this("", (float) 0.0, 0, 0, 0, null, null, null);
    }
       
    public Rate(String rate_number, float interest_rate, int runtime, int credit_amount_from, int credit_amount_to, ValidityLevel validity_level, Date valid_from, Date valid_to) {

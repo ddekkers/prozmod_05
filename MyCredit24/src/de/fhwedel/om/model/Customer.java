@@ -1,5 +1,8 @@
 package de.fhwedel.om.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +37,10 @@ public class Customer implements BusinessObject<Integer> {
 	private String postcode;
    
 	private String city;
+	
+	private List<CreditContract> credit_contracts;
+	
+	private SelfDisclosure self_disclosure;
    
 	public int getCustomerNumber() {
 		return customer_number;
@@ -83,17 +90,35 @@ public class Customer implements BusinessObject<Integer> {
 		this.city = city;
 	}
 
+	public List<CreditContract> getCreditContracts() {
+		return credit_contracts;
+	}
+
+	public void setCreditContracts(List<CreditContract> credit_contracts) {
+		this.credit_contracts = credit_contracts;
+	}
+
+	public SelfDisclosure getSelfDisclosure() {
+		return self_disclosure;
+	}
+
+	public void setSelfDisclosure(SelfDisclosure self_disclosure) {
+		this.self_disclosure = self_disclosure;
+	}
+	   
 	public Customer() {
-		this(null, "", "", "", "", "");
+		this(null, "", "", "", "", "", new ArrayList<CreditContract>(), null);
 	}
       
-	public Customer(Integer customer_number, String surname, String prename,  String street, String postcode, String city) {
+	public Customer(Integer customer_number, String surname, String prename,  String street, String postcode, String city, List<CreditContract> credit_contracts, SelfDisclosure self_disclosure) {
 		this.customer_number = customer_number;
 		this.surname = surname;
 		this.prename = prename;
 		this.street = street;
 		this.postcode = postcode;
 		this.city = city;
+		this.credit_contracts = credit_contracts;
+		this.self_disclosure = self_disclosure;
 	}
 
 	// Object-Methoden
@@ -114,5 +139,4 @@ public class Customer implements BusinessObject<Integer> {
 	public String getCaption() {
 		return "";
 	}
-	   
 }
