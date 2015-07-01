@@ -44,7 +44,7 @@
             <g:Label text="Ergebnisse:"/>
          </g:at>
 		 <g:at top="240" left="100">
-            <fhw:BOSelectListBox pixelSize="200,120" ui:field="customers"></fhw:BOSelectListBox>
+            <fhw:BOSelectListBox pixelSize="200,150" ui:field="customers"></fhw:BOSelectListBox>
          </g:at>
          <g:at top="360" left="100">
             <g:Button pixelSize="100,50" ui:field="select_customer">Kunde auswählen</g:Button>

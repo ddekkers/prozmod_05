@@ -40,6 +40,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField IntegerBox age;
    @Ignore @UiField BOSelectListBox<Customer, Integer> customers;
    @Ignore @UiField BOSelectListBox<Order, Integer> orders;
+   @Ignore @UiField IntegerBox search_id;
    @Ignore @UiField TextBox search_sname;
    @Ignore @UiField TextBox search_pname;
    @Ignore @UiField TextBox search_age;
@@ -171,7 +172,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    protected void onSearchCustomerClick(ClickEvent event) {
 	   String age = search_age.getText();
 	   int ageAsInt = age.equals("")?0:Integer.parseInt(age);
-	   this.getService().searchCustomersBy(1, search_sname.getText(), search_pname.getText(),
+	   this.getService().searchCustomersBy(search_id.getValue(), search_sname.getText(), search_pname.getText(),
 			   				ageAsInt, (new AsyncCallback<List<Customer>>() {         
 	         @Override
 	         public void onSuccess(List<Customer> result) {
