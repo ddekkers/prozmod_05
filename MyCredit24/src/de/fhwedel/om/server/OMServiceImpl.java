@@ -67,9 +67,9 @@ implements OMService {
          em.persist( new Article("Artikel 1", 100) );
          em.persist( new Article("Artikel 2", 1000) );
          em.persist( new Article("Artikel 3", 500) );
-         em.persist( new Customer("Daniel", "Dekkers", 25) );
-         em.persist( new Customer("Jonas", "Hübner", 30) );
-         em.persist( new Customer("Jonas", "Thomsen", 55) ); 
+         em.persist( new Customer(1, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg") );
+         em.persist( new Customer(2, "Jonas", "Hübner", "Blink 128", "12345", "Hetlingen") );
+         em.persist( new Customer(3, "Jonas", "Thomsen", "Blink 129", "12345", "Hetlingen") ); 
          em.getTransaction().commit();
       }      
    }
@@ -108,14 +108,13 @@ implements OMService {
    
    @SuppressWarnings("unchecked")
    @Override
-   synchronized public List<Customer> searchCustomersBy(Integer id, String prename,
-		   												String surname, int age) {
+   synchronized public List<Customer> searchCustomersBy(Integer cust_number, String prename,
+		   												String surname) {
 	   List<Customer> allCustomers = getAllCustomers();
 
-	   List<Customer> filteredCustomers = allCustomers.stream().filter(c -> c.getID().equals(id)
+	   List<Customer> filteredCustomers = allCustomers.stream().filter(c -> c.getID().equals(cust_number)
 			   															 || c.getPrename().equals(prename)
-			   															 || c.getSurname().equals(surname)
-			   															 || c.getAge() == age).
+			   															 || c.getSurname().equals(surname)).
 			   															 collect(Collectors.toList());
 
 	   return filteredCustomers;
@@ -144,7 +143,7 @@ implements OMService {
       else {
          em.persist(o);
          Customer c = o.getCustomer();
-         c.getOrders().add(o);
+         //c.getOrders().add(o);
          em.merge(c);
       }
       em.getTransaction().commit();

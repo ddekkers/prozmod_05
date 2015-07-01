@@ -9,10 +9,10 @@
          
          <!-- Suchen -->         
          <g:at top="0" left="20">
-            <g:Label text="ID:"/>
+            <g:Label text="Kunden-Nr:"/>
          </g:at>
          <g:at top="0" left="100">
-            <g:IntegerBox pixelSize="50,20" ui:field="search_id"/>
+            <g:IntegerBox pixelSize="50,20" ui:field="search_cust_number"/>
          </g:at>
          
          <g:at top="40" left="20">

@@ -23,7 +23,7 @@ public class Customer implements BusinessObject<Integer> {
 	@Column(name="customer_id")
 	private int customer_id;
 	   
-	private int customer_number;
+	private Integer customer_number;
 	   
 	private String surname;
    
@@ -84,11 +84,11 @@ public class Customer implements BusinessObject<Integer> {
 	}
 
 	public Customer() {
-		this(0, "", "", "", "", "");
+		this(null, "", "", "", "", "");
 	}
       
-	public Customer(int debtor_number, String surname, String prename,  String street, String postcode, String city) {
-		this.customer_number = debtor_number;
+	public Customer(Integer customer_number, String surname, String prename,  String street, String postcode, String city) {
+		this.customer_number = customer_number;
 		this.surname = surname;
 		this.prename = prename;
 		this.street = street;
