@@ -28,14 +28,7 @@
          <g:at top="80" left="100">
             <g:TextBox pixelSize="200,20" ui:field="search_pname"/>
          </g:at>
-
-         <g:at top="120" left="20">
-            <g:Label text="Alter:"/>
-         </g:at>
-         <g:at top="120" left="100">
-            <g:TextBox pixelSize="200,20" ui:field="search_age"/>
-         </g:at>
-         
+              
          <g:at top="160" left="100">
          	<g:Button pixelSize="100,50" ui:field="search_customer">Kunden suchen</g:Button>
          </g:at>

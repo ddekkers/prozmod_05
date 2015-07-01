@@ -18,11 +18,8 @@ import org.eclipse.persistence.config.PersistenceUnitProperties;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.fhwedel.om.model.Article;
 import de.fhwedel.om.model.BusinessObject;
 import de.fhwedel.om.model.Customer;
-import de.fhwedel.om.model.Order;
-import de.fhwedel.om.model.OrderPosition;
 import de.fhwedel.om.services.OMService;
 
 @SuppressWarnings("serial")
@@ -64,9 +61,6 @@ implements OMService {
       if(OMServiceImpl.props.getProperty("regenerate", "0").equals("1")) {            
          EntityManager em = OMServiceImpl.getEM();
          em.getTransaction().begin();
-         em.persist( new Article("Artikel 1", 100) );
-         em.persist( new Article("Artikel 2", 1000) );
-         em.persist( new Article("Artikel 3", 500) );
          em.persist( new Customer(1, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg") );
          em.persist( new Customer(2, "Jonas", "Hübner", "Blink 128", "12345", "Hetlingen") );
          em.persist( new Customer(3, "Jonas", "Thomsen", "Blink 129", "12345", "Hetlingen") ); 
@@ -74,13 +68,6 @@ implements OMService {
       }      
    }
 
-   @SuppressWarnings("unchecked")
-   @Override
-   synchronized public List<Article> getAllArticles() {
-      EntityManager em = OMServiceImpl.getEM();
-      return em.createNamedQuery("getAllArticles").getResultList();      
-   }
-    
    @SuppressWarnings("unchecked")
    @Override
    synchronized public List<Customer> getAllCustomers() {       
@@ -133,7 +120,7 @@ implements OMService {
       return entity;
    }
    
-   @Override
+/*   @Override
    synchronized public Order save(Order o) {
       EntityManager em = OMServiceImpl.getEM();
       em.getTransaction().begin();
@@ -165,6 +152,6 @@ implements OMService {
       }
       em.getTransaction().commit();
       return pos;
-   }
+   }*/
    
 }
