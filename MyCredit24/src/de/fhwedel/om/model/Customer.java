@@ -42,7 +42,7 @@ public class Customer implements BusinessObject<Integer> {
 	
 	private SelfDisclosure self_disclosure;
    
-	public int getCustomerNumber() {
+	public Integer getCustomerNumber() {
 		return customer_number;
 	}
    
@@ -137,6 +137,9 @@ public class Customer implements BusinessObject<Integer> {
 
 	@Override
 	public String getCaption() {
-		return "";
+		return "[" + this.getCustomerNumber() + "] " 
+			  + this.getPrename() 
+			  + ", "
+			  + this.getSurname();
 	}
 }

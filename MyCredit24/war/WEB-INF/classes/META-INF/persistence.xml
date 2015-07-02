@@ -11,6 +11,7 @@
       <class>de.fhwedel.om.model.Order</class>
       <class>de.fhwedel.om.model.OrderPosition</class>
       <class>de.fhwedel.om.model.Article</class>
+
       
     </persistence-unit>  
     

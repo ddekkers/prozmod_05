@@ -1,5 +1,6 @@
 package de.fhwedel.om.masks;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -134,7 +135,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 			   								(new AsyncCallback<List<Customer>>() {         
 	         @Override
 	         public void onSuccess(List<Customer> result) {
-	            customers.setAcceptableValues(result);            
+	        	customers.setAcceptableValues(result);            
 	         }         
 	         @Override
 	         public void onFailure(Throwable caught) {

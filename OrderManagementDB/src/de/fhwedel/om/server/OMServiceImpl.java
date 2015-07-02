@@ -69,7 +69,7 @@ implements OMService {
          em.persist( new Article("Artikel 3", 500) );
          em.persist( new Customer("Daniel", "Dekkers", 25) );
          em.persist( new Customer("Jonas", "Hübner", 30) );
-         em.persist( new Customer("Jonas", "Thomsen", 55) ); 
+         em.persist( new Customer("Eugen", "Geist", 55) ); 
          em.getTransaction().commit();
       }      
    }
