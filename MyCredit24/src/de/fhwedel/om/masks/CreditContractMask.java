@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.fhwedel.om.model.CreditContract;
+import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.widgets.BOSelectListBox;
 
 public class CreditContractMask extends BusinessMask<CreditContract> implements Editor<CreditContract> {
@@ -70,8 +71,18 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("search")
    protected void onSearchClick(ClickEvent event) {
-	   
-   }   
+	   this.getService().searchCreditContractBy( search_contract_number.getValue(),
+			   								(new AsyncCallback<List<CreditContract>>() {         
+		         @Override
+		         public void onSuccess(List<CreditContract> result) {
+		        	credit_contracts.setAcceptableValues(result);            
+		         }         
+		         @Override
+		         public void onFailure(Throwable caught) {
+		            Window.alert("Fehler beim Laden der Kunden.");        
+		         }
+		}));
+   }
    
   protected void refreshCreditContracts() {
      this.getService().getAllCreditContracts(new AsyncCallback<List<CreditContract>>() {         

@@ -9,7 +9,10 @@
       
       <class>de.fhwedel.om.model.Customer</class>
       <class>de.fhwedel.om.model.CreditContract</class>
+      <class>de.fhwedel.om.model.Payment</class>
+      <class>de.fhwedel.om.model.Rate</class>
+      <class>de.fhwedel.om.model.SelfDisclosure</class>
       
-    </persistence-unit>  
+     </persistence-unit>  
     
 </persistence>

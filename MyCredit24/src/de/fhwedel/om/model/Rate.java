@@ -1,7 +1,9 @@
 package de.fhwedel.om.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 import de.fhwedel.om.types.ValidityLevel;
 
@@ -42,6 +45,8 @@ public class Rate implements BusinessObject<Integer> {
    private Date valid_from;
    
    private Date valid_to;
+   
+   private List<CreditContract> creditContracts;
    
    
    public String getRateNumber() {

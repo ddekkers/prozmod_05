@@ -73,6 +73,10 @@ implements OMService {
          em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
+         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), new Customer()));
+         em.persist( new CreditContract("2", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), new Customer()));
+         em.persist( new CreditContract("3", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), new Customer()));
+  	   
          em.getTransaction().commit();
       }
    }
@@ -126,16 +130,18 @@ implements OMService {
 			   							.getCustomerNumber() + 1;
    }
    
-
+   @SuppressWarnings("unchecked")
    @Override
    public List<CreditContract> getAllCreditContracts() {
-	   List<CreditContract> cc = new ArrayList<CreditContract>();
-	   cc.add(new CreditContract("abc", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), new Customer()));
-	   return cc;
+	   EntityManager em = OMServiceImpl.getEM();
+	   List<CreditContract> allCreditContracts = em.createNamedQuery("getAllCreditContracts").getResultList();
+	   Collections.sort(allCreditContracts, (CreditContract cc1, CreditContract cc2) -> cc1.getContractNumber().compareTo(cc2.getContractNumber()));
+	   return allCreditContracts;
    }
 
    @Override
-   public List<CreditContract> searchCreditContractByNumber(Integer credit_contract_number) {
+   public List<CreditContract> searchCreditContractBy(String credit_contract_number) {
+	   
 	   return null;
    }
    

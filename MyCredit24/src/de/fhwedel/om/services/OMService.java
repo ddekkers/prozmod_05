@@ -19,7 +19,7 @@ public interface OMService extends RemoteService {
    public List<Customer> getAllCustomers(); 
    public List<CreditContract> getAllCreditContracts();
    public List<Customer> searchCustomersBy(Integer cust_number, String prename, String surname);
-   public List<CreditContract> searchCreditContractByNumber(Integer credit_contract_number);
+   public List<CreditContract> searchCreditContractBy(String credit_contract_number);
    
    public <TYPE extends BusinessObject<?>> TYPE save(TYPE entity);
 //   public Order save(Order o);

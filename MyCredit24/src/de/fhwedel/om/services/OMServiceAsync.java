@@ -22,6 +22,6 @@ public interface OMServiceAsync {
    void getNextCustumerNumber(AsyncCallback<Integer> callback);
 //   void save(Order o, AsyncCallback<Order> callback);
 //   void save(OrderPosition o, AsyncCallback<OrderPosition> callback);
-   void searchCreditContractByNumber(Integer credit_contract_number, AsyncCallback<List<CreditContract>> callback);
+   void searchCreditContractBy(String credit_contract_number, AsyncCallback<List<CreditContract>> callback);
    
 }

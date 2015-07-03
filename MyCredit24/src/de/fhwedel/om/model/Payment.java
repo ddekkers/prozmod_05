@@ -2,6 +2,7 @@ package de.fhwedel.om.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import de.fhwedel.om.types.PaymentType;
 
@@ -33,7 +36,7 @@ public class Payment implements BusinessObject<Integer> {
    
    private PaymentType type; 
    
-   private CreditContract credit_contract;
+   private CreditContract creditContract;
 
    public Date getDate() {
 	   return date;
@@ -60,11 +63,11 @@ public class Payment implements BusinessObject<Integer> {
    }
    
    public CreditContract getCreditContract() {
-	   return credit_contract;
+	   return creditContract;
    }
 
    public void setCreditContract(CreditContract credit_contract) {
-	   this.credit_contract = credit_contract;
+	   this.creditContract = credit_contract;
    }
    
    public Payment() {
@@ -76,7 +79,7 @@ public class Payment implements BusinessObject<Integer> {
 	   this.date = date;
 	   this.amount = amount;
 	   this.type = type;
-	   this.credit_contract = credit_contract;
+	   this.creditContract = credit_contract;
    }
 
    @Override

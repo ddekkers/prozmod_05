@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import de.fhwedel.om.types.CreditContractStatus;
 
@@ -49,10 +53,13 @@ public class CreditContract implements BusinessObject<Integer> {
 	
 	private String bic;
 	
+	@OneToMany(mappedBy ="creditContract", cascade = CascadeType.PERSIST)
 	private List<Payment> payments;
-
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Rate rate;
 	
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Customer customer;
 
 	public CreditContract() {

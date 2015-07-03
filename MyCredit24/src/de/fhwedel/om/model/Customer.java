@@ -3,6 +3,7 @@ package de.fhwedel.om.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @SuppressWarnings("serial")
 @Entity
@@ -38,8 +41,10 @@ public class Customer implements BusinessObject<Integer> {
    
 	private String city;
 	
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.PERSIST)
 	private List<CreditContract> credit_contracts;
 	
+	@OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST)
 	private SelfDisclosure self_disclosure;
    
 	public Integer getCustomerNumber() {
