@@ -69,16 +69,16 @@ implements OMService {
       
       //Testdatensätze anlegen
       if(OMServiceImpl.props.getProperty("regenerate", "0").equals("1")) {            
-         Customer cust = new Customer (6, "Jonas", "Hübner", "Straße 1", "78902", "Hamburg", new ArrayList<CreditContract>(), new SelfDisclosure());
+         Customer cust = new Customer (7, "Jonas", "Hübner", "Straße 1", "78902", "Hamburg", new ArrayList<CreditContract>(), new SelfDisclosure());
     	 EntityManager em = OMServiceImpl.getEM();
          em.getTransaction().begin();
          em.persist( new CreditContract("1", CreditContractStatus.proposal, 123, 10000, new Date(), 3, 4, "5", "6789", new ArrayList<Payment>(), new Rate(), cust));
          em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
-         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), new Customer()));
-         em.persist( new CreditContract("2", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), new Customer()));
-         em.persist( new CreditContract("3", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), new Customer()));
+         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("2", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("3", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
   	   
          em.getTransaction().commit();
       }

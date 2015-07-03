@@ -13,6 +13,6 @@
       <class>de.fhwedel.om.model.Rate</class>
       <class>de.fhwedel.om.model.SelfDisclosure</class>
       
-    </persistence-unit>  
+     </persistence-unit>  
     
 </persistence>

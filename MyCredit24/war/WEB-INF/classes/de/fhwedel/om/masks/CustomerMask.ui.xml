@@ -5,7 +5,7 @@
    <ui:style>
    
    </ui:style>   
-      <g:AbsolutePanel height="500px" width="1000px">   
+      <g:AbsolutePanel height="500px" width="1500px">   
          
          <!-- Suchen -->         
          <g:at top="0" left="20">
@@ -85,6 +85,13 @@
          <g:at top="240" left="610">
             <g:Button pixelSize="100,50" ui:field="save_customer">Kunde speichern</g:Button>
          </g:at>      
+         
+         <g:at top="200" left="800">
+            <g:Label text="Verträge:"/>
+         </g:at>
+		 <g:at top="200" left="900">
+            <fhw:BOSelectListBox pixelSize="250,120" ui:field="creditContracts"></fhw:BOSelectListBox>
+         </g:at>
 				
       </g:AbsolutePanel>      
 </ui:UiBinder> 

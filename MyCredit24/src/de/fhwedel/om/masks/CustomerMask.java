@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.widgets.BOSelectListBox;
 
@@ -37,6 +38,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @Ignore @UiField IntegerBox search_cust_number;
    @Ignore @UiField TextBox search_sname;
    @Ignore @UiField TextBox search_pname;
+   
    @Ignore @UiField BOSelectListBox<Customer, Integer> customers;
    
    @Path("customerNumber") @UiField IntegerBox cust_number;
@@ -45,6 +47,8 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField TextBox street;
    @UiField TextBox postcode;
    @UiField TextBox city;
+   
+//   @UiField BOSelectListBox<CreditContract, Integer> creditContracts;
    
    //Buttons
    @UiField Button search_customer;   

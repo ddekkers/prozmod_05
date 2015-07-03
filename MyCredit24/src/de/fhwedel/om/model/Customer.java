@@ -41,11 +41,11 @@ public class Customer implements BusinessObject<Integer> {
    
 	private String city;
 	
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.PERSIST)
-	private List<CreditContract> credit_contracts;
+//	@OneToMany(mappedBy = "customer", cascade = CascadeType.PERSIST)
+//	private List<CreditContract> creditContracts;
 	
 	@OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST)
-	private SelfDisclosure self_disclosure;
+	private SelfDisclosure selfDisclosure;
    
 	public Integer getCustomerNumber() {
 		return customerNumber;
@@ -95,20 +95,20 @@ public class Customer implements BusinessObject<Integer> {
 		this.city = city;
 	}
 
-	public List<CreditContract> getCreditContracts() {
-		return credit_contracts;
-	}
-
-	public void setCreditContracts(List<CreditContract> credit_contracts) {
-		this.credit_contracts = credit_contracts;
-	}
+//	public List<CreditContract> getCreditContracts() {
+//		return creditContracts;
+//	}
+//
+//	public void setCreditContracts(List<CreditContract> creditContracts) {
+//		this.creditContracts = creditContracts;
+//	}
 
 	public SelfDisclosure getSelfDisclosure() {
-		return self_disclosure;
+		return selfDisclosure;
 	}
 
 	public void setSelfDisclosure(SelfDisclosure self_disclosure) {
-		this.self_disclosure = self_disclosure;
+		this.selfDisclosure = self_disclosure;
 	}
 	   
 	public Customer() {
@@ -122,8 +122,8 @@ public class Customer implements BusinessObject<Integer> {
 		this.street = street;
 		this.postcode = postcode;
 		this.city = city;
-		this.credit_contracts = credit_contracts;
-		this.self_disclosure = self_disclosure;
+//		this.creditContracts = credit_contracts;
+		this.selfDisclosure = self_disclosure;
 	}
 
 	// Object-Methoden
