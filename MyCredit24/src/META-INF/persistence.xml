@@ -8,10 +8,7 @@
       <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
       
       <class>de.fhwedel.om.model.Customer</class>
-      <class>de.fhwedel.om.model.Order</class>
-      <class>de.fhwedel.om.model.OrderPosition</class>
-      <class>de.fhwedel.om.model.Article</class>
-
+      <class>de.fhwedel.om.model.CreditContract</class>
       
     </persistence-unit>  
     
