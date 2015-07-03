@@ -67,9 +67,12 @@ implements OMService {
          System.err.println("Failed to load configuration file (" + new File(".\\om.conf").getAbsolutePath() + "), continuing with defaults...");
       }
       
+      //Testdatensätze anlegen
       if(OMServiceImpl.props.getProperty("regenerate", "0").equals("1")) {            
-         EntityManager em = OMServiceImpl.getEM();
+         Customer cust = new Customer (6, "Jonas", "Hübner", "Straße 1", "78902", "Hamburg", new ArrayList<CreditContract>(), new SelfDisclosure());
+    	 EntityManager em = OMServiceImpl.getEM();
          em.getTransaction().begin();
+         em.persist( new CreditContract("1", CreditContractStatus.proposal, 123, 10000, new Date(), 3, 4, "5", "6789", new ArrayList<Payment>(), new Rate(), cust));
          em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
