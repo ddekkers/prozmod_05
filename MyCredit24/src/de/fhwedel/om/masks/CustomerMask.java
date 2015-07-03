@@ -45,11 +45,11 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField TextBox street;
    @UiField TextBox postcode;
    @UiField TextBox city;
- 
    
    //Buttons
    @UiField Button search_customer;   
    @UiField Button select_customer;
+   @UiField Button new_customer;
    @UiField Button save_customer;
    
 
@@ -77,8 +77,10 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    
    protected void setMode(boolean show_only) {
       this.show_only = show_only;
+      
       this.pname.setReadOnly(show_only);
       this.sname.setReadOnly(show_only);
+      this.new_customer.setVisible(!show_only);
       this.save_customer.setVisible(!show_only);
 
       
