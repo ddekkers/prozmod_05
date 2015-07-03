@@ -34,20 +34,25 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    private final static CustomerMaskUiBinder uiBinder = GWT.create(CustomerMaskUiBinder.class);
 
    // UiBinder (Widget-Instanzvariablen)    
-   @Path("prename") @UiField TextBox pname;
-   @Path("surname") @UiField TextBox sname;
-   @Ignore @UiField BOSelectListBox<Customer, Integer> customers;
-
    @Ignore @UiField IntegerBox search_cust_number;
    @Ignore @UiField TextBox search_sname;
    @Ignore @UiField TextBox search_pname;
-      
+   @Ignore @UiField BOSelectListBox<Customer, Integer> customers;
    
+   @Path("customerNumber") @UiField IntegerBox cust_number;
+   @Path("prename") @UiField TextBox pname;
+   @Path("surname") @UiField TextBox sname;
+   @UiField TextBox street;
+   @UiField TextBox postcode;
+   @UiField TextBox city;
+ 
    
    //Buttons
-   @UiField Button search_customer;
-   
+   @UiField Button search_customer;   
    @UiField Button select_customer;
+   @UiField Button save_customer;
+   
+
            
    //Labels
    public CustomerMask() {
@@ -74,7 +79,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.show_only = show_only;
       this.pname.setReadOnly(show_only);
       this.sname.setReadOnly(show_only);
-      //this.age.setEnabled(!show_only);
+      this.save_customer.setVisible(!show_only);
 
       
       this.search_customer.setVisible(!show_only);
@@ -130,8 +135,8 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    protected void onSearchCustomerClick(ClickEvent event) {
 	   
 	   this.getService().searchCustomersBy( search_cust_number.getValue(),
-			   								search_sname.getText(),
 			   								search_pname.getText(),
+			   								search_sname.getText(),
 			   								(new AsyncCallback<List<Customer>>() {         
 	         @Override
 	         public void onSuccess(List<Customer> result) {
@@ -142,6 +147,11 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 	            Window.alert("Fehler beim Laden der Kunden.");        
 	         }
 	   }));
+   }
+
+   @UiHandler("save_customer")
+   protected void onSaveCustomerClick(ClickEvent event) {
+      this.saveBO();
    }
    
    @Override

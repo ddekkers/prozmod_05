@@ -26,7 +26,7 @@ public class Customer implements BusinessObject<Integer> {
 	@Column(name="customer_id")
 	private int customer_id;
 	   
-	private Integer customer_number;
+	private Integer customerNumber;
 	   
 	private String surname;
    
@@ -43,11 +43,11 @@ public class Customer implements BusinessObject<Integer> {
 	private SelfDisclosure self_disclosure;
    
 	public Integer getCustomerNumber() {
-		return customer_number;
+		return customerNumber;
 	}
    
 	public void setCustomerNumber(int customer_number) {
-		this.customer_number = customer_number;
+		this.customerNumber = customer_number;
 	}
    
 	public String getSurname() {
@@ -62,8 +62,8 @@ public class Customer implements BusinessObject<Integer> {
 		return prename;
 	}
 
-	public void setName(String name) {
-		this.prename = name;
+	public void setPrename(String prename) {
+		this.prename = prename;
 	}
 
 	public String getStreet() {
@@ -110,8 +110,8 @@ public class Customer implements BusinessObject<Integer> {
 		this(null, "", "", "", "", "", new ArrayList<CreditContract>(), null);
 	}
       
-	public Customer(Integer customer_number, String surname, String prename,  String street, String postcode, String city, List<CreditContract> credit_contracts, SelfDisclosure self_disclosure) {
-		this.customer_number = customer_number;
+	public Customer(Integer customer_number, String prename, String surname,  String street, String postcode, String city, List<CreditContract> credit_contracts, SelfDisclosure self_disclosure) {
+		this.customerNumber = customer_number;
 		this.surname = surname;
 		this.prename = prename;
 		this.street = street;
@@ -138,8 +138,8 @@ public class Customer implements BusinessObject<Integer> {
 	@Override
 	public String getCaption() {
 		return "[" + this.getCustomerNumber() + "] " 
-			  + this.getPrename() 
+			  + this.getSurname()
 			  + ", "
-			  + this.getSurname();
+			  + this.getPrename();
 	}
 }
