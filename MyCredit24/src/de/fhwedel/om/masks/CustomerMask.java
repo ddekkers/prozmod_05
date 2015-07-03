@@ -82,6 +82,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.sname.setReadOnly(show_only);
       this.new_customer.setVisible(!show_only);
       this.save_customer.setVisible(!show_only);
+      
 
       
       this.search_customer.setVisible(!show_only);
@@ -153,7 +154,16 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 
    @UiHandler("save_customer")
    protected void onSaveCustomerClick(ClickEvent event) {
-      this.saveBO();
+	   if (!(this.pname.getText().equals("")
+		  || this.sname.getText().equals("")
+		  || this.street.getText().equals("")
+		  || this.postcode.getText().equals("")
+		  || this.city.getText().equals(""))) {
+		   this.saveBO();
+		   
+	   } else {
+		   Window.alert("Bitte alle Pflichtfelder ausfüllen.");
+	   }
    }
 
    @UiHandler("new_customer")

@@ -77,7 +77,10 @@ implements OMService {
    @Override
    synchronized public List<Customer> getAllCustomers() {       
       EntityManager em = OMServiceImpl.getEM();
-      return em.createNamedQuery("getAllCustomers").getResultList();      
+      List<Customer> allCustomers = em.createNamedQuery("getAllCustomers").getResultList();      
+      Collections.sort(allCustomers, 
+			   (Customer cust1, Customer cust2) -> cust1.getCustomerNumber().compareTo(cust2.getCustomerNumber()));
+      return allCustomers;
    }
    
    @SuppressWarnings("unchecked")
@@ -107,8 +110,7 @@ implements OMService {
 			   															 || c.getPrename().equals(prename)
 			   															 || c.getSurname().equals(surname)).
 			   															 collect(Collectors.toList());
-	   Collections.sort(filteredCustomers, 
-			   (Customer cust1, Customer cust2) -> cust1.getCustomerNumber().compareTo(cust2.getCustomerNumber()));
+	   
 
 	   return filteredCustomers;
    }
