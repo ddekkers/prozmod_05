@@ -29,21 +29,21 @@ public class CreditContract implements BusinessObject<Integer> {
    	@Column(name="credit_contract_id")
    	private Integer credit_contract_id;
    
-   	private String contract_number;
+   	private String contractNumber;
 
 	private CreditContractStatus status;
 	
 	private Integer runtime;
   
-	private Integer credit_amount;
+	private Integer creditAmount;
   
-	private Date contract_begin;
+	private Date contractBegin;
   
 	// Tilgungsrate
-	private Integer annuity_rental;
+	private Integer annuityRental;
   
 	// Restschuld
-	private Integer residual_debt;
+	private Integer residualDebt;
   
 	private String iban;
 	
@@ -61,13 +61,13 @@ public class CreditContract implements BusinessObject<Integer> {
 	
 	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, Date contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, List<Payment> payments, Rate rate, Customer customer) {
 		
-		this.contract_number = contract_number;
+		this.contractNumber = contract_number;
 		this.status = status;
 		this.runtime = runtime;
-		this.credit_amount = credit_amount;
-		this.contract_begin = contract_begin;
-		this.annuity_rental = annuity_rental;
-		this.residual_debt = residual_debt;
+		this.creditAmount = credit_amount;
+		this.contractBegin = contract_begin;
+		this.annuityRental = annuity_rental;
+		this.residualDebt = residual_debt;
 		this.iban = iban;
 		this.bic = bic;	
 		this.payments = payments;
@@ -85,11 +85,11 @@ public class CreditContract implements BusinessObject<Integer> {
 	}
 	
 	public String getContractNumber() {
-		return contract_number;
+		return contractNumber;
 	}
 	
 	public void setContractNumber(String contract_number) {
-		this.contract_number = contract_number;
+		this.contractNumber = contract_number;
 	}
 	
 	public CreditContractStatus getStatus() {
@@ -109,35 +109,35 @@ public class CreditContract implements BusinessObject<Integer> {
 	}
 	
 	public int getCreditAmount() {
-		return credit_amount;
+		return creditAmount;
 	}
 	
 	public void setCreditAmount(Integer credit_amount) {
-		this.credit_amount = credit_amount;
+		this.creditAmount = credit_amount;
 	}
 	
 	public Date getContractBegin() {
-		return contract_begin;
+		return contractBegin;
 	}
 	
 	public void setContractBegin(Date contract_begin) {
-		this.contract_begin = contract_begin;
+		this.contractBegin = contract_begin;
 	}
 	
 	public int getAnnuityRental() {
-		return annuity_rental;
+		return annuityRental;
 	}
 	
 	public void setAnnuityRental(Integer annuity_rental) {
-		this.annuity_rental = annuity_rental;
+		this.annuityRental = annuity_rental;
 	}
 	
 	public int getResidualDebt() {
-		return residual_debt;
+		return residualDebt;
 	}
 	
 	public void setResidualDebt(int residual_debt) {
-		this.residual_debt = residual_debt;
+		this.residualDebt = residual_debt;
 	}
 	
 	public String getIban() {
@@ -188,7 +188,7 @@ public class CreditContract implements BusinessObject<Integer> {
 
 	@Override
 	public String getCaption() {
-		return contract_number;
+		return contractNumber;
 	}
    
 }

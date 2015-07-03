@@ -17,7 +17,7 @@
 				<g:Button visible="true" ui:field="search" text="Suche"/>
 			</g:at>
 			<g:at top="105" left ="20">
-				<fhw:BOSelectListBox pixelSize="250,300" ui:field="credit_contracts" />
+				<fhw:BOSelectListBox pixelSize="250,330" ui:field="credit_contracts" />
 			</g:at>
 			<g:at top="450" left="20">
                 <g:Button visible="true" ui:field="back" text="Zurück"/>

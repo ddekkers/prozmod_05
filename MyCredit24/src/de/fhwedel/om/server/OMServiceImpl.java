@@ -115,7 +115,6 @@ implements OMService {
 			   															 || c.getSurname().equals(surname)).
 			   															 collect(Collectors.toList());
 	   
-
 	   return filteredCustomers;
    }
    
