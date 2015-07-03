@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -65,9 +66,9 @@ implements OMService {
       if(OMServiceImpl.props.getProperty("regenerate", "0").equals("1")) {            
          EntityManager em = OMServiceImpl.getEM();
          em.getTransaction().begin();
-         em.persist( new Customer(1, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
-         em.persist( new Customer(2, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
-         em.persist( new Customer(3, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
+         em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
+         em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
+         em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
          em.getTransaction().commit();
       }
    }
@@ -97,13 +98,12 @@ implements OMService {
       return (TYPE)em.find(cl, id);
    }
    
-   @SuppressWarnings("unchecked")
    @Override
    synchronized public List<Customer> searchCustomersBy(Integer cust_number, String prename,
 		   												String surname) {
 	   List<Customer> allCustomers = getAllCustomers();
 
-	   List<Customer> filteredCustomers = allCustomers.stream().filter(c -> c.getID().equals(cust_number)
+	   List<Customer> filteredCustomers = allCustomers.stream().filter(c -> c.getCustomerNumber().equals(cust_number)
 			   															 || c.getPrename().equals(prename)
 			   															 || c.getSurname().equals(surname)).
 			   															 collect(Collectors.toList());
@@ -111,6 +111,14 @@ implements OMService {
 			   (Customer cust1, Customer cust2) -> cust1.getCustomerNumber().compareTo(cust2.getCustomerNumber()));
 
 	   return filteredCustomers;
+   }
+   
+   @Override
+   synchronized public Integer getNextCustumerNumber () {
+	   return getAllCustomers().stream().max((cust1, cust2)
+			   							  -> (cust1.getCustomerNumber() - cust2.getCustomerNumber()))
+			   							.get()
+			   							.getCustomerNumber() + 1;
    }
    
    @Override

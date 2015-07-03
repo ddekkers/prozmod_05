@@ -155,6 +155,21 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    protected void onSaveCustomerClick(ClickEvent event) {
       this.saveBO();
    }
+
+   @UiHandler("new_customer")
+   protected void onNewCustomerClick(ClickEvent event) {
+      this.setBO(new Customer());
+      this.getService().getNextCustumerNumber(new AsyncCallback<Integer>() {         
+	         @Override
+	         public void onSuccess(Integer result) {
+	        	cust_number.setValue(result);;
+	         }         
+	         @Override
+	         public void onFailure(Throwable caught) {
+	            Window.alert("Fehler beim Laden der neuen Kundennummer.");        
+	         }
+	   });
+   }
    
    @Override
    public void refresh() {

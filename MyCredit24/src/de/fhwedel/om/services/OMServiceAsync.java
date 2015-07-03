@@ -17,6 +17,7 @@ public interface OMServiceAsync {
 		   AsyncCallback<List<TYPE>> callback);
    
    <TYPE extends BusinessObject<?>> void save(TYPE entity, AsyncCallback<TYPE> callback);
+   void getNextCustumerNumber(AsyncCallback<Integer> callback);
 //   void save(Order o, AsyncCallback<Order> callback);
 //   void save(OrderPosition o, AsyncCallback<OrderPosition> callback);
    
