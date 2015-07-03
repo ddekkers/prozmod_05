@@ -188,7 +188,7 @@ public class CreditContract implements BusinessObject<Integer> {
 
 	@Override
 	public String getCaption() {
-		return "";
+		return contract_number;
 	}
    
 }

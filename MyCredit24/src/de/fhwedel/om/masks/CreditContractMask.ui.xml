@@ -1,0 +1,27 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+   xmlns:g="urn:import:com.google.gwt.user.client.ui"
+   xmlns:fhw="urn:import:de.fhwedel.om.widgets">
+   <ui:style>
+   
+   </ui:style>   
+      <g:AbsolutePanel height="500px" width="1000px">   
+			
+			<g:at top="0" left ="20">
+            	<g:Label text="Vertrags-Nr:"/>
+			</g:at>
+			<g:at top="25" left ="20">
+				<g:TextBox pixelSize="100,20" ui:field="search_contract_number"/>
+			</g:at>
+			<g:at top="65" left ="20">
+				<g:Button visible="true" ui:field="search" text="Suche"/>
+			</g:at>
+			<g:at top="105" left ="20">
+				<fhw:BOSelectListBox pixelSize="250,300" ui:field="credit_contracts" />
+			</g:at>
+			<g:at top="450" left="20">
+                <g:Button visible="true" ui:field="back" text="Zurück"/>
+            </g:at>
+         
+      </g:AbsolutePanel>      
+</ui:UiBinder> 

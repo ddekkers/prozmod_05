@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -24,8 +25,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.fhwedel.om.model.BusinessObject;
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
+import de.fhwedel.om.model.Payment;
+import de.fhwedel.om.model.Rate;
 import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.services.OMService;
+import de.fhwedel.om.types.CreditContractStatus;
 
 @SuppressWarnings("serial")
 public class OMServiceImpl 
@@ -121,6 +125,19 @@ implements OMService {
 			   							  -> (cust1.getCustomerNumber() - cust2.getCustomerNumber()))
 			   							.get()
 			   							.getCustomerNumber() + 1;
+   }
+   
+
+   @Override
+   public List<CreditContract> getAllCreditContracts() {
+	   List<CreditContract> cc = new ArrayList<CreditContract>();
+	   cc.add(new CreditContract("abc", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), new Customer()));
+	   return cc;
+   }
+
+   @Override
+   public List<CreditContract> searchCreditContractByNumber(Integer credit_contract_number) {
+	   return null;
    }
    
    @Override

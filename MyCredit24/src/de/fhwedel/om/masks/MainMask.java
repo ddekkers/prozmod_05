@@ -24,10 +24,19 @@ public class MainMask implements EntryPoint, FlowControl {
    private final static MainMaskUiBinder uiBinder = GWT.create(MainMaskUiBinder.class);
    
    @UiField Button customers;
+   @UiField Button credit_contract;
    @UiField Button back;
    @UiField Label history_label;
    @UiField FlowPanel content;
    	
+   public void setAllFieldsVisible(boolean isVisible) {
+	   
+	   customers.setVisible(isVisible);
+	   credit_contract.setVisible(isVisible);
+	   back.setVisible(isVisible);
+	   history_label.setVisible(isVisible);
+   }
+   
 	public void onModuleLoad() {
 	   RootPanel.get().add( uiBinder.createAndBindUi(this) );
 	   
@@ -36,6 +45,12 @@ public class MainMask implements EntryPoint, FlowControl {
    @UiHandler("customers")
    protected void onCustomersClick(ClickEvent event) {
       this.forward( new CustomerMask() );
+   }
+   
+   @UiHandler("credit_contract")
+   protected void onCreditContractClick(ClickEvent event) {
+	   setAllFieldsVisible(false);
+	   this.forward(new CreditContractMask()); 
    }
 
    @UiHandler("back")
