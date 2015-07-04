@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,17 +54,17 @@ public class CreditContract implements BusinessObject<Integer> {
 	
 	private String bic;
 	
-	@OneToMany(mappedBy ="creditContract", cascade = CascadeType.PERSIST)
-	private List<Payment> payments;
-	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	private Rate rate;
+//	@OneToMany(fetch=FetchType.EAGER, mappedBy ="creditContract", cascade = CascadeType.PERSIST)
+//	private List<Payment> payments;
+//	
+//	@ManyToOne(cascade = CascadeType.PERSIST)
+//	private Rate rate;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Customer customer;
 
 	public CreditContract() {
-		this(null, CreditContractStatus.proposal, null, null, null, null, null, null, null, new ArrayList<Payment>(), null, null);
+		this("", CreditContractStatus.proposal, null, null, new Date(), null, null, "", "", new ArrayList<Payment>(), new Rate(), new Customer());
 	}
 	
 	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, Date contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, List<Payment> payments, Rate rate, Customer customer) {
@@ -77,8 +78,8 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.residualDebt = residual_debt;
 		this.iban = iban;
 		this.bic = bic;	
-		this.payments = payments;
-		this.rate = rate;
+//		this.payments = payments;
+//		this.rate = rate;
 		this.customer = customer;
 	}
 
@@ -163,21 +164,21 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.bic = bic;
 	}
 	  
-	public List<Payment> getPayments() {
-		return payments;
-	}
-
-	public void setPayments(List<Payment> payments) {
-		this.payments = payments;
-	}
-	
-	public Rate getRate() {
-		return rate;
-	}
-
-	public void setRate(Rate rate) {
-		this.rate = rate;
-	}
+//	public List<Payment> getPayments() {
+//		return payments;
+//	}
+//
+//	public void setPayments(List<Payment> payments) {
+//		this.payments = payments;
+//	}
+//	
+//	public Rate getRate() {
+//		return rate;
+//	}
+//
+//	public void setRate(Rate rate) {
+//		this.rate = rate;
+//	}
 
 	public Customer getCustomer() {
 		return customer;

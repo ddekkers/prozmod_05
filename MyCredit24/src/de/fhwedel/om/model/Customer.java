@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,10 +42,10 @@ public class Customer implements BusinessObject<Integer> {
    
 	private String city;
 	
-//	@OneToMany(mappedBy = "customer", cascade = CascadeType.PERSIST)
-//	private List<CreditContract> creditContracts;
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="customer", cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH})
+	private List<CreditContract> creditContracts;
 	
-	@OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST)
+	@OneToOne(fetch=FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.PERSIST)
 	private SelfDisclosure selfDisclosure;
    
 	public Integer getCustomerNumber() {
@@ -95,13 +96,13 @@ public class Customer implements BusinessObject<Integer> {
 		this.city = city;
 	}
 
-//	public List<CreditContract> getCreditContracts() {
-//		return creditContracts;
-//	}
-//
-//	public void setCreditContracts(List<CreditContract> creditContracts) {
-//		this.creditContracts = creditContracts;
-//	}
+	public List<CreditContract> getCreditContracts() {
+		return creditContracts;
+	}
+
+	public void setCreditContracts(List<CreditContract> creditContracts) {
+		this.creditContracts = creditContracts;
+	}
 
 	public SelfDisclosure getSelfDisclosure() {
 		return selfDisclosure;
@@ -122,7 +123,7 @@ public class Customer implements BusinessObject<Integer> {
 		this.street = street;
 		this.postcode = postcode;
 		this.city = city;
-//		this.creditContracts = credit_contracts;
+		this.creditContracts = credit_contracts;
 		this.selfDisclosure = self_disclosure;
 	}
 

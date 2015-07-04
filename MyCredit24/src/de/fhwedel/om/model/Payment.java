@@ -71,7 +71,7 @@ public class Payment implements BusinessObject<Integer> {
    }
    
    public Payment() {
-	   this(null, 0, null, null);
+	   this(new Date(), 0, null, new CreditContract());
    }
       
    public Payment(Date date, int amount, PaymentType type, CreditContract credit_contract) {

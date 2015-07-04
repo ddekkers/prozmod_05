@@ -85,13 +85,30 @@
          <g:at top="240" left="610">
             <g:Button pixelSize="100,50" ui:field="save_customer">Kunde speichern</g:Button>
          </g:at>      
+
+		<!-- Selbstauskunft -->
+         <g:at top="200" left="800">
+            <g:Label text="Selbstauskunft:"/>
+         </g:at>
          
+         
+         <g:at top="240" left="900">
+            <g:Button pixelSize="100,50" ui:field="new_selfDisclosure">Neue Selbstauskunft</g:Button>
+         </g:at>
+
+		<!-- Vertragsdaten -->         
          <g:at top="200" left="800">
             <g:Label text="Verträge:"/>
          </g:at>
 		 <g:at top="200" left="900">
             <fhw:BOSelectListBox pixelSize="250,120" ui:field="creditContracts"></fhw:BOSelectListBox>
          </g:at>
+         <g:at top="240" left="900">
+            <g:Button pixelSize="100,50" ui:field="new_creditContract">Neuer Kreditvertrag</g:Button>
+         </g:at>
+         <g:at top="240" left="1010">
+            <g:Button pixelSize="100,50" ui:field="edit_creditContract">Kreditvertrag bearbeiten</g:Button>
+         </g:at>  
 				
       </g:AbsolutePanel>      
 </ui:UiBinder> 

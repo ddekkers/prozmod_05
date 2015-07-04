@@ -55,6 +55,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField Button select_customer;
    @UiField Button new_customer;
    @UiField Button save_customer;
+   @UiField Button new_creditContract;
    
 
            
@@ -86,7 +87,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.sname.setReadOnly(show_only);
       this.new_customer.setVisible(!show_only);
       this.save_customer.setVisible(!show_only);
-      
+      this.new_creditContract.setVisible(!show_only);
 
       
       this.search_customer.setVisible(!show_only);
@@ -183,6 +184,14 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 	            Window.alert("Fehler beim Laden der neuen Kundennummer.");        
 	         }
 	   });
+   }
+   
+   
+   @UiHandler("new_creditContract")
+   protected void onNewCreditContractClick(ClickEvent event) {
+      CreditContract creditContract = new CreditContract();
+      creditContract.setCustomer(this.getBO());
+      this.getFlowControl().forward( new CreditContractMask(creditContract) );         
    }
    
    @Override

@@ -114,7 +114,7 @@ public class Rate implements BusinessObject<Integer> {
    }
 
    public Rate() {
-	   this("", (float) 0.0, 0, 0, 0, null, null, null);
+	   this("", (float) 0.0, 0, 0, 0, null, new Date(), new Date());
    }
       
    public Rate(String rate_number, float interest_rate, int runtime, int credit_amount_from, int credit_amount_to, ValidityLevel validity_level, Date valid_from, Date valid_to) {
