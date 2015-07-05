@@ -52,7 +52,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	       this.editorDriver.initialize(this);
 	       this.refreshModeOfEmployment();
 	       this.refreshValidity();
-		   this.setBO(s);
+		   this.setBo(s);
 	   }
 	   
 	   protected void refreshModeOfEmployment(){
@@ -76,8 +76,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	         @Override
 	         public void onSuccess(SelfDisclosure result) {
 	        	Window.alert(result.toString());
-	        	 SelfDisclosureMask.this.setBO(result);
-	            
+	        	SelfDisclosureMask.this.setBO(result);
 	        	SelfDisclosureMask.this.fireSaved();            
 	         }         
 	         @Override
@@ -89,7 +88,6 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   
 	   @UiHandler("save_selfDisclosure")
 	   protected void onSaveSelfDisclosureClick(ClickEvent event) {
-		   this.setBO(this.getBO());
 		   Window.alert(this.getBO().getOccupation());
 		   this.saveBO();
 		   
