@@ -1,6 +1,7 @@
 package de.fhwedel.om.services;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -10,6 +11,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.fhwedel.om.model.BusinessObject;
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
+import de.fhwedel.om.model.Rate;
 
 @RemoteServiceRelativePath("services")
 public interface OMService extends RemoteService {
@@ -25,4 +27,5 @@ public interface OMService extends RemoteService {
    public Integer getNextCustumerNumber();
    public String getNewContractNumber();
    public CreditContract save(CreditContract cc);
+   public List<Rate> getPossibleRates(Date c_begin, Integer c_runtime, Integer c_amount);
 }

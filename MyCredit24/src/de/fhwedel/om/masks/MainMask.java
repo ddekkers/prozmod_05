@@ -1,5 +1,6 @@
 package de.fhwedel.om.masks;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.fhwedel.om.model.Rate;
+
 public class MainMask implements EntryPoint, FlowControl {
    
    private List<BusinessMask<?>> history = new LinkedList<BusinessMask<?>>();
@@ -25,6 +28,7 @@ public class MainMask implements EntryPoint, FlowControl {
    
    @UiField Button customers;
    @UiField Button credit_contract;
+   @UiField Button rate;   
    @UiField Button back;
    @UiField Label history_label;
    @UiField FlowPanel content;
@@ -51,6 +55,12 @@ public class MainMask implements EntryPoint, FlowControl {
    protected void onCreditContractClick(ClickEvent event) {
 	   setAllFieldsVisible(false);
 	   this.forward(new CreditContractMask()); 
+   }
+   
+   @UiHandler("rate")
+   protected void onRateClick(ClickEvent event) {
+	   setAllFieldsVisible(false);
+	   this.forward(new RateMask(10, 5000, new Date(), false)); 
    }
 
    @UiHandler("back")

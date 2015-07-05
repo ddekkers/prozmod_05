@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+   xmlns:g="urn:import:com.google.gwt.user.client.ui"
+   xmlns:fhw="urn:import:de.fhwedel.om.widgets"
+   xmlns:dp="urn:import:com.google.gwt.user.datepicker.client" >
+   
+   <ui:style>
+   
+   </ui:style>   
+      <g:AbsolutePanel height="500px" width="1500px">   
+         
+		<!-- Vertragsdetails -->
+		
+		<g:at top="0" left="0">
+           	<g:Label text="Vertragsdetails:"/>
+        </g:at>
+		<g:at top="30" left="0">
+           	<g:Label text="Laufzeit:"/>
+        </g:at>
+		<g:at top="30" left="100">
+           	<g:IntegerBox ReadOnly="true" pixelSize="200,10" ui:field="contractRuntime"/>
+        </g:at>
+
+		<g:at top="60" left="0">
+           	<g:Label text="Kreditsumme:"/>
+        </g:at>
+		<g:at top="60" left="100">
+           	<g:IntegerBox ReadOnly="true" pixelSize="200,10" ui:field="contractAmount"/>
+        </g:at>
+
+		<g:at top="90" left="0">
+           	<g:Label text="Vertragsbeginn:"/>
+        </g:at>
+		<g:at top="90" left="100">
+           	<dp:DatePicker ReadOnly="true" pixelSize="200,10" ui:field="contractBegin"/>
+        </g:at>
+
+       	<g:at top="250" left="0">
+          	<g:Button ui:field="search">Tarif suchen</g:Button>
+       	</g:at>
+       	
+	     <g:at top="105" left ="20">
+			<fhw:BOSelectListBox pixelSize="250,330" ui:field="rates" />
+		</g:at>
+		
+      </g:AbsolutePanel>      
+</ui:UiBinder> 
