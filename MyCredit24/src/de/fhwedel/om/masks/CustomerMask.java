@@ -14,6 +14,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -39,7 +40,6 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @Ignore @UiField IntegerBox search_cust_number;
    @Ignore @UiField TextBox search_sname;
    @Ignore @UiField TextBox search_pname;
-   
    @Ignore @UiField BOSelectListBox<Customer, Integer> customers;
    
    @Path("customerNumber") @UiField IntegerBox cust_number;
@@ -49,6 +49,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField TextBox postcode;
    @UiField TextBox city;
    
+   @UiField CaptionPanel selfDisclosure;
 //   @UiField BOSelectListBox<CreditContract, Integer> creditContracts;
    
    //Buttons
@@ -56,7 +57,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField Button select_customer;
    @UiField Button new_customer;
    @UiField Button save_customer;
-   @UiField Button new_selfDisclosure;
+   @UiField Button edit_selfDisclosure;
    @UiField Button new_creditContract;
            
    //Labels
@@ -88,12 +89,14 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.search_customer.setVisible(!show_only);
       this.new_customer.setVisible(!show_only);
       this.save_customer.setVisible(!show_only);
-      this.new_selfDisclosure.setVisible(!show_only);
+      this.edit_selfDisclosure.setVisible(!show_only);
       this.new_creditContract.setVisible(!show_only);
    }
     
    public void setBO(Customer c) {
       super.setBO(c);
+      this.selfDisclosure.clear();
+      this.selfDisclosure.add( new SelfDisclosureMask(this.getBO().getSelfDisclosure()) );
       this.editorDriver.edit(c);
    }
     
@@ -126,6 +129,12 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       });      
    }
    
+//   protected void refreshCreditContracts() {
+//	      if(this.getBO() != null)
+//	          creditContracts.setAcceptableValues(this.getBO().getCreditContracts());
+//	       else 
+//	          creditContracts.clear();
+//   }
    
    @UiHandler("select_customer")
    protected void onSelectCustomerClick(ClickEvent event) {
@@ -185,7 +194,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 	   });
    }
    
-   @UiHandler("new_selfDisclosure")
+   @UiHandler("edit_selfDisclosure")
    protected void onNewSelfDisclosureClick(ClickEvent event) {
 	   SelfDisclosure selfDisclosure = new SelfDisclosure();
 	   selfDisclosure.setCustomer(this.getBO());
