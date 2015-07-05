@@ -33,7 +33,7 @@
             	<g:Label text="Vertrags-Nr:"/>
          	</g:at>
 			<g:at top="0" left="450">
-            	<g:TextBox pixelSize="200,10" ui:field="contractNumber"/>
+            	<g:TextBox readOnly="true" pixelSize="200,10" ui:field="contractNumber"/>
          	</g:at>
 
 			<g:at top="30" left="350">
@@ -93,8 +93,15 @@
          	</g:at>     
          	
          	<g:at top="450" left="450">
-            	<g:Button ui:field="save_credit_contract">Speichern</g:Button>
+            	<g:Button ui:field="save_changes">Speichern</g:Button>
          	</g:at>
+         	
+         	
+         	<g:at top="450" left="560">
+            	<g:Button ui:field="discard_changes">Verwerfen</g:Button>
+         	</g:at>
+         	
+         	
          	
          		   
          
