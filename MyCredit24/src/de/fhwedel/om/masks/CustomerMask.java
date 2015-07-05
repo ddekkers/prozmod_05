@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
+import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.widgets.BOSelectListBox;
 
 public class CustomerMask extends BusinessMask<Customer> implements Editor<Customer> {
@@ -55,9 +56,8 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField Button select_customer;
    @UiField Button new_customer;
    @UiField Button save_customer;
+   @UiField Button new_selfDisclosure;
    @UiField Button new_creditContract;
-   
-
            
    //Labels
    public CustomerMask() {
@@ -85,12 +85,11 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       
       this.pname.setReadOnly(show_only);
       this.sname.setReadOnly(show_only);
+      this.search_customer.setVisible(!show_only);
       this.new_customer.setVisible(!show_only);
       this.save_customer.setVisible(!show_only);
+      this.new_selfDisclosure.setVisible(!show_only);
       this.new_creditContract.setVisible(!show_only);
-
-      
-      this.search_customer.setVisible(!show_only);
    }
     
    public void setBO(Customer c) {
@@ -186,12 +185,17 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 	   });
    }
    
-   
+   @UiHandler("new_selfDisclosure")
+   protected void onNewSelfDisclosureClick(ClickEvent event) {
+	   SelfDisclosure selfDisclosure = new SelfDisclosure();
+	   selfDisclosure.setCustomer(this.getBO());
+	   this.getFlowControl().forward(new SelfDisclosureMask(selfDisclosure));
+   }
    @UiHandler("new_creditContract")
    protected void onNewCreditContractClick(ClickEvent event) {
       CreditContract creditContract = new CreditContract();
       creditContract.setCustomer(this.getBO());
-      this.getFlowControl().forward( new CreditContractMask(creditContract) );         
+      this.getFlowControl().forward(new CreditContractMask(creditContract));         
    }
    
    @Override
