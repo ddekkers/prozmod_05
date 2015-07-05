@@ -41,11 +41,11 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	
 	private String employer;
 	
-	private Integer month_net;
+	private Integer monthNet;
 	
 	private Date classification;
 	
-	private Integer credit_limit;
+	private Integer creditLimit;
 	
 	private ValidityLevel validity;
 	
@@ -92,11 +92,11 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	}
 
 	public Integer getMonthNet() {
-		return month_net;
+		return monthNet;
 	}
 
 	public void setMonthNet(Integer month_net) {
-		this.month_net = month_net;
+		this.monthNet = month_net;
 	}
 
 	public Date getClassification() {
@@ -108,11 +108,11 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	}
 
 	public Integer getCreditLimit() {
-		return credit_limit;
+		return creditLimit;
 	}
 
 	public void setCreditLimit(Integer credit_limit) {
-		this.credit_limit = credit_limit;
+		this.creditLimit = credit_limit;
 	}
 
 	public ValidityLevel getValidity() {
@@ -142,9 +142,9 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 		this.mode_of_employment = mode_of_employment;
 		this.terminable = terminable;
 		this.employer = employer;
-		this.month_net = month_net;
+		this.monthNet = month_net;
 		this.classification = classification;
-		this.credit_limit = credit_limit;
+		this.creditLimit = credit_limit;
 		this.validity = validity;
 		this.customer = customer;
 	}
