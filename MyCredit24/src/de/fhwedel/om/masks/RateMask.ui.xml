@@ -18,28 +18,28 @@
            	<g:Label text="Laufzeit:"/>
         </g:at>
 		<g:at top="30" left="100">
-           	<g:IntegerBox ReadOnly="true" pixelSize="200,10" ui:field="contractRuntime"/>
+           	<g:IntegerBox pixelSize="200,10" ui:field="contractRuntime"/>
         </g:at>
 
 		<g:at top="60" left="0">
            	<g:Label text="Kreditsumme:"/>
         </g:at>
 		<g:at top="60" left="100">
-           	<g:IntegerBox ReadOnly="true" pixelSize="200,10" ui:field="contractAmount"/>
+           	<g:IntegerBox pixelSize="200,10" ui:field="contractAmount"/>
         </g:at>
 
 		<g:at top="90" left="0">
            	<g:Label text="Vertragsbeginn:"/>
         </g:at>
 		<g:at top="90" left="100">
-           	<dp:DatePicker ReadOnly="true" pixelSize="200,10" ui:field="contractBegin"/>
+           	<dp:DatePicker pixelSize="200,10" ui:field="contractBegin"/>
         </g:at>
 
-       	<g:at top="250" left="0">
+       	<g:at top="300" left="100">
           	<g:Button ui:field="search">Tarif suchen</g:Button>
        	</g:at>
        	
-	     <g:at top="105" left ="20">
+	     <g:at top="0" left ="350">
 			<fhw:BOSelectListBox pixelSize="250,330" ui:field="rates" />
 		</g:at>
 		

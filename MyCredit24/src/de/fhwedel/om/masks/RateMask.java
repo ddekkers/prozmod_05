@@ -144,18 +144,6 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
 //	   this.saveBO();
 //   }
 //   
-//  protected void refreshCreditContracts() {
-//     this.getService().getAllCreditContracts(new AsyncCallback<List<CreditContract>>() {         
-//        @Override
-//        public void onSuccess(List<CreditContract> result) {
-//           credit_contracts.setAcceptableValues(result);            
-//        }         
-//        @Override
-//        public void onFailure(Throwable caught) {
-//           Window.alert("Fehler beim Laden der Verträge.");        
-//        }
-//     });      
-//  }
 //  
 //  protected void refreshCreditContractStatus() {
 //	  this.status.setEnum(CreditContractStatus.class);
