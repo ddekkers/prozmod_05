@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -132,6 +133,18 @@ implements OMService {
 			   							.getCustomerNumber() + 1;
    }
    
+   @Override
+   synchronized public String getNewContractNumber () {
+	   List<CreditContract> todaysContracts = getAllCreditContracts().stream().
+			   filter(c -> c.getContractBegin().getDay()== LocalDate.now().getDayOfMonth()
+			   			&& c.getContractBegin().getMonth() == LocalDate.now().getMonthValue())
+			   			.collect(Collectors.toList());
+	   return Integer.toString(LocalDate.now().getDayOfMonth())
+			+ Integer.toString(LocalDate.now().getMonthValue())
+			+ Integer.toString(todaysContracts.size() + 1);
+   }
+   
+   
    @SuppressWarnings("unchecked")
    @Override
    public List<CreditContract> getAllCreditContracts() {
@@ -163,24 +176,24 @@ implements OMService {
       return entity;
    }
    
-/*   @Override
-   synchronized public Order save(Order o) {
+   @Override
+   synchronized public CreditContract save(CreditContract cc) {
       EntityManager em = OMServiceImpl.getEM();
       em.getTransaction().begin();
 
-      if(o.getID() != null)
-         o = em.merge(o);
+      if(cc.getID() != null)
+         cc = em.merge(cc);
       else {
-         em.persist(o);
-         Customer c = o.getCustomer();
-         //c.getOrders().add(o);
+         em.persist(cc);
+         Customer c = cc.getCustomer();
+         c.getCreditContracts().add(cc);
          em.merge(c);
       }
       em.getTransaction().commit();
-      return o;
+      return cc;
    }
    
-   @Override
+/*   @Override
    synchronized public OrderPosition save(OrderPosition pos) {
       EntityManager em = OMServiceImpl.getEM();
       em.getTransaction().begin();

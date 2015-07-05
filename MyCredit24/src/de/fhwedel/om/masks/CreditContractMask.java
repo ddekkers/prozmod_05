@@ -56,6 +56,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 
    //Buttons
    @UiField Button back;
+   @UiField Button save_credit_contract;
            
    public CreditContractMask() {
 	   this(new CreditContract());	   
@@ -83,6 +84,26 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
       super.setBO(c);
       this.editorDriver.edit(c);
    }
+   
+   @Override
+   protected void saveBO() {
+	   Window.alert(this.getBO().getCustomer().getCaption());
+	       
+      this.editorDriver.flush();
+	   Window.alert(this.getBO().getCustomer().getCaption());
+      this.getService().save(this.getBO(), new AsyncCallback<CreditContract>() {         
+         @Override
+         public void onSuccess(CreditContract result) {
+      	   Window.alert(result.getCaption());
+            CreditContractMask.this.setBO(result);
+         }         
+         @Override
+         public void onFailure(Throwable caught) {
+            Window.alert("Fehler beim Speichern des Kunden.");        
+         }
+      });
+   }
+
 
    @UiHandler("back")
    protected void onBackClick(ClickEvent event) {
@@ -108,6 +129,11 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	            Window.alert("Fehler beim Laden der Kunden.");        
 	         }
 		}));
+   }
+   
+   @UiHandler("save_credit_contract")
+   protected void onSaveCreditContractClick(ClickEvent event) {
+	   this.saveBO();
    }
    
   protected void refreshCreditContracts() {

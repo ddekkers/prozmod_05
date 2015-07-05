@@ -11,7 +11,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.DateLabel;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.TextBox;
@@ -71,11 +70,9 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   @Override
 	   protected void saveBO() {
 	      this.editorDriver.flush();
-	      Window.alert(this.getBO().getCaption());
 	      this.getService().save(this.getBO(), new AsyncCallback<SelfDisclosure>() {         
 	         @Override
 	         public void onSuccess(SelfDisclosure result) {
-	        	Window.alert(result.toString());
 	        	SelfDisclosureMask.this.setBO(result);
 	        	SelfDisclosureMask.this.fireSaved();            
 	         }         
@@ -88,8 +85,6 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   
 	   @UiHandler("save_selfDisclosure")
 	   protected void onSaveSelfDisclosureClick(ClickEvent event) {
-		   Window.alert(this.getBO().getOccupation());
 		   this.saveBO();
-		   
 	   }
 }

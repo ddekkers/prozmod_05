@@ -20,7 +20,8 @@ public interface OMServiceAsync {
    
    <TYPE extends BusinessObject<?>> void save(TYPE entity, AsyncCallback<TYPE> callback);
    void getNextCustumerNumber(AsyncCallback<Integer> callback);
-//   void save(Order o, AsyncCallback<Order> callback);
+   void getNewContractNumber(AsyncCallback<String> callback);
+   void save(CreditContract cc, AsyncCallback<CreditContract> callback);
 //   void save(OrderPosition o, AsyncCallback<OrderPosition> callback);
    void searchCreditContractBy(String credit_contract_number, AsyncCallback<List<CreditContract>> callback);
    

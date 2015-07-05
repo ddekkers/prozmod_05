@@ -1,7 +1,5 @@
 package de.fhwedel.om.model;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +14,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 @SuppressWarnings("serial")
 @Entity
@@ -106,6 +102,10 @@ public class Customer implements BusinessObject<Integer> {
 
 	public void setCreditContracts(List<CreditContract> creditContracts) {
 		this.creditContracts = creditContracts;
+	}
+	
+	public void addCreditContract(CreditContract creditContract) {
+		this.creditContracts.add(creditContract);
 	}
 
 	public SelfDisclosure getSelfDisclosure() {

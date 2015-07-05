@@ -22,8 +22,7 @@ public interface OMService extends RemoteService {
    public List<CreditContract> searchCreditContractBy(String credit_contract_number);
    
    public <TYPE extends BusinessObject<?>> TYPE save(TYPE entity);
-//   public Order save(Order o);
-//   public OrderPosition save(OrderPosition o);
    public Integer getNextCustumerNumber();
-   
+   public String getNewContractNumber();
+   public CreditContract save(CreditContract cc);
 }

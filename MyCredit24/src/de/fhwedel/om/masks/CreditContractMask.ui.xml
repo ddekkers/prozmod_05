@@ -90,7 +90,13 @@
          	</g:at>
 			<g:at top="410" left="450">
             	<g:TextBox pixelSize="200,10" ui:field="bic"/>
-         	</g:at>     	   
+         	</g:at>     
+         	
+         	<g:at top="450" left="450">
+            	<g:Button ui:field="save_credit_contract">Speichern</g:Button>
+         	</g:at>
+         	
+         		   
          
       </g:AbsolutePanel>      
 </ui:UiBinder> 

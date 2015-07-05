@@ -74,6 +74,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.setMode(show_only);
       this.editorDriver.initialize(this);
       this.refreshCustomers();
+      this.refreshCreditContracts();
       this.setBO(c);
    }
    
@@ -102,7 +103,8 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.getService().save(this.getBO(), new AsyncCallback<Customer>() {         
          @Override
          public void onSuccess(Customer result) {
-            CustomerMask.this.refreshCustomers();          
+            CustomerMask.this.refreshCustomers();  
+            CustomerMask.this.refreshCreditContracts();
             CustomerMask.this.setBO(result);
          }         
          @Override
@@ -125,12 +127,12 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       });      
    }
    
-//   protected void refreshCreditContracts() {
+   protected void refreshCreditContracts() {
 //	      if(this.getBO() != null)
 //	          creditContracts.setAcceptableValues(this.getBO().getCreditContracts());
 //	       else 
 //	          creditContracts.clear();
-//   }
+   }
    
    @UiHandler("select_customer")
    protected void onSelectCustomerClick(ClickEvent event) {
@@ -181,7 +183,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.getService().getNextCustumerNumber(new AsyncCallback<Integer>() {         
 	         @Override
 	         public void onSuccess(Integer result) {
-	        	cust_number.setValue(result);;
+	        	cust_number.setValue(result);
 	         }         
 	         @Override
 	         public void onFailure(Throwable caught) {
@@ -205,12 +207,24 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    protected void onNewCreditContractClick(ClickEvent event) {
       CreditContract creditContract = new CreditContract();
       creditContract.setCustomer(this.getBO());
+//      this.getService().getNewContractNumber(new AsyncCallback<String>() {         
+//	         @Override
+//	         public void onSuccess(String result) {
+//	        	creditContract.setContractNumber(result);
+//	         }         
+//	         @Override
+//	         public void onFailure(Throwable caught) {
+//	            Window.alert("Fehler beim Laden der neuen Kundennummer.");        
+//	         }
+//	   });
+
       this.getFlowControl().forward(new CreditContractMask(creditContract));         
    }
    
    @Override
    public void refresh() {
       this.refreshCustomers();
+      this.refreshCreditContracts();
       super.refresh();
    }
       
