@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -35,7 +36,7 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	
 	private String occupation;
 	
-	private ModeOfEmployment mode_of_employment;
+	private ModeOfEmployment modeEfEmployment;
 	
 	private Boolean terminable;
 	
@@ -49,6 +50,7 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	
 	private ValidityLevel validity;
 	
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Customer customer;
 	
 	public Date getRegistration() {
@@ -68,11 +70,11 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	}
 
 	public ModeOfEmployment getModeOfEmployment() {
-		return mode_of_employment;
+		return modeEfEmployment;
 	}
 
 	public void setModeOfEmployment(ModeOfEmployment mode_of_employment) {
-		this.mode_of_employment = mode_of_employment;
+		this.modeEfEmployment = mode_of_employment;
 	}
 
 	public Boolean isTerminable() {
@@ -132,14 +134,14 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	}
 	
 	public SelfDisclosure() {
-		this(null, null, null, null, null, null, null, null, null, null);
+		this(null, "Imker", null, null, null, null, null, null, null, null);
 	}
 	
 	public SelfDisclosure(Date registration, String occupation, ModeOfEmployment mode_of_employment, Boolean terminable, String employer, Integer month_net, Date classification, Integer credit_limit, ValidityLevel validity, Customer customer) {
 		
 		this.registration = registration;
 		this.occupation = occupation;
-		this.mode_of_employment = mode_of_employment;
+		this.modeEfEmployment = mode_of_employment;
 		this.terminable = terminable;
 		this.employer = employer;
 		this.monthNet = month_net;
@@ -157,7 +159,7 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	@Override
 	public String getCaption() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Selbstauskunft von " + this.getCustomer().getCaption() ;
 	}
 	
 	

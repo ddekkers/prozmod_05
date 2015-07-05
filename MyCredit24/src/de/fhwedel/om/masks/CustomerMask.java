@@ -1,6 +1,6 @@
 package de.fhwedel.om.masks;
 
-import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -49,7 +49,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField TextBox postcode;
    @UiField TextBox city;
    
-   @UiField CaptionPanel selfDisclosure;
+//   @UiField CaptionPanel selfDisclosure;
 //   @UiField BOSelectListBox<CreditContract, Integer> creditContracts;
    
    //Buttons
@@ -63,10 +63,6 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    //Labels
    public CustomerMask() {
 	   this(new Customer());	   
-   }
-   
-   public void onAddClick(ClickEvent event) {
-	   Window.alert("Hallo!");
    }
    
    public CustomerMask(Customer c) {
@@ -95,8 +91,8 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
     
    public void setBO(Customer c) {
       super.setBO(c);
-      this.selfDisclosure.clear();
-      this.selfDisclosure.add( new SelfDisclosureMask(this.getBO().getSelfDisclosure()) );
+//      this.selfDisclosure.clear();
+//      this.selfDisclosure.add( new SelfDisclosureMask(this.getBO().getSelfDisclosure()) );
       this.editorDriver.edit(c);
    }
     
@@ -175,7 +171,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 		   this.saveBO();
 		   
 	   } else {
-		   Window.alert("Bitte alle Pflichtfelder ausfüllen.");
+		   Window.alert("Bitte alle Felder ausfüllen.");
 	   }
    }
 
@@ -195,11 +191,16 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    }
    
    @UiHandler("edit_selfDisclosure")
-   protected void onNewSelfDisclosureClick(ClickEvent event) {
-	   SelfDisclosure selfDisclosure = new SelfDisclosure();
+   protected void onEditSelfDisclosureClick(ClickEvent event) {
+		SelfDisclosure selfDisclosure = this.getBO().getSelfDisclosure();
+		if (selfDisclosure == null) {
+			selfDisclosure = new SelfDisclosure(new Date(), "ITler", null, null, "", null, 
+												new Date(), null, null, null);
+		    
+	   }
 	   selfDisclosure.setCustomer(this.getBO());
 	   this.getFlowControl().forward(new SelfDisclosureMask(selfDisclosure));
-   }
+	   }
    @UiHandler("new_creditContract")
    protected void onNewCreditContractClick(ClickEvent event) {
       CreditContract creditContract = new CreditContract();

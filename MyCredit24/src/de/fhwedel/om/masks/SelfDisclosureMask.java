@@ -46,8 +46,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   
 	   //Buttons
 	   @UiField Button save_selfDisclosure;
-	   
-	   
+	   	   
 	   public SelfDisclosureMask(SelfDisclosure s) {
 		   initWidget(uiBinder.createAndBindUi(this));
 	       this.editorDriver.initialize(this);
@@ -72,11 +71,14 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   @Override
 	   protected void saveBO() {
 	      this.editorDriver.flush();
+	      Window.alert(this.getBO().getCaption());
 	      this.getService().save(this.getBO(), new AsyncCallback<SelfDisclosure>() {         
 	         @Override
 	         public void onSuccess(SelfDisclosure result) {
-	            SelfDisclosureMask.this.setBO(result);
-	            SelfDisclosureMask.this.fireSaved();            
+	        	Window.alert(result.toString());
+	        	 SelfDisclosureMask.this.setBO(result);
+	            
+	        	SelfDisclosureMask.this.fireSaved();            
 	         }         
 	         @Override
 	         public void onFailure(Throwable caught) {
@@ -87,6 +89,9 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   
 	   @UiHandler("save_selfDisclosure")
 	   protected void onSaveSelfDisclosureClick(ClickEvent event) {
+		   this.setBO(this.getBO());
+		   Window.alert(this.getBO().getOccupation());
 		   this.saveBO();
+		   
 	   }
 }
