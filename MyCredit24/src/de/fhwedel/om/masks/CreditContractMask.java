@@ -13,14 +13,18 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DateLabel;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.types.CreditContractStatus;
+import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.BOSelectListBox;
+import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class CreditContractMask extends BusinessMask<CreditContract> implements Editor<CreditContract> {
 
@@ -40,15 +44,15 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @UiField Button search;
    
    // Alle Felder zur Vertragsdetail anzeige
-   @Path("contractNumber") @UiField TextBox contractNumber;
-//   @Path("status") @UiField CreditContractStatus status;
+   	@Path("contractNumber") @UiField TextBox contractNumber;
+   	@Path("status") @UiField EnumSelectListBox<CreditContractStatus> status;
    	@Path("runtime") @UiField IntegerBox runtime;
    	@Path("creditAmount") @UiField IntegerBox creditAmount;
-//   @Ignore @UiField TextBox contractBegin;
-//   @Ignore @UiField TextBox annuityRental;
-//   @Ignore @UiField TextBox residualDebt;
-//   @Ignore @UiField TextBox iban;
-//   @Ignore @UiField TextBox bic;	
+   	@Path("contractBegin") @UiField DatePicker contractBegin;
+   	@Path("annuityRental") @UiField IntegerBox annuityRental;
+   	@Path("residualDebt") @UiField IntegerBox residualDebt;
+   	@Path("iban") @UiField TextBox iban;
+   	@Path("bic") @UiField TextBox bic;	
 
    //Buttons
    @UiField Button back;
@@ -68,6 +72,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
       this.setBO(c);
       this.refresh();
       this.refreshCreditContracts();
+      this.refreshCreditContractStatus();
    }
    
    protected void setMode(boolean show_only) {
@@ -87,20 +92,21 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @UiHandler("select_credit_contract")
    protected void onSelectCreditContractClick(ClickEvent event) {
       this.setBO(this.credit_contracts.getValue());
+      refreshCreditContractStatus();
    }
    
    @UiHandler("search")
    protected void onSearchClick(ClickEvent event) {
 	   this.getService().searchCreditContractBy( search_contract_number.getValue(),
 			   								(new AsyncCallback<List<CreditContract>>() {         
-		         @Override
-		         public void onSuccess(List<CreditContract> result) {
-		        	credit_contracts.setAcceptableValues(result);            
-		         }         
-		         @Override
-		         public void onFailure(Throwable caught) {
-		            Window.alert("Fehler beim Laden der Kunden.");        
-		         }
+	         @Override
+	         public void onSuccess(List<CreditContract> result) {
+	        	credit_contracts.setAcceptableValues(result);            
+	         }         
+	         @Override
+	         public void onFailure(Throwable caught) {
+	            Window.alert("Fehler beim Laden der Kunden.");        
+	         }
 		}));
    }
    
@@ -115,6 +121,10 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
            Window.alert("Fehler beim Laden der Verträge.");        
         }
      });      
+  }
+  
+  protected void refreshCreditContractStatus() {
+	  this.status.setEnum(CreditContractStatus.class);
   }
    
    @Override

@@ -132,7 +132,7 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.contractBegin = contract_begin;
 	}
 	
-	public int getAnnuityRental() {
+	public Integer getAnnuityRental() {
 		return annuityRental;
 	}
 	
@@ -140,7 +140,7 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.annuityRental = annuity_rental;
 	}
 	
-	public int getResidualDebt() {
+	public Integer getResidualDebt() {
 		return residualDebt;
 	}
 	

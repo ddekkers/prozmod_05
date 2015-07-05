@@ -1,8 +1,9 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-   xmlns:g="urn:import:com.google.gwt.user.client.ui"
-   xmlns:fhw="urn:import:de.fhwedel.om.widgets">
-   <ui:style>
+   	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+   	xmlns:fhw="urn:import:de.fhwedel.om.widgets"
+	xmlns:dp="urn:import:com.google.gwt.user.datepicker.client">
+   	<ui:style>
    
    </ui:style>   
       <g:AbsolutePanel height="550px" width="1000px">   
@@ -35,37 +36,61 @@
             	<g:TextBox pixelSize="200,10" ui:field="contractNumber"/>
          	</g:at>
 
-<!-- 			<g:at top="30" left="350">
+			<g:at top="30" left="350">
             	<g:Label text="Status:"/>
          	</g:at>
 			<g:at top="30" left="450">
-            	<g:TextBox pixelSize="200,10" ui:field=""/>
+            	<fhw:EnumSelectListBox visibleItemCount="1" pixelSize="200,20" ui:field="status"/>
          	</g:at>
- -->
-			<g:at top="45" left="350">
+ 
+			<g:at top="60" left="350">
             	<g:Label text="Laufzeit:"/>
          	</g:at>
-			<g:at top="45" left="450">
+			<g:at top="60" left="450">
             	<g:IntegerBox pixelSize="200,10" ui:field="runtime"/>
          	</g:at>
 
-			<g:at top="60" left="350">
+			<g:at top="90" left="350">
             	<g:Label text="Kreditsumme:"/>
          	</g:at>
-			<g:at top="60" left="450">
+			<g:at top="90" left="450">
             	<g:IntegerBox pixelSize="200,10" ui:field="creditAmount"/>
          	</g:at>
-         	
-<!-- 
-status;
-runtime;
-creditAmount;
-contractBegin;
-annuityRental;
-residualDebt;
-iban;
-bic;
- -->         	   
+
+			<g:at top="120" left="350">
+            	<g:Label text="Vertragsbeginn:"/>
+         	</g:at>
+			<g:at top="120" left="450">
+            	<dp:DatePicker pixelSize="200,10" ui:field="contractBegin"/>
+         	</g:at>
+
+			<g:at top="320" left="350">
+            	<g:Label text="Tilgungsrate:"/>
+         	</g:at>
+			<g:at top="320" left="450">
+            	<g:IntegerBox pixelSize="200,10" ui:field="annuityRental"/>
+         	</g:at>
+
+			<g:at top="350" left="350">
+            	<g:Label text="Restschuld:"/>
+         	</g:at>
+			<g:at top="350" left="450">
+            	<g:IntegerBox pixelSize="200,10" ui:field="residualDebt"/>
+         	</g:at>
+
+			<g:at top="380" left="350">
+            	<g:Label text="IBAN:"/>
+         	</g:at>
+			<g:at top="380" left="450">
+            	<g:TextBox pixelSize="200,10" ui:field="iban"/>
+         	</g:at>
+
+			<g:at top="410" left="350">
+            	<g:Label text="BIC:"/>
+         	</g:at>
+			<g:at top="410" left="450">
+            	<g:TextBox pixelSize="200,10" ui:field="bic"/>
+         	</g:at>     	   
          
       </g:AbsolutePanel>      
 </ui:UiBinder> 
