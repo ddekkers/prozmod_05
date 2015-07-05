@@ -2,7 +2,7 @@ package de.fhwedel.om.types;
 
 public enum CreditContractStatus {
 	
-	proposal,
+	Angebot,
 	rejected_validity,
 	rejected_deadline,
 	engrossed,

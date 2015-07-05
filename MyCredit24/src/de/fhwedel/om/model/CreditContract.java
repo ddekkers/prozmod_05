@@ -64,7 +64,7 @@ public class CreditContract implements BusinessObject<Integer> {
 	private Customer customer;
 
 	public CreditContract() {
-		this("", CreditContractStatus.proposal, null, null, new Date(), null, null, "", "", new ArrayList<Payment>(), new Rate(), new Customer());
+		this("", CreditContractStatus.Angebot, null, null, new Date(), null, null, "", "", new ArrayList<Payment>(), new Rate(), new Customer());
 	}
 	
 	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, Date contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, List<Payment> payments, Rate rate, Customer customer) {
@@ -108,7 +108,7 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.status = status;
 	}
 	
-	public int getRuntime() {
+	public Integer getRuntime() {
 		return runtime;
 	}
 	
@@ -116,7 +116,7 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.runtime = runtime;
 	}
 	
-	public int getCreditAmount() {
+	public Integer getCreditAmount() {
 		return creditAmount;
 	}
 	
@@ -196,7 +196,7 @@ public class CreditContract implements BusinessObject<Integer> {
 
 	@Override
 	public String getCaption() {
-		return contractNumber;
+		return contractNumber + " " + status.toString();
 	}
    
 }

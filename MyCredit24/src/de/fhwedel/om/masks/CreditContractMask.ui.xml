@@ -5,8 +5,9 @@
    <ui:style>
    
    </ui:style>   
-      <g:AbsolutePanel height="500px" width="1000px">   
+      <g:AbsolutePanel height="550px" width="1000px">   
 			
+			<!-- Suche -->
 			<g:at top="0" left ="20">
             	<g:Label text="Vertrags-Nr:"/>
 			</g:at>
@@ -19,9 +20,52 @@
 			<g:at top="105" left ="20">
 				<fhw:BOSelectListBox pixelSize="250,330" ui:field="credit_contracts" />
 			</g:at>
-			<g:at top="450" left="20">
+            <g:at top="450" left="20">
+            	<g:Button ui:field="select_credit_contract">Vertrag auswählen</g:Button>
+         	</g:at>
+			<g:at top="490" left="20">
                 <g:Button visible="true" ui:field="back" text="Zurück"/>
             </g:at>
+            
+            <!-- Kopfdaten des Vertrages -->
+			<g:at top="0" left="350">
+            	<g:Label text="Vertrags-Nr:"/>
+         	</g:at>
+			<g:at top="0" left="450">
+            	<g:TextBox pixelSize="200,10" ui:field="contractNumber"/>
+         	</g:at>
+
+<!-- 			<g:at top="30" left="350">
+            	<g:Label text="Status:"/>
+         	</g:at>
+			<g:at top="30" left="450">
+            	<g:TextBox pixelSize="200,10" ui:field=""/>
+         	</g:at>
+ -->
+			<g:at top="45" left="350">
+            	<g:Label text="Laufzeit:"/>
+         	</g:at>
+			<g:at top="45" left="450">
+            	<g:IntegerBox pixelSize="200,10" ui:field="runtime"/>
+         	</g:at>
+
+			<g:at top="60" left="350">
+            	<g:Label text="Kreditsumme:"/>
+         	</g:at>
+			<g:at top="60" left="450">
+            	<g:IntegerBox pixelSize="200,10" ui:field="creditAmount"/>
+         	</g:at>
+         	
+<!-- 
+status;
+runtime;
+creditAmount;
+contractBegin;
+annuityRental;
+residualDebt;
+iban;
+bic;
+ -->         	   
          
       </g:AbsolutePanel>      
 </ui:UiBinder> 
