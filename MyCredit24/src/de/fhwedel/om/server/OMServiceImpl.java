@@ -76,9 +76,9 @@ implements OMService {
          em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
-         em.persist( new CreditContract("1", CreditContractStatus.Angebot, new Integer(2), new Integer(2), new Date(16082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
-         em.persist( new CreditContract("2", CreditContractStatus.Angebot, new Integer(2), new Integer(2), new Date(17082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
-         em.persist( new CreditContract("3", CreditContractStatus.Angebot, new Integer(2), new Integer(2), new Date(18082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(16082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), new Date(17082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), new Date(18082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
          
          em.getTransaction().commit();
       }
@@ -135,13 +135,18 @@ implements OMService {
    
    @Override
    synchronized public String getNewContractNumber () {
-	   List<CreditContract> todaysContracts = getAllCreditContracts().stream().
-			   filter(c -> c.getContractBegin().getDay()== LocalDate.now().getDayOfMonth()
-			   			&& c.getContractBegin().getMonth() == LocalDate.now().getMonthValue())
-			   			.collect(Collectors.toList());
-	   return Integer.toString(LocalDate.now().getDayOfMonth())
-			+ Integer.toString(LocalDate.now().getMonthValue())
-			+ Integer.toString(todaysContracts.size() + 1);
+	   List<CreditContract> contracts = getAllCreditContracts();
+	   String act_number = "0";
+	   Long new_number = new Long(0);
+	   for (int i = 0; i < contracts.size(); ++i) {
+		   
+		   act_number = contracts.get(i).getContractNumber();
+		   
+		   if (new_number.longValue() <= new Integer(act_number).longValue())
+			   new_number = new Long(act_number) + 1;
+	   }
+	   
+	   return new_number.toString();
    }
    
    
