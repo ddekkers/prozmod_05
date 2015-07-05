@@ -1,0 +1,80 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+   xmlns:g="urn:import:com.google.gwt.user.client.ui"
+   xmlns:fhw="urn:import:de.fhwedel.om.widgets"
+   xmlns:dp="urn:import:com.google.gwt.user.datepicker.client" >
+   
+   <ui:style>
+   
+   </ui:style>   
+      <g:AbsolutePanel height="500px" width="1500px">   
+         
+         <!-- Suchen -->         
+         <g:at top="0" left="20">
+            <g:Label text="Erfassungsdatum:"/>
+         </g:at>
+         <g:at top="0" left="150">
+            <dp:DatePicker ui:field="registration" />
+         </g:at>
+         
+         <g:at top="210" left="20">
+            <g:Label text="Einstufungsdatum:"/>
+         </g:at>
+         <g:at top="210" left="150">
+            <dp:DatePicker ui:field="classification"/>
+         </g:at>
+         
+         <g:at top="0" left="400">
+            <g:Label text="Beruf:"/>
+         </g:at>
+         <g:at top="0" left="520">
+            <g:TextBox pixelSize="200,20" ui:field="occupation"/>
+         </g:at>
+
+         <g:at top="40" left="400">
+            <g:Label text="Beschäftigungsart:"/>
+         </g:at>
+         <g:at top="40" left="520">
+            <fhw:EnumSelectListBox visibleItemCount="1" pixelSize="200,20" ui:field="modeOfEmployment"/>
+         </g:at>
+         
+         <g:at top="80" left="400">
+            <g:Label text="Befristet:"/>
+         </g:at>
+         <g:at top="80" left="520">
+            <g:CheckBox ui:field="terminable"/>
+         </g:at>
+              
+         <g:at top="120" left="400">
+            <g:Label text="Arbeitgeber"/>
+         </g:at>
+         <g:at top="120" left="520">
+            <g:TextBox pixelSize="200,20" ui:field="employer"/>
+         </g:at>  
+				
+		 <g:at top="160" left="400">
+            <g:Label text="Monatsnetto:"/>
+         </g:at>
+         <g:at top="160" left="520">
+            <g:IntegerBox pixelSize="50,20" ui:field="monthNet"/>
+         </g:at>
+         
+		 <g:at top="200" left="400">
+            <g:Label text="Kreditlimit:"/>
+         </g:at>
+         <g:at top="200" left="520">
+            <g:IntegerBox pixelSize="50,20" ui:field="creditLimit"/>
+         </g:at>
+         
+         <g:at top="240" left="400">
+            <g:Label text="Bonität:"/>
+         </g:at>
+         <g:at top="240" left="520">
+            <fhw:EnumSelectListBox visibleItemCount="1" pixelSize="200,20" ui:field="validity"/>
+         </g:at>
+         
+         <g:at top="300" left="400">
+            <g:Button pixelSize="100,50" ui:field="save_selfDisclosure">Selbstauskunft speichern</g:Button>
+         </g:at> 
+      </g:AbsolutePanel>      
+</ui:UiBinder> 
