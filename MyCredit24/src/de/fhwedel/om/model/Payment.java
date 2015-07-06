@@ -32,7 +32,7 @@ public class Payment implements BusinessObject<Integer> {
    
    private Date date;
 
-   private int amount;
+   private Integer amount;
    
    private PaymentType type; 
    
@@ -46,11 +46,11 @@ public class Payment implements BusinessObject<Integer> {
 	   this.date = date;
    }
 	
-   public int getAmount() {
+   public Integer getAmount() {
 	   return amount;
    }
 	
-   public void setAmount(int amount) {
+   public void setAmount(Integer amount) {
 	   this.amount = amount;
    }
 	
@@ -71,7 +71,7 @@ public class Payment implements BusinessObject<Integer> {
    }
    
    public Payment() {
-	   this(new Date(), 0, null, new CreditContract());
+	   this(new Date(), 0, PaymentType.rate, new CreditContract());
    }
       
    public Payment(Date date, int amount, PaymentType type, CreditContract credit_contract) {
@@ -96,7 +96,7 @@ public class Payment implements BusinessObject<Integer> {
 
    @Override
    public String getCaption() {
-      return "";
+      return type.toString() + amount.toString() + " EUR";
    }
    
 }

@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.fhwedel.om.model.CreditContract;
+import de.fhwedel.om.model.Payment;
 import de.fhwedel.om.model.Rate;
 
 public class MainMask implements EntryPoint, FlowControl {
@@ -30,6 +31,7 @@ public class MainMask implements EntryPoint, FlowControl {
    @UiField Button customers;
    @UiField Button credit_contract;
    @UiField Button rate;   
+   @UiField Button payment;   
    @UiField Button back;
    @UiField Label history_label;
    @UiField FlowPanel content;
@@ -39,6 +41,8 @@ public class MainMask implements EntryPoint, FlowControl {
 	   customers.setVisible(isVisible);
 	   credit_contract.setVisible(isVisible);
 	   back.setVisible(isVisible);
+	   rate.setVisible(isVisible);
+	   payment.setVisible(isVisible);
 	   history_label.setVisible(isVisible);
    }
    
@@ -62,6 +66,12 @@ public class MainMask implements EntryPoint, FlowControl {
    protected void onRateClick(ClickEvent event) {
 	   setAllFieldsVisible(false);
 	   this.forward(new RateMask(new CreditContract(), false)); 
+   }
+   
+   @UiHandler("payment")
+   protected void onPaymentClick(ClickEvent event) {
+	   setAllFieldsVisible(false);
+	   this.forward(new PaymentMask(new CreditContract(), new Payment(), false)); 
    }
 
    @UiHandler("back")

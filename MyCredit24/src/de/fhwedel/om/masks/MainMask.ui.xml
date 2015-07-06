@@ -15,6 +15,9 @@
 			<g:at top="0" left="250">
 				<g:Button ui:field="rate" text="Tarif"/>
 			</g:at>
+			<g:at top="0" left="350">
+				<g:Button ui:field="payment" text="Zahlung"/>
+			</g:at>
             <g:at top="0" left="300">
                 <g:Button visible="false" ui:field="back" text="Zurück"/>
             </g:at>
