@@ -10,6 +10,8 @@ import de.fhwedel.om.model.BusinessObject;
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.model.Rate;
+import de.fhwedel.om.types.ModeOfEmployment;
+import de.fhwedel.om.types.ValidityLevel;
 
 public interface OMServiceAsync {
    
@@ -27,5 +29,5 @@ public interface OMServiceAsync {
    void getNewContractNumber(AsyncCallback<String> callback);
    void save(CreditContract cc, AsyncCallback<CreditContract> callback);
    void searchCreditContractBy(String credit_contract_number, AsyncCallback<List<CreditContract>> callback);
-   
+   void evaluate(Integer modeOfEmployment, Integer monthNet, AsyncCallback<Integer> callback);
 }

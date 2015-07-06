@@ -21,6 +21,7 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
+import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.types.CreditContractStatus;
 import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.BOSelectListBox;
@@ -60,6 +61,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @UiField Button back;
    @UiField Button save_changes;
    @UiField Button discard_changes;
+   @UiField Button new_contract;
            
    public CreditContractMask(boolean isNewContract) {
 	   this(new CreditContract(), isNewContract);	   
@@ -144,6 +146,24 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    protected void onDiscardCreditContractClick(ClickEvent event) {
 	   getNewContractNumber();
    }
+   
+   @UiHandler("new_contract")
+   protected void onNewContractClick(ClickEvent event) {
+      this.setBO(new CreditContract());
+      this.getBO().setCustomer(new Customer(123, "DD", "Dekk", "", "", "", null, new SelfDisclosure()));
+      this.getService().getNewContractNumber(new AsyncCallback<String>() {         
+	         @Override
+	         public void onSuccess(String result) {
+	        	contractNumber.setValue(result);
+	         }         
+	         @Override
+	         public void onFailure(Throwable caught) {
+	            Window.alert("Fehler beim Laden der neuen Kundennummer.");        
+	         }
+	   });
+   
+   }
+   
 
    private void getNewContractNumber() {
 	   this.getService().getNewContractNumber((new AsyncCallback<String>() {         

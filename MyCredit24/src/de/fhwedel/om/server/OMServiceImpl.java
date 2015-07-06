@@ -31,6 +31,7 @@ import de.fhwedel.om.model.Rate;
 import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.services.OMService;
 import de.fhwedel.om.types.CreditContractStatus;
+import de.fhwedel.om.types.ModeOfEmployment;
 import de.fhwedel.om.types.ValidityLevel;
 
 @SuppressWarnings("serial")
@@ -137,18 +138,29 @@ implements OMService {
    
    @Override
    synchronized public String getNewContractNumber () {
-	   List<CreditContract> contracts = getAllCreditContracts();
-	   String act_number = "0";
-	   Long new_number = new Long(0);
-	   for (int i = 0; i < contracts.size(); ++i) {
-		   
-		   act_number = contracts.get(i).getContractNumber();
-		   
-		   if (new_number.longValue() <= new Integer(act_number).longValue())
-			   new_number = new Long(act_number) + 1;
-	   }
-	   
+//	   List<CreditContract> contracts = getAllCreditContracts();
+//	   String act_number = "0";
+//	   Long new_number = new Long(0);
+//	   for (int i = 0; i < contracts.size(); ++i) {
+//		   
+//		   act_number = contracts.get(i).getContractNumber();
+//		   
+//		   if (new_number.longValue() <= new Integer(act_number).longValue())
+//			   new_number = new Long(act_number) + 1;
+//	   }
+	   String new_number = "123";
 	   return new_number.toString();
+   }
+   
+   @Override
+   synchronized public Integer evaluate(Integer modeOfEmployment, Integer monthNet){
+	   Window.alert(modeOfEmployment.toString());
+	   Window.alert(monthNet.toString());
+	   Integer monthNetEval = Math.round((9000 - monthNet) / 1000);
+	   Window.alert(monthNetEval.toString());
+	   Integer value = modeOfEmployment * monthNetEval;
+	   Window.alert(value.toString());
+	   return value;
    }
    
    

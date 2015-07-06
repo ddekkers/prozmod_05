@@ -92,7 +92,7 @@
 
 		<!-- Selbstauskunft -->
          <g:at top="410" left="20">
-            <g:CaptionPanel pixelSize="900,400" captionText="Selbstauskunft" ui:field="selfDisclosure"/>            
+            <g:CaptionPanel pixelSize="900,450" captionText="Selbstauskunft" ui:field="selfDisclosure"/>            
          </g:at>
          
 

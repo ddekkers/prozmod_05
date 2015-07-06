@@ -1,9 +1,16 @@
 package de.fhwedel.om.masks;
 
+
+
+
+import java.sql.Date;
+
+import com.gargoylesoftware.htmlunit.WebConsole.Formatter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -32,7 +39,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   interface SelfDisclosureMaskUiBinder extends UiBinder<Widget, SelfDisclosureMask> {}
 	   private final static SelfDisclosureMaskUiBinder uiBinder = GWT.create(SelfDisclosureMaskUiBinder.class);
 
-	   
+	   DateHandler handler = new DateHandler("d.M.y");
 	   @UiField DatePicker registration;
 	   @UiField TextBox occupation;
 	   @UiField EnumSelectListBox<ModeOfEmployment> modeOfEmployment;
@@ -45,6 +52,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   
 	   //Buttons
 	   @UiField Button save_selfDisclosure;
+	   @UiField Button eval_validity;
 	   	   
 	   public SelfDisclosureMask(SelfDisclosure s) {
 		   initWidget(uiBinder.createAndBindUi(this));
@@ -86,5 +94,22 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   @UiHandler("save_selfDisclosure")
 	   protected void onSaveSelfDisclosureClick(ClickEvent event) {
 		   this.saveBO();
+	   }
+	   
+	   @UiHandler("eval_validity")
+	   protected void onEvalValidity(ClickEvent event) {
+		   
+		   Window.alert(modeOfEmployment.getValue().getEvaluation().toString());
+		   Window.alert(monthNet.getValue().toString());
+		   this.getService().evaluate(modeOfEmployment.getValue().getEvaluation(), monthNet.getValue(), new AsyncCallback<Integer>() {
+			   @Override
+			   public void onSuccess (Integer result) {
+				   Window.alert(result.toString());
+			   }
+			   @Override
+			   public void onFailure (Throwable caught) {
+				   Window.alert("Fehler beim Bewerten der Bonität.");        
+			   }
+		});
 	   }
 }

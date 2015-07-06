@@ -6,6 +6,8 @@ import com.google.gwt.i18n.shared.DateTimeFormat;
 
 public class DateHandler {
 	private DateTimeFormat format;
+	
+	
 	public DateHandler (String format) {
 		this.format = DateTimeFormat.getFormat(format);
 	}

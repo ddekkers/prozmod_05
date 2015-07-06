@@ -49,7 +49,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField TextBox postcode;
    @UiField TextBox city;
    
-//   @UiField CaptionPanel selfDisclosure;
+   @UiField CaptionPanel selfDisclosure;
 //   @UiField BOSelectListBox<CreditContract, Integer> creditContracts;
    
    //Buttons
@@ -92,8 +92,8 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
     
    public void setBO(Customer c) {
       super.setBO(c);
-//      this.selfDisclosure.clear();
-//      this.selfDisclosure.add( new SelfDisclosureMask(this.getBO().getSelfDisclosure()) );
+      this.selfDisclosure.clear();
+      this.selfDisclosure.add( new SelfDisclosureMask(this.getBO().getSelfDisclosure()) );
       this.editorDriver.edit(c);
    }
     

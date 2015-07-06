@@ -6,7 +6,7 @@
    	<ui:style>
    
    </ui:style>   
-      <g:AbsolutePanel height="550px" width="1000px">   
+      <g:AbsolutePanel height="650px" width="1000px">   
 			
 			<!-- Suche -->
 			<g:at top="0" left ="20">
@@ -101,7 +101,9 @@
             	<g:Button ui:field="discard_changes">Verwerfen</g:Button>
          	</g:at>
          	
-         	
+         	<g:at top="500" left="450">
+            	<g:Button ui:field="new_contract">neu</g:Button>
+         	</g:at>
          	
          		   
          
