@@ -1,5 +1,6 @@
 package de.fhwedel.om.masks;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -14,6 +15,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DateLabel;
+import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -25,6 +27,7 @@ import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.types.CreditContractStatus;
 import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.BOSelectListBox;
+import de.fhwedel.om.widgets.DateHandler;
 import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class CreditContractMask extends BusinessMask<CreditContract> implements Editor<CreditContract> {
@@ -45,6 +48,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @Ignore @UiField BOSelectListBox<CreditContract, Integer> credit_contracts;
    @Ignore @UiField TextBox search_contract_number;
    @UiField Button search;
+   @UiField Button determine_rate;
    
    // Alle Felder zur Vertragsdetail anzeige
    	@Path("contractNumber") @UiField TextBox contractNumber;
@@ -56,6 +60,16 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    	@Path("residualDebt") @UiField IntegerBox residualDebt;
    	@Path("iban") @UiField TextBox iban;
    	@Path("bic") @UiField TextBox bic;	
+   	
+    // Alle Felder zum Tarif
+    @Path("rate.rateNumber") @UiField TextBox rateNumber;
+    @Path("rate.interestRate") @UiField DoubleBox interest_rate;
+    @Path("rate.runtime") @UiField IntegerBox rate_runtime;
+    @Path("rate.creditAmountFrom") @UiField IntegerBox amount_from;
+    @Path("rate.creditAmountTo") @UiField IntegerBox amount_to;
+    @Path("rate.validFrom") @UiField TextBox valid_from;
+    @Path("rate.validTo") @UiField TextBox valid_to;
+    @Path("rate.validityLevel") @UiField EnumSelectListBox<ValidityLevel> validity;
 
    //Buttons
    @UiField Button back;
@@ -79,9 +93,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
       this.refreshCreditContractStatus();
       this.setBO(c);
 	  this.getNewContractNumber();
-
-//      this.refresh();
-//      this.editorDriver.edit(this.getBO());
+	  this.refreshValidityLevel();
    }
    
    protected void setMode(boolean show_only) {
@@ -96,6 +108,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @Override
    protected void saveBO() {
       this.editorDriver.flush();
+      this.getBO().setResidualDebt(this.getBO().getCreditAmount());
+      getNewContractNumber();
       this.getService().save(this.getBO(), new AsyncCallback<CreditContract>() {         
          @Override
          public void onSuccess(CreditContract result) {
@@ -142,9 +156,49 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   }   
    }
    
+   @UiHandler("determine_rate")
+   protected void onDetermineRateClick(ClickEvent event) {
+	   DateHandler handler;
+	   
+	   if (isNewCreditContract) {	
+		   CreditContract cc = this.getBO();
+		   cc.setContractBegin(new LocalDate());
+		   if (cc.getContractBegin() == null) {
+				Window.alert("Geben Sie einen Vertragsbeginn ein.");      
+		   } else {
+			   
+			   cc.setCreditAmount(this.creditAmount.getValue());
+			   if (cc.getCreditAmount() == null) {
+				   Window.alert("Geben Sie eine Kreditsumme ein.");      				   
+			   } else {
+				   
+				   cc.setAnnuityRental(this.annuityRental.getValue());
+				   if (cc.getAnnuityRental() == null) {					   
+					   Window.alert("Geben Sie eine Tilgungsrate ein.");      				   
+					   
+				   } else {					   
+					   
+					   cc.setRuntime(this.runtime.getValue());
+					   if (cc.getRuntime() == null) 
+						   Window.alert("Geben Sie eine Laufzeit ein.");
+					   else
+						   this.getFlowControl().forward(new RateMask(this.getBO(), false));
+				   }
+					   
+			   }
+			   
+		   }
+	   }
+   }
+   
    @UiHandler("discard_changes")
    protected void onDiscardCreditContractClick(ClickEvent event) {
-	   getNewContractNumber();
+	   if (isNewCreditContract) {
+		   CreditContract cc = new CreditContract();
+		   cc.setCustomer(this.getBO().getCustomer());
+		   this.setBO(cc);
+		   getNewContractNumber();
+	   }
    }
    
    @UiHandler("new_contract")
@@ -180,8 +234,15 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("save_changes")
    protected void onSaveCreditContractClick(ClickEvent event) {
-
-	   this.saveBO();
+	   if (isNewCreditContract) {
+		   if (this.getBO().getRate() != null) {
+			   
+			   this.saveBO();   
+		   } else
+			   Window.alert("Sie müssen vorher einen Tarif auswählen");
+		   
+	   } else
+			Window.alert("Keine Änderungen möglich.");      
    }
    
   protected void refreshCreditContracts() {
@@ -200,7 +261,10 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
   protected void refreshCreditContractStatus() {
 	  this.status.setEnum(CreditContractStatus.class);
   }
-   
+
+  protected void refreshValidityLevel() {
+	   this.validity.setEnum(ValidityLevel.class);
+  }
    @Override
    public void refresh() {
       super.refresh();

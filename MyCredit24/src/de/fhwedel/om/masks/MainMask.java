@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Rate;
 
 public class MainMask implements EntryPoint, FlowControl {
@@ -60,7 +61,7 @@ public class MainMask implements EntryPoint, FlowControl {
    @UiHandler("rate")
    protected void onRateClick(ClickEvent event) {
 	   setAllFieldsVisible(false);
-	   this.forward(new RateMask(10, 5000, new Date(2000, 1, 1), false)); 
+	   this.forward(new RateMask(new CreditContract(), false)); 
    }
 
    @UiHandler("back")

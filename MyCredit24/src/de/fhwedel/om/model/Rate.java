@@ -94,25 +94,23 @@ public class Rate implements BusinessObject<Integer> {
 	   this.validityLevel = validity_level;
    }
 	
-   public Date getValidFrom() {
-	   return validFrom;
+   public String getValidFrom() {
+	   return validFrom == null ? "" : validFrom.toString();
 	   
    }
 	
-   public void setValidFrom(Date valid_from) {
-	   this.validFrom = valid_from;
+   public void setValidFrom(String valid_from) {
    }
 	
-   public Date getValidTo() {
-	   return validTo;
+   public String getValidTo() {
+	   return validTo == null ? "" : validTo.toString();
    }
 	
-   public void setValidTo(Date valid_to) {
-	   this.validTo = valid_to;
+   public void setValidTo(String valid_to) {
    }
 
    public Rate() {
-	   this(null, null, null, null, null, null, new Date(), new Date());
+	   this(null, null, null, null, null, null, null, null);
    }
       
    public Rate(String rate_number, Double interest_rate, Integer runtime, Integer credit_amount_from, Integer credit_amount_to, ValidityLevel validity_level, Date valid_from, Date valid_to) {

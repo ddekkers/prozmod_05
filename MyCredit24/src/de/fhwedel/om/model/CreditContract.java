@@ -1,5 +1,6 @@
 package de.fhwedel.om.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +48,7 @@ public class CreditContract implements BusinessObject<Integer> {
   
 	private Integer creditAmount;
   
-	private Date contractBegin;
+	private LocalDate contractBegin;
   
 	// Tilgungsrate
 	private Integer annuityRental;
@@ -62,17 +63,17 @@ public class CreditContract implements BusinessObject<Integer> {
 //	@OneToMany(fetch=FetchType.EAGER, mappedBy ="creditContract", cascade = CascadeType.PERSIST)
 //	private List<Payment> payments;
 //	
-//	@ManyToOne(cascade = CascadeType.PERSIST)
-//	private Rate rate;
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Rate rate;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Customer customer;
 
 	public CreditContract() {
-		this("", CreditContractStatus.proposal, null, null, new Date(), null, null, "", "", new ArrayList<Payment>(), new Rate(), new Customer());
+		this(null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 	
-	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, Date contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, List<Payment> payments, Rate rate, Customer customer) {
+	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, LocalDate contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, List<Payment> payments, Rate rate, Customer customer) {
 		
 		this.contractNumber = contract_number;
 		this.status = status;
@@ -129,11 +130,11 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.creditAmount = credit_amount;
 	}
 	
-	public Date getContractBegin() {
+	public LocalDate getContractBegin() {
 		return contractBegin;
 	}
 	
-	public void setContractBegin(Date contract_begin) {
+	public void setContractBegin(LocalDate contract_begin) {
 		this.contractBegin = contract_begin;
 	}
 	
@@ -149,7 +150,7 @@ public class CreditContract implements BusinessObject<Integer> {
 		return residualDebt;
 	}
 	
-	public void setResidualDebt(int residual_debt) {
+	public void setResidualDebt(Integer residual_debt) {
 		this.residualDebt = residual_debt;
 	}
 	
@@ -176,14 +177,14 @@ public class CreditContract implements BusinessObject<Integer> {
 //	public void setPayments(List<Payment> payments) {
 //		this.payments = payments;
 //	}
-//	
-//	public Rate getRate() {
-//		return rate;
-//	}
-//
-//	public void setRate(Rate rate) {
-//		this.rate = rate;
-//	}
+	
+	public Rate getRate() {
+		return rate;
+	}
+
+	public void setRate(Rate rate) {
+		this.rate = rate;
+	}
 
 	public Customer getCustomer() {
 		return customer;
@@ -202,5 +203,7 @@ public class CreditContract implements BusinessObject<Integer> {
 	public String getCaption() {
 		return contractNumber + " " + status.toString();
 	}
+
+	
    
 }

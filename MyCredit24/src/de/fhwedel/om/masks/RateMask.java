@@ -42,6 +42,7 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
    interface RateMaskUiBinder extends UiBinder<Widget, RateMask> {}
    private final static RateMaskUiBinder uiBinder = GWT.create(RateMaskUiBinder.class);
 
+   private CreditContract contract;
    // Alle Felder zur Suche 
    @Ignore @UiField BOSelectListBox<Rate, Integer> rates;
    @UiField Button select_rate;
@@ -58,18 +59,19 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
    @Path("runtime") @UiField IntegerBox runtime;
    @Path("creditAmountFrom") @UiField IntegerBox amount_from;
    @Path("creditAmountTo") @UiField IntegerBox amount_to;
-   @Path("validFrom") @UiField DatePicker valid_from;
-   @Path("validTo") @UiField DatePicker valid_to;
+   @Path("validFrom") @UiField TextBox valid_from;
+   @Path("validTo") @UiField TextBox valid_to;
    @Path("validityLevel") @UiField EnumSelectListBox<ValidityLevel> validity;   
    
-   public RateMask(Integer c_runtime, Integer c_amount, Date c_begin, boolean show_only) {        
+   public RateMask(CreditContract c, boolean show_only) {        
       initWidget(uiBinder.createAndBindUi(this));
       this.setMode(show_only);
       this.editorDriver.initialize(this);
       this.setBO(new Rate());
-      this.contractBegin.setValue(c_begin);
-      this.contractAmount.setValue(c_amount);
-      this.contractRuntime.setValue(c_runtime);
+      this.contractBegin.setValue(c.getContractBegin());
+      this.contractAmount.setValue(c.getCreditAmount());
+      this.contractRuntime.setValue(c.getRuntime());
+      this.contract = c;
       this.refresh();
       this.refreshRates();
    }
@@ -108,6 +110,9 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
    
    @UiHandler("safe_rate")
    protected void onSafeRateClick(ClickEvent event) {
+	   
+	   this.contract.setRate(rates.getValue());
+	   this.getFlowControl().forward(new CreditContractMask(contract, true));
    }
    
    @UiHandler("select_rate")

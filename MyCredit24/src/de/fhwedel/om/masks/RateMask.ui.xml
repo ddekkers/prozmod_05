@@ -69,15 +69,15 @@
     		<g:Label text="Kreditvertrag bis:"/>
     	</g:at>   	
     	
-    	<g:at top="580" left="650">
+    	<g:at top="240" left="650">
     		<g:Label text="Bonitätsstufe:"/>
     	</g:at>   	
     	
-    	<g:at top="210" left="650">
+    	<g:at top="180" left="650">
     		<g:Label text="Gültig von:"/>
     	</g:at>   	
     	
-    	<g:at top="380" left="650">
+    	<g:at top="210" left="650">
     		<g:Label text="Gültig bis:"/>
     	</g:at>   	
     	
@@ -102,18 +102,18 @@
     	</g:at>   	
     	
     	<g:at top="180" left="750">
-    		<dp:DatePicker pixelSize="200,10" ui:field="valid_from"/>
+    		<g:TextBox pixelSize="200,10" readOnly="true" ui:field="valid_from"/>
     	</g:at>   	
     	
-    	<g:at top="380" left="750">
-    		<dp:DatePicker pixelSize="200,10" ui:field="valid_to"/>
+    	<g:at top="210" left="750">
+    		<g:TextBox pixelSize="200,10" readOnly="true"  ui:field="valid_to"/>
     	</g:at>   	
     	
-    	<g:at top="580" left="750">
+    	<g:at top="240" left="750">
             <fhw:EnumSelectListBox visibleItemCount="1" pixelSize="200,20" ui:field="validity"/>
     	</g:at>   	
     	
-       	<g:at top="610" left="750">
+       	<g:at top="270" left="750">
           	<g:Button ui:field="safe_rate">Tarif übernehmen</g:Button>
        	</g:at>
 	
