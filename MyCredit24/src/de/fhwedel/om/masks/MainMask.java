@@ -54,7 +54,7 @@ public class MainMask implements EntryPoint, FlowControl {
    @UiHandler("credit_contract")
    protected void onCreditContractClick(ClickEvent event) {
 	   setAllFieldsVisible(false);
-	   this.forward(new CreditContractMask()); 
+	   this.forward(new CreditContractMask(false)); 
    }
    
    @UiHandler("rate")
