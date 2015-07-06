@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -82,9 +81,9 @@ implements OMService {
          em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
-         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
-         em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
-         em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
          
          GregorianCalendar cal = new GregorianCalendar(2015, 01, 01);
          Date begin = cal.getTime();
@@ -176,21 +175,6 @@ implements OMService {
 			   							.getCustomerNumber() + 1;
    }
    
-   @Override
-   synchronized public String getNewContractNumber () {
-//	   List<CreditContract> contracts = getAllCreditContracts();
-//	   String act_number = "0";
-//	   Long new_number = new Long(0);
-//	   for (int i = 0; i < contracts.size(); ++i) {
-//		   
-//		   act_number = contracts.get(i).getContractNumber();
-//		   
-//		   if (new_number.longValue() <= new Integer(act_number).longValue())
-//			   new_number = new Long(act_number) + 1;
-//	   }
-	   String new_number = "123";
-	   return new_number.toString();
-   }
    
    @Override
    synchronized public Integer evaluate(Integer modeOfEmployment, Integer monthNet){

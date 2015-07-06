@@ -63,7 +63,7 @@
             <g:Label text="Kreditlimit:"/>
          </g:at>
          <g:at top="200" left="520">
-            <g:IntegerBox pixelSize="50,20" ui:field="creditLimit"/>
+            <g:IntegerBox pixelSize="100,20" ui:field="creditLimit"/>
          </g:at>
          
          <g:at top="240" left="400">

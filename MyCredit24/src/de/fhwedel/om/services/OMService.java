@@ -26,7 +26,6 @@ public interface OMService extends RemoteService {
    
    public <TYPE extends BusinessObject<?>> TYPE save(TYPE entity);
    public Integer getNextCustumerNumber();
-   public String getNewContractNumber();
    public CreditContract save(CreditContract cc);
    public List<Rate> getPossibleRates(Date c_begin, Integer c_runtime, Integer c_amount);
    public Integer evaluate(Integer modeOfEmployment, Integer monthNet);

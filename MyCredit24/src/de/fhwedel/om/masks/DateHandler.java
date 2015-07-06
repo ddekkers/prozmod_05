@@ -19,15 +19,17 @@ public class DateHandler {
 		return this.format.parse(dateString);
 	}
 	
-	public long DaysBetween (Date earlierDate, Date laterDate) {
+	public long daysBetween (Date earlierDate, Date laterDate) {
 		long msLater = laterDate.getTime();
 		long msEarlier = earlierDate.getTime();
 		long milliSecondsBetween = msLater - msEarlier;
-		return milliSecondsBetween / 24 / 60 / 60 / 1000 + 1;
+		return milliSecondsBetween / 24 / 60 / 60 / 1000;
 	}
 	
 	public boolean isAAfterOrEqualsBAndBeforeC(Date A, Date B, Date C) {
 		
-		return (DaysBetween(B, A) >= 0) && (DaysBetween(A,C) > 0);
+		return (daysBetween(B, A) >= 0) && (daysBetween(A,C) > 0);
 	}
+	
+	
 }

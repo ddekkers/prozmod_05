@@ -1,16 +1,11 @@
 package de.fhwedel.om.masks;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Calendar;
+
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-
-
-
-
-
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
@@ -45,6 +40,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    final static int MIN_DAYS = 28;
    
    private DateHandler dateHandler = new DateHandler();
+   
+   private Integer numberOfContractsPerDay = 0;
    
    // Customer-Editor
    interface CustomerEditorDriver extends SimpleBeanEditorDriver<CreditContract, CreditContractMask> {}
@@ -101,7 +98,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
       this.refreshCreditContracts();
       this.refreshCreditContractStatus();
       this.setBO(c);
-	  this.getNewContractNumber();
+	  this.setNewContractNumber();
 	  this.refreshValidityLevel();
    }
    
@@ -118,7 +115,6 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    protected void saveBO() {
       this.editorDriver.flush();
       this.getBO().setResidualDebt(this.getBO().getCreditAmount());
-      getNewContractNumber();
       this.getService().save(this.getBO(), new AsyncCallback<CreditContract>() {         
          @Override
          public void onSuccess(CreditContract result) {
@@ -191,7 +187,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 						   Window.alert("Geben Sie eine Laufzeit ein.");
 					   else {
 						   if ((contractBegin.getValue() != null)
-							 && dateHandler.DaysBetween(new Date(), contractBegin.getValue()) >= MIN_DAYS) {
+							 && dateHandler.daysBetween(new Date(), contractBegin.getValue()) > MIN_DAYS) {
 								   this.getFlowControl().forward(new RateMask(this.getBO(), false));
 						   } else {
 							   Window.alert("Bitte einen Vertragsbeginn wählen, der mind. 28 Tage in der Zukunft liegt.");
@@ -211,21 +207,38 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   CreditContract cc = new CreditContract();
 		   cc.setCustomer(this.getBO().getCustomer());
 		   this.setBO(cc);
-		   getNewContractNumber();
+		   setNewContractNumber();
 	   }
    }
 
-   private void getNewContractNumber() {
-	   this.getService().getNewContractNumber((new AsyncCallback<String>() {         
-				@Override
-				public void onSuccess(String result) {
-					contractNumber.setValue(result);
-				}         
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert("Fehler beim Laden der Kunden.");        
+   private void setNewContractNumber() {
+
+	   this.getService().getAllCreditContracts((new AsyncCallback<List<CreditContract>>() {         
+		   DateHandler dateHandler = new DateHandler();
+		   Date now = new Date();	
+		   @Override
+		   public void onSuccess(List<CreditContract>result) {
+			   List<CreditContract> todaysContracts = new ArrayList<CreditContract>();
+			   for (CreditContract creditContract : result) {
+				   if (dateHandler.daysBetween(creditContract.getContractBegin(), now) == 0) {
+					   todaysContracts.add(creditContract);
+				   }
+					   
+			}
+			   		numberOfContractsPerDay = todaysContracts.size();
+		   }         
+		   @Override
+		   public void onFailure(Throwable caught) {
+					Window.alert("Fehler beim Laden der neuen Kundennummer.");        
 				}
 		}));
+//	   YearMonth yearMonth = YearMonth.now();
+//	   int month = yearMonth.getMonthValue();
+//	   int year = yearMonth
+//	   
+//	   contractNumber.setValue(Integer.toString(LocalDate.now().getDayOfMonth())
+//				+ Integer.toString(LocalDate.now().getMonthValue())
+//				+ Integer.toString(numberOfContractsPerDay));
    }
    
    @UiHandler("save_changes")
