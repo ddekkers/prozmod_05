@@ -1,13 +1,18 @@
 package de.fhwedel.om.masks;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+
+
+
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
-import com.google.gwt.editor.client.Editor.Path;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -15,7 +20,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DateLabel;
 import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -36,6 +40,10 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    private boolean show_only;
    
    private boolean isNewCreditContract;
+   
+   final static int MIN_DAYS = 28;
+   
+   private DateHandler dateHandler = new DateHandler();
    
    // Customer-Editor
    interface CustomerEditorDriver extends SimpleBeanEditorDriver<CreditContract, CreditContractMask> {}
@@ -158,7 +166,6 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("determine_rate")
    protected void onDetermineRateClick(ClickEvent event) {
-	   DateHandler handler;
 	   
 	   if (isNewCreditContract) {	
 		   CreditContract cc = this.getBO();
@@ -181,8 +188,14 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 					   cc.setRuntime(this.runtime.getValue());
 					   if (cc.getRuntime() == null) 
 						   Window.alert("Geben Sie eine Laufzeit ein.");
-					   else
-						   this.getFlowControl().forward(new RateMask(this.getBO(), false));
+					   else {
+						   if ((contractBegin.getValue() != null)
+							 && dateHandler.DaysBetween(new Date(), contractBegin.getValue()) >= MIN_DAYS) {
+								   this.getFlowControl().forward(new RateMask(this.getBO(), false));
+						   } else {
+							   Window.alert("Bitte einen Vertragsbeginn wählen, der mind. 28 Tage in der Zukunft liegt.");
+						   }
+					   }
 				   }
 					   
 			   }
