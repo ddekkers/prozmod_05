@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -20,9 +21,12 @@ import javax.persistence.Persistence;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
+import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.ibm.icu.text.SimpleDateFormat;
 
+import de.fhwedel.om.masks.DateHandler;
 import de.fhwedel.om.model.BusinessObject;
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
@@ -82,7 +86,43 @@ implements OMService {
          em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
          em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
          
-         em.persist( new Rate("R1", 0.0, 10, 1000, 10000, ValidityLevel.A, new Date(1990, 1, 1), new Date(9999, 12, 31)));
+         GregorianCalendar cal = new GregorianCalendar(2015, 01, 01);
+         Date begin = cal.getTime();
+         cal = new GregorianCalendar(2015, 12, 31);
+         Date end = cal.getTime();
+         
+         em.persist( new Rate("R1_10", 5.0, 10, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_9", 5.0, 9, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_8", 5.0, 8, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_7", 5.0, 7, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_6", 5.0, 6, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_5", 5.0, 5, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_4", 5.0, 4, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_3", 5.0, 3, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_2", 5.0, 2, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_1", 5.0, 1, 1000, 1000000, ValidityLevel.A, begin, end));
+         
+         em.persist( new Rate("R1_10", 7.5, 10, 1000, 1000000, ValidityLevel.B, begin, end));
+         em.persist( new Rate("R1_9", 7.5, 9, 1000, 1000000, ValidityLevel.B, begin, end));
+         em.persist( new Rate("R1_8", 7.5, 8, 1000, 1000000, ValidityLevel.B, begin, end));
+         em.persist( new Rate("R1_7", 7.5, 7, 1000, 1000000, ValidityLevel.B, begin, end));
+         em.persist( new Rate("R1_6", 7.5, 6, 1000, 1000000, ValidityLevel.B, begin, end));
+         em.persist( new Rate("R1_5", 7.5, 5, 1000, 1000000, ValidityLevel.B, begin, end));
+         em.persist( new Rate("R1_4", 7.5, 4, 1000, 1000000, ValidityLevel.B, begin, end));
+         em.persist( new Rate("R1_3", 7.5, 3, 1000, 1000000, ValidityLevel.B, begin, end));
+         em.persist( new Rate("R1_2", 7.5, 2, 1000, 1000000, ValidityLevel.B, begin, end));
+         em.persist( new Rate("R1_1", 7.5, 1, 1000, 1000000, ValidityLevel.B, begin, end));
+         
+         em.persist( new Rate("R1_10", 10.0, 10, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_9", 10.0, 9, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_8", 10.0, 8, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_7", 10.0, 7, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_6", 10.0, 6, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_5", 10.0, 5, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_4", 10.0, 4, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_3", 10.0, 3, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_2", 10.0, 2, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_1", 10.0, 1, 1000, 1000000, ValidityLevel.C, begin, end));
          em.getTransaction().commit();
       }
    }
@@ -215,21 +255,20 @@ implements OMService {
 	public List<Rate> getPossibleRates(Date c_begin, Integer c_runtime, Integer c_amount) {
 	   EntityManager em = OMServiceImpl.getEM();
 	   List<Rate> allRates = em.createNamedQuery("getAllRates").getResultList();
+	   List<Rate> filteredRates = new ArrayList<Rate>();
+	   for (int i = 0; i < allRates.size(); ++i) {
+		   Rate act = allRates.get(i);
+		   if (		act.getRuntime() == c_runtime && 
+				   	act.getDateValidFrom().before(c_begin) &&  c_begin.before(act.getDateValidTo()) &&
+				   	act.getCreditAmountFrom() <= c_amount && c_amount < act.getCreditAmountTo() && 
+				   	act.getValidityLevel().equals(ValidityLevel.A)) {
+			   
+			   filteredRates.add(act);
+		   }
+	   }
 	   
-////	   List<Rate> filteredRates = new ArrayList<Rate>();
-////	   for (int i = 0; i < allRates.size(); ++i) {
-////		   
-////		   Rate act = allRates.get(i);
-////		   if (		act.getRuntime() == c_runtime && 
-////				   	(act.getValidFrom().before(c_begin) || act.equals(c_begin)) && act.getValidTo().after(c_begin) &&
-////				   	act.getCreditAmountFrom() <= c_amount && c_amount < act.getCreditAmountTo() && 
-////				   	act.getValidityLevel().equals(ValidityLevel.A)) {
-////			   filteredRates.add(act);
-////		   }
-////	   }
-//	   
 	   
-		return allRates;
+		return filteredRates;
 	}
    
 /*   @Override

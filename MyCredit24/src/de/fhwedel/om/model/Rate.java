@@ -101,6 +101,14 @@ public class Rate implements BusinessObject<Integer> {
 	
    public void setValidFrom(String valid_from) {
    }
+   
+   public Date getDateValidFrom() {
+	   return validFrom;
+   }
+   
+   public Date getDateValidTo() {
+	   return validTo;
+   }
 	
    public String getValidTo() {
 	   return validTo == null ? "" : validTo.toString();

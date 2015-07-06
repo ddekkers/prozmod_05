@@ -10,6 +10,8 @@ import java.util.List;
 
 
 
+
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -32,7 +34,6 @@ import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.types.CreditContractStatus;
 import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.BOSelectListBox;
-
 import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class CreditContractMask extends BusinessMask<CreditContract> implements Editor<CreditContract> {
