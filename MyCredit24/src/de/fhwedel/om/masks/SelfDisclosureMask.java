@@ -93,7 +93,13 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   
 	   @UiHandler("save_selfDisclosure")
 	   protected void onSaveSelfDisclosureClick(ClickEvent event) {
-		   this.saveBO();
+		   if (getBO().getValidity() == ValidityLevel.X) {
+
+			  
+		   } else {
+			   
+			   this.saveBO();
+		   }
 	   }
 	   
 	   @UiHandler("eval_validity")
@@ -102,7 +108,36 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 		   this.getService().evaluate(modeOfEmployment.getValue().getEvaluation(), monthNet.getValue(), new AsyncCallback<Integer>() {
 			   @Override
 			   public void onSuccess (Integer result) {
-				   Window.alert(result.toString());
+				   if (result < 200) {
+					   creditLimit.setValue(new Integer(1000000));
+					   validity.setValue(ValidityLevel.A);
+				   }
+				   if (result >= 200 && result < 250) {
+					   creditLimit.setValue(new Integer(500000));
+					   validity.setValue(ValidityLevel.A);
+					   
+				   }
+				   if (result >= 250 && result < 300) {
+					   creditLimit.setValue(new Integer(250000));
+					   validity.setValue(ValidityLevel.B);					   
+					   
+				   }
+				   if (result >= 300 && result < 350) {
+					   creditLimit.setValue(new Integer(200000));
+					   validity.setValue(ValidityLevel.B);
+					   
+				   }
+				   if (result >= 350 && result < 400) {
+					   creditLimit.setValue(new Integer(100000));
+					   validity.setValue(ValidityLevel.C);
+					   
+				   }
+				   if (result > 400) {
+					   creditLimit.setValue(new Integer(0));
+					   validity.setValue(ValidityLevel.X);
+					   
+				   }
+				   refreshModeOfEmployment();
 			   }
 			   @Override
 			   public void onFailure (Throwable caught) {
