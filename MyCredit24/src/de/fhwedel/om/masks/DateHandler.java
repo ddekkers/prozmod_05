@@ -26,7 +26,7 @@ public class DateHandler {
 		return milliSecondsBetween / 24 / 60 / 60 / 1000 + 1;
 	}
 	
-	public boolean isAAfterOrBeforeBAndAfterC(Date A, Date B, Date C) {
+	public boolean isAAfterOrEqualsBAndBeforeC(Date A, Date B, Date C) {
 		
 		return (DaysBetween(B, A) >= 0) && (DaysBetween(A,C) > 0);
 	}
