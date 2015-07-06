@@ -207,19 +207,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    protected void onNewCreditContractClick(ClickEvent event) {
       CreditContract creditContract = new CreditContract();
       creditContract.setCustomer(this.getBO());
-
-//      this.getService().getNewContractNumber(new AsyncCallback<String>() {         
-//	         @Override
-//	         public void onSuccess(String result) {
-//	        	creditContract.setContractNumber(result);
-//	         }         
-//	         @Override
-//	         public void onFailure(Throwable caught) {
-//	            Window.alert("Fehler beim Laden der neuen Kundennummer.");        
-//	         }
-//	   });
-
-      this.getFlowControl().forward(new CreditContractMask(creditContract));         
+      this.getFlowControl().forward(new CreditContractMask(creditContract, true));         
    }
    
    @Override

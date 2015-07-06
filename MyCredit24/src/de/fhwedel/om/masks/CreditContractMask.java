@@ -61,18 +61,18 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @UiField Button save_changes;
    @UiField Button discard_changes;
            
-   public CreditContractMask() {
-	   this(new CreditContract());	   
+   public CreditContractMask(boolean isNewContract) {
+	   this(new CreditContract(), isNewContract);	   
    }
    
-   public CreditContractMask(CreditContract c) {
-      this(c, false);
-
+   public CreditContractMask(CreditContract c, boolean isNewContract) {
+      this(c, false, isNewContract);
    }
 
-   public CreditContractMask(CreditContract c, boolean show_only) {        
+   public CreditContractMask(CreditContract c, boolean show_only, boolean isNewContract) {        
       initWidget(uiBinder.createAndBindUi(this));
       this.editorDriver.initialize(this);
+      this.isNewCreditContract = isNewContract;
       this.refreshCreditContracts();
       this.refreshCreditContractStatus();
       this.setBO(c);
@@ -93,10 +93,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @Override
    protected void saveBO() {
-	   Window.alert(this.getBO().getCustomer().getCaption());
-	   Window.alert(this.getBO().getContractNumber());
       this.editorDriver.flush();
-	   Window.alert(this.getBO().getCustomer().getCaption());
       this.getService().save(this.getBO(), new AsyncCallback<CreditContract>() {         
          @Override
          public void onSuccess(CreditContract result) {
@@ -119,13 +116,16 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("select_credit_contract")
    protected void onSelectCreditContractClick(ClickEvent event) {
-      this.setBO(this.credit_contracts.getValue());
-      refreshCreditContractStatus();
-      isNewCreditContract = false;
+	  if (!isNewCreditContract) {
+		  this.setBO(this.credit_contracts.getValue());
+      	refreshCreditContractStatus();
+      	isNewCreditContract = false;
+	  }
    }
    
    @UiHandler("search")
    protected void onSearchClick(ClickEvent event) {
+	   if (!isNewCreditContract) {
 	   this.getService().searchCreditContractBy( search_contract_number.getValue(),
 			   								(new AsyncCallback<List<CreditContract>>() {         
 	         @Override
@@ -137,6 +137,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	            Window.alert("Fehler beim Laden der Kunden.");        
 	         }
 		}));
+	   }   
    }
    
    @UiHandler("discard_changes")
@@ -144,11 +145,10 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   getNewContractNumber();
    }
 
-private void getNewContractNumber() {
-	this.getService().getNewContractNumber((new AsyncCallback<String>() {         
+   private void getNewContractNumber() {
+	   this.getService().getNewContractNumber((new AsyncCallback<String>() {         
 				@Override
 				public void onSuccess(String result) {
-					setBO(new CreditContract());
 					contractNumber.setValue(result);
 				}         
 				@Override
@@ -156,7 +156,7 @@ private void getNewContractNumber() {
 					Window.alert("Fehler beim Laden der Kunden.");        
 				}
 		}));
-}
+   }
    
    @UiHandler("save_changes")
    protected void onSaveCreditContractClick(ClickEvent event) {
