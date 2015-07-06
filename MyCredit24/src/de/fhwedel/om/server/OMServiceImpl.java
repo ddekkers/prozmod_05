@@ -81,7 +81,7 @@ implements OMService {
          em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), new Date(17082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
          em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), new Date(18082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
          
-         em.persist( new Rate("R1", (float) 0.0, 10, 1000, 10000, ValidityLevel.A, new Date(1990-01-01), new Date(9999-12-31)));
+         em.persist( new Rate("R1", 0.0, 10, 1000, 10000, ValidityLevel.A, new Date(1990, 1, 1), new Date(9999, 12, 31)));
          em.getTransaction().commit();
       }
    }
@@ -205,20 +205,20 @@ implements OMService {
 	   EntityManager em = OMServiceImpl.getEM();
 	   List<Rate> allRates = em.createNamedQuery("getAllRates").getResultList();
 	   
-	   List<Rate> filteredRates = new ArrayList<Rate>();
-	   for (int i = 0; i < allRates.size(); ++i) {
-		   
-		   Rate act = allRates.get(i);
-		   if (		act.getRuntime() == c_runtime && 
-				   	(act.getValidFrom().before(c_begin) || act.equals(c_begin)) && act.getValidTo().after(c_begin) &&
-				   	act.getCreditAmountFrom() <= c_amount && c_amount < act.getCreditAmountTo() && 
-				   	act.getValidityLevel().equals(ValidityLevel.A)) {
-			   filteredRates.add(act);
-		   }
-	   }
+////	   List<Rate> filteredRates = new ArrayList<Rate>();
+////	   for (int i = 0; i < allRates.size(); ++i) {
+////		   
+////		   Rate act = allRates.get(i);
+////		   if (		act.getRuntime() == c_runtime && 
+////				   	(act.getValidFrom().before(c_begin) || act.equals(c_begin)) && act.getValidTo().after(c_begin) &&
+////				   	act.getCreditAmountFrom() <= c_amount && c_amount < act.getCreditAmountTo() && 
+////				   	act.getValidityLevel().equals(ValidityLevel.A)) {
+////			   filteredRates.add(act);
+////		   }
+////	   }
+//	   
 	   
-	   
-		return filteredRates;
+		return allRates;
 	}
    
 /*   @Override

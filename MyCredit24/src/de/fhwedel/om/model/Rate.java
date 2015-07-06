@@ -28,44 +28,41 @@ public class Rate implements BusinessObject<Integer> {
    @Id
    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CUST_SEQ")
    @Column(name="rate_id")
-   private int rate_id;
+   private Integer rate_id;
    
-   private String rate_number;
+   private String rateNumber;
    
-   private float interest_rate;
+   private Double interestRate;
    
-   private int runtime;
+   private Integer runtime;
    
-   private int credit_amount_from;
+   private Integer creditAmountFrom;
    
-   private int credit_amount_to;
+   private Integer creditAmountTo;
    
-   private ValidityLevel validity_level;
+   private ValidityLevel validityLevel;
    
-   private Date valid_from;
+   private Date validFrom;
    
-   private Date valid_to;
-   
-   private List<CreditContract> creditContracts;
-   
+   private Date validTo;
    
    public String getRateNumber() {
-	return rate_number;
+	return rateNumber;
    }
 
    public void setRateNumber(String rate_number) {
-	   this.rate_number = rate_number;
+	   this.rateNumber = rate_number;
    }
 
-   public float getInterestRate() {
-	   return interest_rate;
+   public Double getInterestRate() {
+	   return interestRate;
    }
 	
-   public void setInterestRate(float interest_rate) {
-	   this.interest_rate = interest_rate;
+   public void setInterestRate(Double interest_rate) {
+	   this.interestRate = interest_rate;
    }
 	
-   public int getRuntime() {
+   public Integer getRuntime() {
 	   return runtime;
    }
 	
@@ -73,59 +70,60 @@ public class Rate implements BusinessObject<Integer> {
 		this.runtime = runtime;
    }
 	
-   public int getCreditAmountFrom() {
-	   return credit_amount_from;
+   public Integer getCreditAmountFrom() {
+	   return creditAmountFrom;
    }
 	
    public void setCreditAmountFrom(int credit_amount_from) {
-	   this.credit_amount_from = credit_amount_from;
+	   this.creditAmountFrom = credit_amount_from;
    }
 	
-   public int getCreditAmountTo() {
-	   return credit_amount_to;
+   public Integer getCreditAmountTo() {
+	   return creditAmountTo;
    }
 	
    public void setCreditAmountTo(int credit_amount_to) {
-	   this.credit_amount_to = credit_amount_to;
+	   this.creditAmountTo = credit_amount_to;
    }
 	
    public ValidityLevel getValidityLevel() {
-	   return validity_level;
+	   return validityLevel;
 	}
 	
    public void setValidityLevel(ValidityLevel validity_level) {
-	   this.validity_level = validity_level;
+	   this.validityLevel = validity_level;
    }
 	
    public Date getValidFrom() {
-	   return valid_from;
+	   return validFrom;
+	   
    }
 	
    public void setValidFrom(Date valid_from) {
-	   this.valid_from = valid_from;
+	   this.validFrom = valid_from;
    }
 	
    public Date getValidTo() {
-	   return valid_to;
+	   return validTo;
    }
 	
    public void setValidTo(Date valid_to) {
-	   this.valid_to = valid_to;
+	   this.validTo = valid_to;
    }
 
    public Rate() {
-	   this("", (float) 0.0, 0, 0, 0, null, new Date(), new Date());
+	   this(null, null, null, null, null, null, new Date(), new Date());
    }
       
-   public Rate(String rate_number, float interest_rate, int runtime, int credit_amount_from, int credit_amount_to, ValidityLevel validity_level, Date valid_from, Date valid_to) {
-	   this.rate_number = rate_number;
-	   this.interest_rate = interest_rate;
+   public Rate(String rate_number, Double interest_rate, Integer runtime, Integer credit_amount_from, Integer credit_amount_to, ValidityLevel validity_level, Date valid_from, Date valid_to) {
+	   this.rateNumber = rate_number;
+	   this.interestRate = interest_rate;
 	   this.runtime = runtime;
-	   this.credit_amount_from = credit_amount_from;
-	   this.credit_amount_from = credit_amount_from;
-	   this.validity_level = validity_level;
-	   this.valid_from = valid_from;
-	   this.valid_to = valid_to;
+	   this.creditAmountFrom = credit_amount_from;
+	   this.creditAmountTo = credit_amount_to;
+	   this.validityLevel = validity_level;
+	   this.validFrom = valid_from;
+	   this.validTo = valid_to;
    }
 
    // Object-Methoden
@@ -144,7 +142,7 @@ public class Rate implements BusinessObject<Integer> {
 
    @Override
    public String getCaption() {
-      return "";
+      return rateNumber;
    }
    
 }

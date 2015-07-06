@@ -60,7 +60,7 @@ public class MainMask implements EntryPoint, FlowControl {
    @UiHandler("rate")
    protected void onRateClick(ClickEvent event) {
 	   setAllFieldsVisible(false);
-	   this.forward(new RateMask(10, 5000, new Date(), false)); 
+	   this.forward(new RateMask(10, 5000, new Date(2000, 1, 1), false)); 
    }
 
    @UiHandler("back")

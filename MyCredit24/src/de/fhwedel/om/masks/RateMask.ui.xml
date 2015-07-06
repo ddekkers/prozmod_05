@@ -7,7 +7,7 @@
    <ui:style>
    
    </ui:style>   
-      <g:AbsolutePanel height="500px" width="1500px">   
+      <g:AbsolutePanel height="1000px" width="1500px">   
          
 		<!-- Vertragsdetails -->
 		
@@ -34,14 +34,105 @@
 		<g:at top="90" left="100">
            	<dp:DatePicker pixelSize="200,10" ui:field="contractBegin"/>
         </g:at>
-
-       	<g:at top="300" left="100">
-          	<g:Button ui:field="search">Tarif suchen</g:Button>
-       	</g:at>
        	
 	     <g:at top="0" left ="350">
 			<fhw:BOSelectListBox pixelSize="250,330" ui:field="rates" />
 		</g:at>
+
+       	<g:at top="330" left="350">
+          	<g:Button ui:field="select_rate">Tarif anzeigen</g:Button>
+       	</g:at>
+       	
+       	<!-- Tarifdetails -->
+       	
+       	<g:at top="0" left="650">
+           	<g:Label text="Tarifdetails:"/>       	
+       	</g:at>
+    	
+    	<g:at top="30" left="650">
+    		<g:Label text="Tarifnummer:"/>
+    	</g:at>   	
+    	
+    	<g:at top="60" left="650">
+    		<g:Label text="Zinssatz:"/>
+    	</g:at>   	
+    	
+    	<g:at top="90" left="650">
+    		<g:Label text="Laufzeit:"/>
+    	</g:at>   	
+    	
+    	<g:at top="120" left="650">
+    		<g:Label text="Kreditbetrag von:"/>
+    	</g:at>   	
+    	
+    	<g:at top="150" left="650">
+    		<g:Label text="Kreditvertrag bis:"/>
+    	</g:at>   	
+    	
+    	<g:at top="580" left="650">
+    		<g:Label text="Bonitätsstufe:"/>
+    	</g:at>   	
+    	
+    	<g:at top="210" left="650">
+    		<g:Label text="Gültig von:"/>
+    	</g:at>   	
+    	
+    	<g:at top="380" left="650">
+    		<g:Label text="Gültig bis:"/>
+    	</g:at>   	
+    	
+    	<g:at top="30" left="750">
+    		<g:TextBox pixelSize="200,10" ui:field="rateNumber"/>
+    	</g:at>   	
+    	
+    	<g:at top="60" left="750">
+    		<g:DoubleBox pixelSize="200,10" ui:field="interest_rate"/>
+    	</g:at>   	
+    	
+    	<g:at top="90" left="750">
+    		<g:IntegerBox pixelSize="200,10" ui:field="runtime"/>
+    	</g:at>   	
+    	
+    	<g:at top="120" left="750">
+    		<g:IntegerBox pixelSize="200,10" ui:field="amount_from"/>
+    	</g:at>   	
+    	
+    	<g:at top="150" left="750">
+    		<g:IntegerBox pixelSize="200,10" ui:field="amount_to"/>
+    	</g:at>   	
+    	
+    	<g:at top="180" left="750">
+    		<dp:DatePicker pixelSize="200,10" ui:field="valid_from"/>
+    	</g:at>   	
+    	
+    	<g:at top="380" left="750">
+    		<dp:DatePicker pixelSize="200,10" ui:field="valid_to"/>
+    	</g:at>   	
+    	
+    	<g:at top="580" left="750">
+            <fhw:EnumSelectListBox visibleItemCount="1" pixelSize="200,20" ui:field="validity"/>
+    	</g:at>   	
+    	
+       	<g:at top="610" left="750">
+          	<g:Button ui:field="safe_rate">Tarif übernehmen</g:Button>
+       	</g:at>
+	
+	<!-- 
+	private String rate_number;
+   
+   private float interest_rate;
+   
+   private Integer runtime;
+   
+   private Integer credit_amount_from;
+   
+   private Integer credit_amount_to;
+   
+   private ValidityLevel validity_level;
+   
+   private Date valid_from;
+   
+   private Date valid_to;
 		
-      </g:AbsolutePanel>      
+     -->  </g:AbsolutePanel>      
 </ui:UiBinder> 
