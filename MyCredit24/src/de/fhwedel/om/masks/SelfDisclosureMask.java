@@ -26,7 +26,6 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.types.ModeOfEmployment;
 import de.fhwedel.om.types.ValidityLevel;
-import de.fhwedel.om.widgets.DateHandler;
 import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements Editor<SelfDisclosure> {

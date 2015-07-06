@@ -28,7 +28,7 @@ import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.types.CreditContractStatus;
 import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.BOSelectListBox;
-import de.fhwedel.om.widgets.DateHandler;
+
 import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class CreditContractMask extends BusinessMask<CreditContract> implements Editor<CreditContract> {

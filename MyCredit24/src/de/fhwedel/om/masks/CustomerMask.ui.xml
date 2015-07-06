@@ -86,14 +86,14 @@
             <g:Button pixelSize="100,50" ui:field="save_customer">Kunde speichern</g:Button>
          </g:at> 
          
-<!--          <g:at top="300" left="500">
+         <g:at top="300" left="500">
             <g:Button pixelSize="100,50" ui:field="edit_selfDisclosure">Selbstauskunft bearbeiten</g:Button>
-         </g:at>    -->  
+         </g:at>     
 
 		<!-- Selbstauskunft -->
-         <!-- <g:at top="410" left="20">
+         <g:at top="410" left="20">
             <g:CaptionPanel pixelSize="900,450" captionText="Selbstauskunft" ui:field="selfDisclosure"/>            
-         </g:at> -->
+         </g:at>
          
 
 
@@ -109,7 +109,7 @@
          </g:at>
          <g:at top="330" left="1010">
             <g:Button pixelSize="100,50" ui:field="edit_creditContract">Kreditvertrag bearbeiten</g:Button>
-         </g:at>   
+         </g:at>  
 				
       </g:AbsolutePanel>      
 </ui:UiBinder> 

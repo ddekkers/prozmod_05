@@ -154,7 +154,7 @@ implements OMService {
    
    @Override
    synchronized public Integer evaluate(Integer modeOfEmployment, Integer monthNet){
-	   Integer monthNetEval = (int)((9000 - monthNet) / 1000);
+	   Integer monthNetEval = new Double(((9000 - monthNet) / 1000)).intValue();
 	   Integer value = modeOfEmployment * monthNetEval;
 	   double valueSqrt = Math.sqrt((double) value) * 100;
 	   return Math.round((float)valueSqrt);

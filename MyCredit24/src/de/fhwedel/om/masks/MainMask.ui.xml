@@ -5,7 +5,7 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="1000px" width="2000px">
+		<g:AbsolutePanel height="1000px">
 			<g:at top="0" left="0">
 				<g:Button ui:field="customers" text="Kunden"/>
 			</g:at>
