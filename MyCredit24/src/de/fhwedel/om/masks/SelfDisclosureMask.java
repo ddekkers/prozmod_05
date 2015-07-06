@@ -99,8 +99,6 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   @UiHandler("eval_validity")
 	   protected void onEvalValidity(ClickEvent event) {
 		   
-		   Window.alert(modeOfEmployment.getValue().getEvaluation().toString());
-		   Window.alert(monthNet.getValue().toString());
 		   this.getService().evaluate(modeOfEmployment.getValue().getEvaluation(), monthNet.getValue(), new AsyncCallback<Integer>() {
 			   @Override
 			   public void onSuccess (Integer result) {
