@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -81,25 +82,23 @@ implements OMService {
          em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
-         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
-         em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
-         em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
          
          GregorianCalendar cal = new GregorianCalendar(2015, 01, 01);
          Date begin = cal.getTime();
          cal = new GregorianCalendar(2015, 12, 31);
          Date end = cal.getTime();
          
-         em.persist( new Rate("R1_10", 5.0, 10, 1000, 1000000, ValidityLevel.A, begin, end));
-         em.persist( new Rate("R1_9", 5.0, 9, 1000, 1000000, ValidityLevel.A, begin, end));
-         em.persist( new Rate("R1_8", 5.0, 8, 1000, 1000000, ValidityLevel.A, begin, end));
-         em.persist( new Rate("R1_7", 5.0, 7, 1000, 1000000, ValidityLevel.A, begin, end));
-         em.persist( new Rate("R1_6", 5.0, 6, 1000, 1000000, ValidityLevel.A, begin, end));
-         em.persist( new Rate("R1_5", 5.0, 5, 1000, 1000000, ValidityLevel.A, begin, end));
-         em.persist( new Rate("R1_4", 5.0, 4, 1000, 1000000, ValidityLevel.A, begin, end));
-         em.persist( new Rate("R1_3", 5.0, 3, 1000, 1000000, ValidityLevel.A, begin, end));
-         em.persist( new Rate("R1_2", 5.0, 2, 1000, 1000000, ValidityLevel.A, begin, end));
-         em.persist( new Rate("R1_1", 5.0, 1, 1000, 1000000, ValidityLevel.A, begin, end));
+         Rate test_rate_1 = new Rate("R1_2", 5.1, 2, 1000, 1000000, ValidityLevel.A, begin, end);
+         em.persist( new Rate("R1_10", 5.1, 10, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_9", 5.1, 9, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_8", 5.1, 8, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_7", 5.1, 7, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_6", 5.1, 6, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_5", 5.1, 5, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_4", 5.1, 4, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( new Rate("R1_3", 5.1, 3, 1000, 1000000, ValidityLevel.A, begin, end));
+         em.persist( test_rate_1);
+         em.persist( new Rate("R1_1", 5.1, 1, 1000, 1000000, ValidityLevel.A, begin, end));
          
          em.persist( new Rate("R1_10", 7.5, 10, 1000, 1000000, ValidityLevel.B, begin, end));
          em.persist( new Rate("R1_9", 7.5, 9, 1000, 1000000, ValidityLevel.B, begin, end));
@@ -112,16 +111,21 @@ implements OMService {
          em.persist( new Rate("R1_2", 7.5, 2, 1000, 1000000, ValidityLevel.B, begin, end));
          em.persist( new Rate("R1_1", 7.5, 1, 1000, 1000000, ValidityLevel.B, begin, end));
          
-         em.persist( new Rate("R1_10", 10.0, 10, 1000, 1000000, ValidityLevel.C, begin, end));
-         em.persist( new Rate("R1_9", 10.0, 9, 1000, 1000000, ValidityLevel.C, begin, end));
-         em.persist( new Rate("R1_8", 10.0, 8, 1000, 1000000, ValidityLevel.C, begin, end));
-         em.persist( new Rate("R1_7", 10.0, 7, 1000, 1000000, ValidityLevel.C, begin, end));
-         em.persist( new Rate("R1_6", 10.0, 6, 1000, 1000000, ValidityLevel.C, begin, end));
-         em.persist( new Rate("R1_5", 10.0, 5, 1000, 1000000, ValidityLevel.C, begin, end));
-         em.persist( new Rate("R1_4", 10.0, 4, 1000, 1000000, ValidityLevel.C, begin, end));
-         em.persist( new Rate("R1_3", 10.0, 3, 1000, 1000000, ValidityLevel.C, begin, end));
-         em.persist( new Rate("R1_2", 10.0, 2, 1000, 1000000, ValidityLevel.C, begin, end));
-         em.persist( new Rate("R1_1", 10.0, 1, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_10", 10.2, 10, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_9", 10.2, 9, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_8", 10.2, 8, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_7", 10.2, 7, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_6", 10.2, 6, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_5", 10.2, 5, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_4", 10.2, 4, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_3", 10.2, 3, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_2", 10.2, 2, 1000, 1000000, ValidityLevel.C, begin, end));
+         em.persist( new Rate("R1_1", 10.2, 1, 1000, 1000000, ValidityLevel.C, begin, end));
+         
+         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), test_rate_1, cust));
+         em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), test_rate_1, cust));
+         em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), test_rate_1, cust));
+         
          em.getTransaction().commit();
       }
    }
@@ -174,7 +178,6 @@ implements OMService {
 			   							.get()
 			   							.getCustomerNumber() + 1;
    }
-   
    
    @Override
    synchronized public Integer evaluate(Integer modeOfEmployment, Integer monthNet){
