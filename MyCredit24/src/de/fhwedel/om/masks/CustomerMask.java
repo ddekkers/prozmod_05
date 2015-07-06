@@ -50,7 +50,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField TextBox city;
    
    @UiField CaptionPanel selfDisclosure;
-   @UiField BOSelectListBox<CreditContract, Integer> creditContracts;
+//   @UiField BOSelectListBox<CreditContract, Integer> creditContracts;
    
    //Buttons
    @UiField Button search_customer;   
@@ -128,10 +128,10 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    }
    
    protected void refreshCreditContracts() {
-	      if(this.getBO() != null)
-	          creditContracts.setAcceptableValues(this.getBO().getCreditContracts());
-	       else 
-	          creditContracts.clear();
+//	      if(this.getBO() != null)
+//	          creditContracts.setAcceptableValues(this.getBO().getCreditContracts());
+//	       else 
+//	          creditContracts.clear();
    }
    
    @UiHandler("select_customer")
