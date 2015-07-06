@@ -48,7 +48,7 @@ public class CreditContract implements BusinessObject<Integer> {
   
 	private Integer creditAmount;
   
-	private LocalDate contractBegin;
+	private Date contractBegin;
   
 	// Tilgungsrate
 	private Integer annuityRental;
@@ -70,10 +70,10 @@ public class CreditContract implements BusinessObject<Integer> {
 	private Customer customer;
 
 	public CreditContract() {
-		this(null, null, null, null, null, null, null, null, null, null, null, null);
+		this(null, CreditContractStatus.proposal, null, null, null, null, null, null, null, null, null, null);
 	}
 	
-	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, LocalDate contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, List<Payment> payments, Rate rate, Customer customer) {
+	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, Date contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, List<Payment> payments, Rate rate, Customer customer) {
 		
 		this.contractNumber = contract_number;
 		this.status = status;
@@ -130,11 +130,11 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.creditAmount = credit_amount;
 	}
 	
-	public LocalDate getContractBegin() {
+	public Date getContractBegin() {
 		return contractBegin;
 	}
 	
-	public void setContractBegin(LocalDate contract_begin) {
+	public void setContractBegin(Date contract_begin) {
 		this.contractBegin = contract_begin;
 	}
 	

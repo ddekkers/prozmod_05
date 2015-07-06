@@ -1,6 +1,7 @@
 package de.fhwedel.om.masks;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -75,7 +76,6 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @UiField Button back;
    @UiField Button save_changes;
    @UiField Button discard_changes;
-   @UiField Button new_contract;
            
    public CreditContractMask(boolean isNewContract) {
 	   this(new CreditContract(), isNewContract);	   
@@ -162,7 +162,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   
 	   if (isNewCreditContract) {	
 		   CreditContract cc = this.getBO();
-		   cc.setContractBegin(new LocalDate());
+		   cc.setContractBegin(new Date());
 		   if (cc.getContractBegin() == null) {
 				Window.alert("Geben Sie einen Vertragsbeginn ein.");      
 		   } else {
@@ -200,24 +200,6 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   getNewContractNumber();
 	   }
    }
-   
-   @UiHandler("new_contract")
-   protected void onNewContractClick(ClickEvent event) {
-      this.setBO(new CreditContract());
-      this.getBO().setCustomer(new Customer(123, "DD", "Dekk", "", "", "", null, new SelfDisclosure()));
-      this.getService().getNewContractNumber(new AsyncCallback<String>() {         
-	         @Override
-	         public void onSuccess(String result) {
-	        	contractNumber.setValue(result);
-	         }         
-	         @Override
-	         public void onFailure(Throwable caught) {
-	            Window.alert("Fehler beim Laden der neuen Kundennummer.");        
-	         }
-	   });
-   
-   }
-   
 
    private void getNewContractNumber() {
 	   this.getService().getNewContractNumber((new AsyncCallback<String>() {         

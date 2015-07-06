@@ -78,9 +78,9 @@ implements OMService {
          em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
          em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
-         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(16082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
-         em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), new Date(17082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
-         em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), new Date(18082015), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
+         em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), null, new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), new Rate(), cust));
          
          em.persist( new Rate("R1", 0.0, 10, 1000, 10000, ValidityLevel.A, new Date(1990, 1, 1), new Date(9999, 12, 31)));
          em.getTransaction().commit();
