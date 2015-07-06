@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,11 +18,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import de.fhwedel.om.types.CreditContractStatus;
 
 @SuppressWarnings("serial")
 @Entity
+@Table(name="creditcontract")
 @NamedQueries({
    @NamedQuery(
            name="getAllCreditContracts",
@@ -36,6 +40,7 @@ public class CreditContract implements BusinessObject<Integer> {
    
    	private String contractNumber;
 
+    @Enumerated(EnumType.STRING)
 	private CreditContractStatus status;
 	
 	private Integer runtime;
@@ -190,7 +195,6 @@ public class CreditContract implements BusinessObject<Integer> {
 	
    @Override
    public Integer getID() {
-	   
 	   return credit_contract_id;
    }
 

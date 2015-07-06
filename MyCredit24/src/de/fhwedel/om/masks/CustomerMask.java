@@ -207,6 +207,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    protected void onNewCreditContractClick(ClickEvent event) {
       CreditContract creditContract = new CreditContract();
       creditContract.setCustomer(this.getBO());
+
 //      this.getService().getNewContractNumber(new AsyncCallback<String>() {         
 //	         @Override
 //	         public void onSuccess(String result) {

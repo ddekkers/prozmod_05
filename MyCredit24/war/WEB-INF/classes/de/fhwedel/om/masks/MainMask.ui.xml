@@ -12,10 +12,13 @@
 			<g:at top="0" left="100">
 				<g:Button ui:field="credit_contract" text="Kreditverträge"/>
 			</g:at>
-            <g:at top="0" left="200">
+			<g:at top="0" left="250">
+				<g:Button ui:field="rate" text="Tarif"/>
+			</g:at>
+            <g:at top="0" left="300">
                 <g:Button visible="false" ui:field="back" text="Zurück"/>
             </g:at>
-            <g:at top="0" left="300">
+            <g:at top="0" left="400">
                 <g:Label ui:field="history_label"/>
             </g:at>
 			<g:at top="50" left="0">

@@ -67,17 +67,19 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    public CreditContractMask(CreditContract c) {
       this(c, false);
+
    }
 
    public CreditContractMask(CreditContract c, boolean show_only) {        
       initWidget(uiBinder.createAndBindUi(this));
-      this.setMode(show_only);
       this.editorDriver.initialize(this);
-      this.setBO(c);
-	  this.getNewContractNumber();
-      this.refresh();
       this.refreshCreditContracts();
       this.refreshCreditContractStatus();
+      this.setBO(c);
+	  this.getNewContractNumber();
+
+//      this.refresh();
+//      this.editorDriver.edit(this.getBO());
    }
    
    protected void setMode(boolean show_only) {
@@ -92,14 +94,15 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @Override
    protected void saveBO() {
 	   Window.alert(this.getBO().getCustomer().getCaption());
-	       
+	   Window.alert(this.getBO().getContractNumber());
       this.editorDriver.flush();
 	   Window.alert(this.getBO().getCustomer().getCaption());
       this.getService().save(this.getBO(), new AsyncCallback<CreditContract>() {         
          @Override
          public void onSuccess(CreditContract result) {
         	CreditContractMask.this.setBO(result);
-     	   refreshCreditContracts();
+        	CreditContractMask.this.fireSaved();
+//     	   refreshCreditContracts();
          }         
          @Override
          public void onFailure(Throwable caught) {
@@ -157,6 +160,7 @@ private void getNewContractNumber() {
    
    @UiHandler("save_changes")
    protected void onSaveCreditContractClick(ClickEvent event) {
+
 	   this.saveBO();
    }
    
