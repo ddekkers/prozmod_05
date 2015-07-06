@@ -11,6 +11,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -212,33 +213,32 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    }
 
    private void setNewContractNumber() {
-
+	   dateHandler.setFormat("yyMM");
 	   this.getService().getAllCreditContracts((new AsyncCallback<List<CreditContract>>() {         
-		   DateHandler dateHandler = new DateHandler();
-		   Date now = new Date();	
+		   
+		   Date now = new Date();
 		   @Override
 		   public void onSuccess(List<CreditContract>result) {
-			   List<CreditContract> todaysContracts = new ArrayList<CreditContract>();
+			   List<CreditContract> thisMonthsContracts = new ArrayList<CreditContract>();
+			   
+			   String currYearMonth = dateHandler.getDateAsString(new Date());
 			   for (CreditContract creditContract : result) {
-				   if (dateHandler.daysBetween(creditContract.getContractBegin(), now) == 0) {
-					   todaysContracts.add(creditContract);
+
+				   if (dateHandler.getDateAsString(creditContract.getContractBegin()).equals(currYearMonth)) {
+					   thisMonthsContracts.add(creditContract);
 				   }
-					   
 			}
-			   		numberOfContractsPerDay = todaysContracts.size();
+			   		numberOfContractsPerDay = thisMonthsContracts.size();
+			 	   NumberFormat formatter = NumberFormat.getFormat("000");
+			 	   contractNumber.setValue(currYearMonth + formatter.format(numberOfContractsPerDay + 1));
+
 		   }         
 		   @Override
 		   public void onFailure(Throwable caught) {
 					Window.alert("Fehler beim Laden der neuen Kundennummer.");        
 				}
 		}));
-//	   YearMonth yearMonth = YearMonth.now();
-//	   int month = yearMonth.getMonthValue();
-//	   int year = yearMonth
-//	   
-//	   contractNumber.setValue(Integer.toString(LocalDate.now().getDayOfMonth())
-//				+ Integer.toString(LocalDate.now().getMonthValue())
-//				+ Integer.toString(numberOfContractsPerDay));
+
    }
    
    @UiHandler("save_changes")

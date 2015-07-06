@@ -5,18 +5,18 @@ import java.util.Date;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 
 public class DateHandler {
-	private DateTimeFormat format;
+	private String format;
 	
 	public DateHandler (String format) {
-		this.format = DateTimeFormat.getFormat(format);
+		this.format = format;
 	}
 	
 	public DateHandler () {
-		this.format = DateTimeFormat.getFormat("");
+		this.format = "";
 	}
 	
 	public Date parseStringToDate(String dateString) {
-		return this.format.parse(dateString);
+		return DateTimeFormat.getFormat(this.format).parse(dateString);
 	}
 	
 	public long daysBetween (Date earlierDate, Date laterDate) {
@@ -31,5 +31,15 @@ public class DateHandler {
 		return (daysBetween(B, A) >= 0) && (daysBetween(A,C) > 0);
 	}
 	
+	public String getDateAsString (Date date) {
+		return DateTimeFormat.getFormat(format).format(date);
+	}
 	
+	public void setFormat(String format) {
+		this.format = format;
+	}
+	
+	public String getFormat() {
+		return format;
+	}
 }
