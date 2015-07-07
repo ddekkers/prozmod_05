@@ -187,7 +187,25 @@
 		
 		 	<g:at top="270" left="750">
             	<g:Button ui:field="determine_rate">Tarif zuordnen</g:Button>
-         	</g:at>         	
+         	</g:at>   
+         	
+         	<!-- Zahlungen -->
+         	         	
+			<g:at top="330" left="750">
+            	<g:Label text="Zahlungen:"/>
+         	</g:at>	
+			<g:at top="360" left="750">
+				<fhw:BOSelectListBox pixelSize="320,200" ui:field="payments" />
+			</g:at>
+			
+         	<g:at top="580" left="750">
+            	<g:Button ui:field="select_payment">Zahlung auswählen</g:Button>
+         	</g:at>
+			
+         	<g:at top="620" left="750">
+            	<g:Button ui:field="outpayment">Auszahlung</g:Button>
+         	</g:at>
+         	      	
          	
       </g:AbsolutePanel>      
 </ui:UiBinder> 

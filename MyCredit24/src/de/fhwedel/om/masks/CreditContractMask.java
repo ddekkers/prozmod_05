@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.fhwedel.om.model.CreditContract;
+import de.fhwedel.om.model.Payment;
 import de.fhwedel.om.types.CreditContractStatus;
 import de.fhwedel.om.types.TransactionType;
 import de.fhwedel.om.types.ValidityLevel;
@@ -80,6 +81,11 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @UiField Button rejected_deadline;
    @UiField Button rejected_validity;
    @UiField Button revocation;
+   
+   //Zahlungen / Zahlungsfunktionen
+   @Ignore @UiField BOSelectListBox<Payment, Integer> payments;
+   @UiField Button select_payment;
+   @UiField Button outpayment;
            
    public CreditContractMask(TransactionType transactionType) {
 	   this(new CreditContract(), transactionType);	   
