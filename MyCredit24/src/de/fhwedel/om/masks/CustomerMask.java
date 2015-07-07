@@ -22,11 +22,14 @@ import com.google.gwt.user.client.ui.Widget;
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.model.SelfDisclosure;
+import de.fhwedel.om.types.TransactionType;
 import de.fhwedel.om.widgets.BOSelectListBox;
 
 public class CustomerMask extends BusinessMask<Customer> implements Editor<Customer> {
 
    private boolean show_only;
+   
+   private TransactionType transactionType;
    
    // Customer-Editor
    interface CustomerEditorDriver extends SimpleBeanEditorDriver<Customer, CustomerMask> {}
@@ -61,21 +64,22 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField Button new_creditContract;
            
    //Labels
-   public CustomerMask() {
-	   this(new Customer());	   
+   public CustomerMask(TransactionType transactionType) {
+	   this(transactionType, new Customer());	   
    }
    
-   public CustomerMask(Customer c) {
-      this(c, false);
+   public CustomerMask(TransactionType transactionType, Customer c) {
+      this(transactionType, c, false);
    }
 
-   public CustomerMask(Customer c, boolean show_only) {        
+   public CustomerMask(TransactionType transactionType, Customer c, boolean show_only) {        
       initWidget(uiBinder.createAndBindUi(this));
       this.setMode(show_only);
       this.editorDriver.initialize(this);
       this.refreshCustomers();
       this.refreshCreditContracts();
       this.setBO(c);
+      this.transactionType = transactionType;
    }
    
    protected void setMode(boolean show_only) {
@@ -207,7 +211,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    protected void onNewCreditContractClick(ClickEvent event) {
       CreditContract creditContract = new CreditContract();
       creditContract.setCustomer(this.getBO());
-      this.getFlowControl().forward(new CreditContractMask(creditContract, true));         
+      this.getFlowControl().forward(new CreditContractMask(creditContract, transactionType));         
    }
    
    @Override

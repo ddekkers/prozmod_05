@@ -201,7 +201,7 @@ public class CreditContract implements BusinessObject<Integer> {
 
 	@Override
 	public String getCaption() {
-		return contractNumber + " " + status.toString();
+		return contractNumber == null ? "" + status.toString() : contractNumber + " " + status.toString();
 	}
 
 	

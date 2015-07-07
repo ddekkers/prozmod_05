@@ -230,14 +230,12 @@ implements OMService {
          cc = em.merge(cc);
       else {
          em.persist(cc);
-         Customer c = cc.getCustomer();
-         c.getCreditContracts().add(cc);
-         em.merge(c);
       }
       em.getTransaction().commit();
       return cc;
    }
-
+   
+   @SuppressWarnings("unchecked")
    	@Override
 	public List<Rate> getPossibleRates(Date c_begin, Integer c_runtime, Integer c_amount) {
 	   EntityManager em = OMServiceImpl.getEM();

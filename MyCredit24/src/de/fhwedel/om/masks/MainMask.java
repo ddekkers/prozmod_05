@@ -1,11 +1,11 @@
 package de.fhwedel.om.masks;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.editor.client.Editor.Ignore;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -18,59 +18,55 @@ import com.google.gwt.user.client.ui.Widget;
 
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Payment;
-import de.fhwedel.om.model.Rate;
+import de.fhwedel.om.types.TransactionType;
+import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class MainMask implements EntryPoint, FlowControl {
    
    private List<BusinessMask<?>> history = new LinkedList<BusinessMask<?>>();
-
+   
+   
    // UiBinder    
    interface MainMaskUiBinder extends UiBinder<Widget, MainMask> {}
    private final static MainMaskUiBinder uiBinder = GWT.create(MainMaskUiBinder.class);
+   
    
    @UiField Button customers;
    @UiField Button credit_contract;
    @UiField Button rate;   
    @UiField Button payment;   
+   @Ignore @UiField EnumSelectListBox<TransactionType> transactionType;
    @UiField Button back;
    @UiField Label history_label;
    @UiField FlowPanel content;
-   	
-   public void setAllFieldsVisible(boolean isVisible) {
-	   
-	   customers.setVisible(isVisible);
-	   credit_contract.setVisible(isVisible);
-	   back.setVisible(isVisible);
-	   rate.setVisible(isVisible);
-	   payment.setVisible(isVisible);
-	   history_label.setVisible(isVisible);
-   }
    
 	public void onModuleLoad() {
 	   RootPanel.get().add( uiBinder.createAndBindUi(this) );
-	   
+	   this.refreshTransactionType();
 	}
+	
 	    	
-   @UiHandler("customers")
+   private void refreshTransactionType() {
+	   this.transactionType.setEnum(TransactionType.class);
+	}
+
+@UiHandler("customers")
    protected void onCustomersClick(ClickEvent event) {
-      this.forward( new CustomerMask() );
+      this.forward( new CustomerMask(transactionType.getValue()));
    }
    
    @UiHandler("credit_contract")
    protected void onCreditContractClick(ClickEvent event) {
-	   setAllFieldsVisible(false);
-	   this.forward(new CreditContractMask(false)); 
+	   this.forward(new CreditContractMask(transactionType.getValue())); 
    }
    
    @UiHandler("rate")
    protected void onRateClick(ClickEvent event) {
-	   setAllFieldsVisible(false);
-	   this.forward(new RateMask(new CreditContract(), false)); 
+	   this.forward(new RateMask(transactionType.getValue(), new CreditContract(), false)); 
    }
    
    @UiHandler("payment")
    protected void onPaymentClick(ClickEvent event) {
-	   setAllFieldsVisible(false);
 	   this.forward(new PaymentMask(new CreditContract(), new Payment(), false)); 
    }
 

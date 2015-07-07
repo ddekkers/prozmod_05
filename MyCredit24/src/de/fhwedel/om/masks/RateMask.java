@@ -25,6 +25,7 @@ import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.model.Rate;
 import de.fhwedel.om.types.CreditContractStatus;
+import de.fhwedel.om.types.TransactionType;
 import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.BOSelectListBox;
 import de.fhwedel.om.widgets.EnumSelectListBox;
@@ -32,7 +33,6 @@ import de.fhwedel.om.widgets.EnumSelectListBox;
 public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
 
    private boolean show_only;
-
    
    // Customer-Editor
    interface CustomerEditorDriver extends SimpleBeanEditorDriver<Rate, RateMask> {}
@@ -63,7 +63,7 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
    @Path("validTo") @UiField TextBox valid_to;
    @Path("validityLevel") @UiField EnumSelectListBox<ValidityLevel> validity;   
    
-   public RateMask(CreditContract c, boolean show_only) {        
+   public RateMask(TransactionType transactionType, CreditContract c, boolean show_only) {        
       initWidget(uiBinder.createAndBindUi(this));
       this.setMode(show_only);
       this.editorDriver.initialize(this);
@@ -74,6 +74,7 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
       this.contract = c;
       this.refresh();
       this.refreshRates();
+      setTransactionType(transactionType);
    }
    
    protected void setMode(boolean show_only) {
@@ -112,7 +113,7 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
    protected void onSafeRateClick(ClickEvent event) {
 	   
 	   this.contract.setRate(rates.getValue());
-	   this.getFlowControl().forward(new CreditContractMask(contract, true));
+	   this.getFlowControl().forward(new CreditContractMask(contract, getTransactionType()));
    }
    
    @UiHandler("select_rate")

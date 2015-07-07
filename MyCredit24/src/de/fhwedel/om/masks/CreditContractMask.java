@@ -1,8 +1,6 @@
 package de.fhwedel.om.masks;
 
 
-import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,19 +23,14 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.fhwedel.om.model.CreditContract;
-import de.fhwedel.om.model.Customer;
-import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.types.CreditContractStatus;
+import de.fhwedel.om.types.TransactionType;
 import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.BOSelectListBox;
 import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class CreditContractMask extends BusinessMask<CreditContract> implements Editor<CreditContract> {
 
-   private boolean show_only;
-   
-   private boolean isNewCreditContract;
-   
    final static int MIN_DAYS = 28;
    
    private DateHandler dateHandler = new DateHandler();
@@ -80,31 +73,70 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
     @Path("rate.validityLevel") @UiField EnumSelectListBox<ValidityLevel> validity;
 
    //Buttons
-   @UiField Button back;
    @UiField Button save_changes;
    @UiField Button discard_changes;
+   
+   //Sonstige Funktionen
+   @UiField Button rejected_deadline;
+   @UiField Button rejected_validity;
+   @UiField Button revocation;
            
-   public CreditContractMask(boolean isNewContract) {
-	   this(new CreditContract(), isNewContract);	   
+   public CreditContractMask(TransactionType transactionType) {
+	   this(new CreditContract(), transactionType);	   
    }
    
-   public CreditContractMask(CreditContract c, boolean isNewContract) {
-      this(c, false, isNewContract);
+   public CreditContractMask(CreditContract c, TransactionType transactionType) {
+      this(c, false, transactionType);
    }
 
-   public CreditContractMask(CreditContract c, boolean show_only, boolean isNewContract) {        
+   private void setWidgetPropertiesByTransactionType(TransactionType transactionType) {
+	   
+	   status.setEnabled(false);
+	   validity.setEnabled(false);
+	   rejected_deadline.setVisible(false);
+	   rejected_validity.setVisible(false);
+	   revocation.setVisible(false);
+	   
+	   runtime.setReadOnly(true);
+	   creditAmount.setReadOnly(true);
+	   annuityRental.setReadOnly(true);
+	   residualDebt.setReadOnly(true);
+	   iban.setReadOnly(true);
+	   bic.setReadOnly(true);
+	   
+	   switch (transactionType) {
+		   case Kreditangebot_erstellen: {
+		   		runtime.setReadOnly(false);
+		   		creditAmount.setReadOnly(false);
+		   		annuityRental.setReadOnly(false);
+		   		residualDebt.setReadOnly(false);			   
+			   break;
+		   }
+		   case Kreditantrag_pruefen: {
+			   iban.setReadOnly(false);
+			   bic.setReadOnly(false);
+			   rejected_deadline.setVisible(true);
+			   rejected_validity.setVisible(true);
+			   break;
+		   }
+		   case Widerruf: {
+			   revocation.setVisible(true);
+		   }
+	default:
+		break;
+	   }
+   }
+   
+   public CreditContractMask(CreditContract c, boolean show_only, TransactionType transactionType) {        
       initWidget(uiBinder.createAndBindUi(this));
       this.editorDriver.initialize(this);
-      this.isNewCreditContract = isNewContract;
+      setTransactionType(transactionType);
       this.refreshCreditContracts();
       this.refreshCreditContractStatus();
       this.setBO(c);
 	  this.setNewContractNumber();
 	  this.refreshValidityLevel();
-   }
-   
-   protected void setMode(boolean show_only) {
-      this.show_only = show_only;
+	  setWidgetPropertiesByTransactionType(transactionType);
    }
     
    public void setBO(CreditContract c) {
@@ -115,13 +147,12 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @Override
    protected void saveBO() {
       this.editorDriver.flush();
-      this.getBO().setResidualDebt(this.getBO().getCreditAmount());
       this.getService().save(this.getBO(), new AsyncCallback<CreditContract>() {         
          @Override
          public void onSuccess(CreditContract result) {
         	CreditContractMask.this.setBO(result);
         	CreditContractMask.this.fireSaved();
-//     	   refreshCreditContracts();
+     	   	refreshCreditContracts();
          }         
          @Override
          public void onFailure(Throwable caught) {
@@ -129,25 +160,38 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
          }
       });
    }
+   
+   @UiHandler("rejected_deadline")
+   protected void onRejectedDeadlineClick(ClickEvent event) {
 
-
-   @UiHandler("back")
-   protected void onBackClick(ClickEvent event) {
-	   
+	   this.status.setValue(CreditContractStatus.rejected_deadline);
+	   this.saveBO();
+   }
+   
+   @UiHandler("rejected_deadline")
+   protected void onRejectedValidityClick(ClickEvent event) {
+	   this.status.setValue(CreditContractStatus.rejected_validity);
+	   this.saveBO();
+   }
+   
+   @UiHandler("revocation")
+   protected void onRevocationClick(ClickEvent event) {
+	   this.status.setValue(CreditContractStatus.revocation);
+	   this.saveBO();
    }
    
    @UiHandler("select_credit_contract")
    protected void onSelectCreditContractClick(ClickEvent event) {
-	  if (!isNewCreditContract) {
-		  this.setBO(this.credit_contracts.getValue());
+	  if (!TransactionType.Kreditangebot_erstellen.equals(getTransactionType())) {
+		this.setBO(this.credit_contracts.getValue());
       	refreshCreditContractStatus();
-      	isNewCreditContract = false;
+      	this.status.setValue(getBO().getStatus());
 	  }
    }
    
    @UiHandler("search")
    protected void onSearchClick(ClickEvent event) {
-	   if (!isNewCreditContract) {
+	   if (!TransactionType.Kreditangebot_erstellen.equals(getTransactionType())) {
 	   this.getService().searchCreditContractBy( search_contract_number.getValue(),
 			   								(new AsyncCallback<List<CreditContract>>() {         
 	         @Override
@@ -165,7 +209,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @UiHandler("determine_rate")
    protected void onDetermineRateClick(ClickEvent event) {
 	   
-	   if (isNewCreditContract) {	
+	   if (TransactionType.Kreditangebot_erstellen.equals(getTransactionType())) {	
 		   CreditContract cc = this.getBO();
 		   cc.setContractBegin(new Date());
 		   if (cc.getContractBegin() == null) {
@@ -189,7 +233,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 					   else {
 						   if ((contractBegin.getValue() != null)
 							 && dateHandler.daysBetween(new Date(), contractBegin.getValue()) > MIN_DAYS) {
-								   this.getFlowControl().forward(new RateMask(this.getBO(), false));
+								   this.getFlowControl().forward(new RateMask(getTransactionType(), this.getBO(), false));
 						   } else {
 							   Window.alert("Bitte einen Vertragsbeginn wählen, der mind. 28 Tage in der Zukunft liegt.");
 						   }
@@ -204,7 +248,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("discard_changes")
    protected void onDiscardCreditContractClick(ClickEvent event) {
-	   if (isNewCreditContract) {
+	   if (TransactionType.Kreditangebot_erstellen.equals(getTransactionType())) {
 		   CreditContract cc = new CreditContract();
 		   cc.setCustomer(this.getBO().getCustomer());
 		   this.setBO(cc);
@@ -216,7 +260,6 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   dateHandler.setFormat("yyMM");
 	   this.getService().getAllCreditContracts((new AsyncCallback<List<CreditContract>>() {         
 		   
-		   Date now = new Date();
 		   @Override
 		   public void onSuccess(List<CreditContract>result) {
 			   List<CreditContract> thisMonthsContracts = new ArrayList<CreditContract>();
@@ -229,8 +272,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 				   }
 			}
 			   		numberOfContractsPerDay = thisMonthsContracts.size();
-			 	   NumberFormat formatter = NumberFormat.getFormat("000");
-			 	   contractNumber.setValue(currYearMonth + formatter.format(numberOfContractsPerDay + 1));
+			   		NumberFormat formatter = NumberFormat.getFormat("000");
+			   		contractNumber.setValue(currYearMonth + formatter.format(numberOfContractsPerDay + 1));
 
 		   }         
 		   @Override
@@ -243,15 +286,36 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("save_changes")
    protected void onSaveCreditContractClick(ClickEvent event) {
-	   if (isNewCreditContract) {
-		   if (this.getBO().getRate() != null) {
-			   
-			   this.saveBO();   
-		   } else
-			   Window.alert("Sie müssen vorher einen Tarif auswählen");
-		   
-	   } else
-			Window.alert("Keine Änderungen möglich.");      
+	   	getFlowControl().update(this);
+	   	switch (getTransactionType()) {
+	   		case Kreditangebot_erstellen:
+	   			if (this.getBO().getRate() != null) {
+
+					this.getBO().setResidualDebt(this.getBO().getCreditAmount());
+					this.residualDebt.setValue(this.getBO().getCreditAmount());
+	   				this.saveBO();   
+	   				Window.alert("Kreditangebotsunterlagen versandt!");
+	 		   } else
+	 			   	Window.alert("Sie müssen vorher einen Tarif auswählen");
+	   			break;
+	   		case Kreditantrag_pruefen:
+	   			this.getBO().setBic(bic.getValue());
+	   			this.getBO().setIban(iban.getValue());
+	   			if (this.getBO().getBic() != null && !this.getBO().getBic().isEmpty() && this.getBO().getIban() != null && !this.getBO().getIban().isEmpty()) {
+	   				
+	   				this.getBO().setStatus(CreditContractStatus.engrossed);
+	   				this.status.setValue(CreditContractStatus.engrossed);
+	   				this.saveBO();
+	   				Window.alert("Kreditvertrag ausgefertigt!");	   				
+	   			} else
+	   				Window.alert("Geben Sie eine IBAN und eine BIC ein!");
+	   			break;
+	   
+	   	default:
+	   			Window.alert("Keine Änderungen möglich.");   
+	   		break;
+	   
+	   	}
    }
    
   protected void refreshCreditContracts() {

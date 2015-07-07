@@ -6,7 +6,7 @@
    	<ui:style>
    
    </ui:style>   
-      <g:AbsolutePanel height="550px" width="2000px">   
+      <g:AbsolutePanel height="1000px" width="2000px">   
 			
 			<!-- Suche -->
 			<g:at top="0" left ="20">
@@ -24,9 +24,6 @@
             <g:at top="450" left="20">
             	<g:Button ui:field="select_credit_contract">Vertrag auswählen</g:Button>
          	</g:at>
-			<g:at top="490" left="20">
-                <g:Button visible="true" ui:field="back" text="Zurück"/>
-            </g:at>
             
             <!-- Kopfdaten des Vertrages -->
 			<g:at top="0" left="350">
@@ -99,6 +96,24 @@
          	<g:at top="450" left="560">
             	<g:Button ui:field="discard_changes">Verwerfen</g:Button>
          	</g:at>
+
+			<!-- Sonstige Funktionen -->
+			
+			<g:at top="500" left="350">
+            	<g:Label text="Sonstige Funktionen:"/>
+         	</g:at>
+
+         	<g:at top="540" left="350">
+            	<g:Button ui:field="rejected_deadline">Abgelehnen wegen Fristablauf</g:Button>
+         	</g:at>
+
+         	<g:at top="580" left="350">
+            	<g:Button ui:field="rejected_validity">Abgelehnen wegen Bonität</g:Button>
+         	</g:at>
+
+         	<g:at top="540" left="350">
+            	<g:Button ui:field="revocation">Widerruf</g:Button>
+         	</g:at> 
          	
          	<!-- Tarifdetails -->
          	

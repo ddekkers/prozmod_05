@@ -12,18 +12,28 @@ import com.google.gwt.user.client.ui.Composite;
 import de.fhwedel.om.model.BusinessObject;
 import de.fhwedel.om.services.OMService;
 import de.fhwedel.om.services.OMServiceAsync;
+import de.fhwedel.om.types.TransactionType;
 
 public abstract class BusinessMask<TYPE extends BusinessObject<? extends Serializable>> extends Composite {
    
    private TYPE bo;
    private List<MaskListener> mls = new LinkedList<MaskListener>();
    private FlowControl fc;
+   private TransactionType transactionType;
   
    // Serverdienste 
    private final OMServiceAsync service = GWT.create(OMService.class);  
     
    public void addMaskListener(MaskListener ml) {
       this.mls.add(ml);
+   }
+   
+   public void setTransactionType(TransactionType transactionType) {
+	   this.transactionType = transactionType;
+   }
+   
+   public TransactionType getTransactionType() {
+	   return transactionType;
    }
    
    public void removeMaskListener(MaskListener ml) {
