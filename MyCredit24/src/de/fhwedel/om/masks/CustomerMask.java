@@ -62,6 +62,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField Button save_customer;
    @UiField Button edit_selfDisclosure;
    @UiField Button new_creditContract;
+   @UiField Button edit_creditContract;
            
    //Labels
    public CustomerMask(TransactionType transactionType) {
@@ -93,12 +94,18 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.edit_selfDisclosure.setVisible(!show_only);
       this.new_creditContract.setVisible(!show_only);
       this.creditContracts.setVisible(!show_only);
+      
    }
     
    public void setBO(Customer c) {
       super.setBO(c);
+      this.refreshCreditContracts();
       this.selfDisclosure.clear();
       this.selfDisclosure.add( new SelfDisclosureMask(this.getBO().getSelfDisclosure()) );
+      this.new_creditContract.setEnabled(this.getBO().getID() != null);
+      this.edit_creditContract.setEnabled(this.getBO().getID() != null);
+      this.creditContracts.setEnabled(this.getBO().getID() != null);
+      this.selfDisclosure.setVisible(this.getBO().getID() != null);
       this.editorDriver.edit(c);
    }
     
@@ -225,6 +232,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 	   selfDisclosure.setCustomer(this.getBO());
 	   this.getFlowControl().forward(new SelfDisclosureMask(selfDisclosure));
 	   }
+   
    @UiHandler("new_creditContract")
    protected void onNewCreditContractClick(ClickEvent event) {
 	   if (!(this.cust_number.getValue() == null || this.transactionType == null)) {
@@ -235,7 +243,28 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 		   Window.alert("Neu anlegen eines Vertrags nicht möglich. Bitte Kunden wählen.");
 	   }
    }
+
+   @UiHandler("edit_creditContract")
+   protected void onEditCreditContractClick(ClickEvent event) {
+	   editCreditContract();
+   }
    
+   @UiHandler("creditContracts")
+   protected void onCreditContractsDoubleClick(DoubleClickEvent event) {
+	   editCreditContract();
+   }
+   
+   private void editCreditContract() {
+	   if (!(this.cust_number.getValue() == null
+		  || this.transactionType == null
+		  || this.creditContracts.getItemCount() == 0
+		  || this.creditContracts.getValue() == null)) {
+		   CreditContract creditContract = this.creditContracts.getValue();
+		   this.getFlowControl().forward(new CreditContractMask(creditContract, transactionType));  
+	   } else {
+		   Window.alert("Bitte Vertrag auswählen.");
+	   }
+   }
    @Override
    public void refresh() {
       this.refreshCustomers();
