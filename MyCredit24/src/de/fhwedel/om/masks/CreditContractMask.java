@@ -87,6 +87,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @Ignore @UiField BOSelectListBox<Payment, Integer> payments;
    @UiField Button select_payment;
    @UiField Button outpayment;
+   @UiField Button rate;
            
    public CreditContractMask(TransactionType transactionType) {
 	   this(new CreditContract(), transactionType);	   
@@ -103,6 +104,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   rejected_deadline.setVisible(false);
 	   rejected_validity.setVisible(false);
 	   revocation.setVisible(false);
+	   outpayment.setVisible(false);
+	   rate.setVisible(false);
 	   
 	   runtime.setReadOnly(true);
 	   creditAmount.setReadOnly(true);
@@ -128,7 +131,15 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   }
 		   case Widerruf: {
 			   revocation.setVisible(true);
+			   break;
 		   }
+		   case Kredit_Summe_ausbezahlen:
+			   outpayment.setVisible(true);
+			   break;
+		   case Rate_einziehen:
+			   rate.setVisible(true);
+			   break;
+			   
 	default:
 		break;
 	   }
@@ -169,6 +180,29 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
       });
    }
    
+   @UiHandler("rate")
+   protected void onRateClick(ClickEvent event) {
+	   Integer min_resDebt_anRental = getBO().getResidualDebt() > getBO().getAnnuityRental() ? getBO().getAnnuityRental() : getBO().getResidualDebt();
+	   Integer creditAmount = min_resDebt_anRental + (int) (getBO().getResidualDebt() * getBO().getRate().getInterestRate());
+	   Payment payment = new Payment(new Date(), creditAmount, PaymentType.Ratenzahlung, getBO());
+	   this.residualDebt.setValue(getBO().getResidualDebt() - min_resDebt_anRental);
+	   this.saveBO();
+	   this.getService().save(payment, new AsyncCallback<Payment>() {
+		   
+		   @Override
+		   public void onFailure(Throwable caught) {
+			   
+				Window.alert("Bei der Einziehung der Rate ist etwas schief gegangen.");	 
+		   }
+		   
+		   @Override
+		   public void onSuccess(Payment result) {
+			   refreshPayments();
+		   
+		   }});
+  
+   }
+   
    	@UiHandler("outpayment")
    	protected void onOutpaymentClick(ClickEvent event) {
 	   
@@ -179,13 +213,15 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   		@Override
 	   		public void onFailure(Throwable caught) {
 
+				Window.alert("Bei der Erfassung der Auszahlung ist etwas schief gegangen.");	   			
 			}
 
 			@Override
 			public void onSuccess(Payment result) {
 				if (result != null) {
-					getBO().setStatus(CreditContractStatus.Ausgezahlt);
+					status.setValue(CreditContractStatus.Ausgezahlt);
 					refreshPayments();
+					saveBO();
 				} else {
 					
 					Window.alert("Auszahlung bereits vorhanden.");
@@ -193,7 +229,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 			}
 			   
 		   });
-   		}
+   	}
    
 	private void refreshPayments() {
 		

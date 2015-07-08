@@ -6,5 +6,6 @@ public enum TransactionType {
 	Kreditantrag_pruefen,
 	Auskunft,
 	Widerruf,
-	Kredit_Summe_ausbezahlen
+	Kredit_Summe_ausbezahlen, 
+	Rate_einziehen
 }

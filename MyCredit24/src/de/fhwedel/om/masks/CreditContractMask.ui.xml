@@ -205,6 +205,10 @@
          	<g:at top="620" left="750">
             	<g:Button ui:field="outpayment">Auszahlung</g:Button>
          	</g:at>
+			
+         	<g:at top="620" left="750">
+            	<g:Button ui:field="rate">Rate einziehen</g:Button>
+         	</g:at>
          	      	
          	
       </g:AbsolutePanel>      
