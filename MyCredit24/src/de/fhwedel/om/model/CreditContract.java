@@ -63,7 +63,7 @@ public class CreditContract implements BusinessObject<Integer> {
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Rate rate;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
 	private Customer customer;
 
 	public CreditContract() {

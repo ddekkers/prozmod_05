@@ -11,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Transient;
 
+import de.fhwedel.om.masks.DateHandler;
 import de.fhwedel.om.types.PaymentType;
 
 @SuppressWarnings("serial")
@@ -79,8 +81,6 @@ public class Payment implements BusinessObject<Integer> {
       return this.getCaption();
    }
    
-   // BusinessObject-Methoden 
-   
    @Override
    public Integer getID() {
       return this.payment_id;
@@ -88,7 +88,7 @@ public class Payment implements BusinessObject<Integer> {
 
    @Override
    public String getCaption() {
-      return type.toString() + " " + amount.toString() + " EUR";
+      return type.toString() + " - " + amount.toString() + " EUR - " + (new DateHandler("dd.MM.yyyy").getDateAsString(date));
    }
 
 	public CreditContract getCreditContract() {

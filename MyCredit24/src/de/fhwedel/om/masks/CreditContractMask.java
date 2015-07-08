@@ -172,22 +172,28 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    	@UiHandler("outpayment")
    	protected void onOutpaymentClick(ClickEvent event) {
 	   
-	   Payment payment = new Payment(new Date(), this.creditAmount.getValue(), PaymentType.Auszahlung, getBO());
-	   this.getService().save(payment, new AsyncCallback<Payment>() {
+   		Payment payment = new Payment(new Date(), this.creditAmount.getValue(), PaymentType.Auszahlung, getBO());
 
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Fehler beim Speichern der Auszahlung");
-		}
+	   	this.getService().saveOutpayment(payment, new AsyncCallback<Payment>() {
 
-		@Override
-		public void onSuccess(Payment result) {
-			refreshPayments();
-		}
-		   
-	   });
-	   
-   	}
+	   		@Override
+	   		public void onFailure(Throwable caught) {
+
+			}
+
+			@Override
+			public void onSuccess(Payment result) {
+				if (result != null) {
+					getBO().setStatus(CreditContractStatus.Ausgezahlt);
+					refreshPayments();
+				} else {
+					
+					Window.alert("Auszahlung bereits vorhanden.");
+				}
+			}
+			   
+		   });
+   		}
    
 	private void refreshPayments() {
 		
@@ -206,19 +212,19 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @UiHandler("rejected_deadline")
    protected void onRejectedDeadlineClick(ClickEvent event) {
 
-	   this.status.setValue(CreditContractStatus.rejected_deadline);
+	   this.status.setValue(CreditContractStatus.Abgelehnt_wegen_Fristablauf);
 	   this.saveBO();
    }
    
    @UiHandler("rejected_deadline")
    protected void onRejectedValidityClick(ClickEvent event) {
-	   this.status.setValue(CreditContractStatus.rejected_validity);
+	   this.status.setValue(CreditContractStatus.Abgelehnt_wegen_Bonitaet);
 	   this.saveBO();
    }
    
    @UiHandler("revocation")
    protected void onRevocationClick(ClickEvent event) {
-	   this.status.setValue(CreditContractStatus.revocation);
+	   this.status.setValue(CreditContractStatus.Widerruf);
 	   this.saveBO();
    }
    
@@ -334,8 +340,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   		case Kreditangebot_erstellen:
 	   			if (this.getBO().getRate() != null) {
 
-	   				this.getBO().setStatus(CreditContractStatus.proposal);
-	   				this.status.setValue(CreditContractStatus.proposal);			
+	   				this.getBO().setStatus(CreditContractStatus.Angebot);
+	   				this.status.setValue(CreditContractStatus.Angebot);			
 					this.getBO().setResidualDebt(this.getBO().getCreditAmount());
 					this.residualDebt.setValue(this.getBO().getCreditAmount());
 	   				this.saveBO();   
@@ -348,8 +354,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   			this.getBO().setIban(iban.getValue());
 	   			if (this.getBO().getBic() != null && !this.getBO().getBic().isEmpty() && this.getBO().getIban() != null && !this.getBO().getIban().isEmpty()) {
 	   				
-	   				this.getBO().setStatus(CreditContractStatus.engrossed);
-	   				this.status.setValue(CreditContractStatus.engrossed);
+	   				this.getBO().setStatus(CreditContractStatus.Ausgefertigt);
+	   				this.status.setValue(CreditContractStatus.Ausgefertigt);
 	   				this.saveBO();
 	   				Window.alert("Kreditvertrag ausgefertigt!");	   				
 	   			} else

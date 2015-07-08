@@ -29,4 +29,5 @@ public interface OMServiceAsync {
    void searchCreditContractBy(String credit_contract_number, AsyncCallback<List<CreditContract>> callback);
    void evaluate(Integer modeOfEmployment, Integer monthNet, AsyncCallback<Integer> callback);
    void getAllPaymentsByCreditContractId(Integer id, AsyncCallback<List<Payment>> asyncCallback);
+   void saveOutpayment(Payment payment, AsyncCallback<Payment> asyncCallback);
 }

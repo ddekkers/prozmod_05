@@ -30,4 +30,5 @@ public interface OMService extends RemoteService {
    public Integer evaluate(Integer modeOfEmployment, Integer monthNet);
    
    public List<Payment> getAllPaymentsByCreditContractId(Integer id);
+   public Payment saveOutpayment(Payment id);
 }

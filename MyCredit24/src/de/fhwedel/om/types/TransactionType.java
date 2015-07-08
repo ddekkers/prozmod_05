@@ -5,5 +5,6 @@ public enum TransactionType {
 	Kreditangebot_erstellen,
 	Kreditantrag_pruefen,
 	Auskunft,
-	Widerruf
+	Widerruf,
+	Kredit_Summe_ausbezahlen
 }
