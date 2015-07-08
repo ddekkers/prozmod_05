@@ -67,14 +67,20 @@
          </g:at>
          
          <g:at top="120" left="400">
-            <g:Label text="Adresse:"/>
+            <g:Label text="Straße:"/>
          </g:at>
          <g:at top="120" left="500">
             <g:TextBox pixelSize="200,20" ui:field="street"/>
          </g:at>      
+         <g:at top="160" left="400">
+            <g:Label text="PLZ:"/>
+         </g:at>
 		 <g:at top="160" left="500">
             <g:TextBox pixelSize="200,20" ui:field="postcode"/>
          </g:at>      
+         <g:at top="200" left="400">
+            <g:Label text="Ort:"/>
+         </g:at>
 		 <g:at top="200" left="500">
             <g:TextBox pixelSize="200,20" ui:field="city"/>
          </g:at>

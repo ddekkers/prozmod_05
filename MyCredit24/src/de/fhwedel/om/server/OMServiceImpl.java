@@ -231,6 +231,9 @@ implements OMService {
          cc = em.merge(cc);
       else {
          em.persist(cc);
+		 Customer c = cc.getCustomer();
+         c.addCreditContract(cc);
+         em.merge(c);
       }
       em.getTransaction().commit();
       return cc;

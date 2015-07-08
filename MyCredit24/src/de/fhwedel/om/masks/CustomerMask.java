@@ -141,11 +141,11 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    
    @UiHandler("select_customer")
    protected void onSelectCustomerClick(ClickEvent event) {
-	   List<CreditContract> contracts = this.getBO().getCreditContracts();
-	   for (CreditContract creditContract : contracts) {
-		Window.alert(creditContract.getCaption());
-	}
-      this.setBO(this.customers.getValue());
+	  if (this.customers.getValue() != null){
+		  this.setBO(this.customers.getValue());
+	  } else {
+		  Window.alert("Bitte Kunden auswählen");
+	  }
    }
 
    @UiHandler("customers")
@@ -174,15 +174,19 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 
    @UiHandler("save_customer")
    protected void onSaveCustomerClick(ClickEvent event) {
-	   if (!(this.pname.getText().equals("")
-		  || this.sname.getText().equals("")
-		  || this.street.getText().equals("")
-		  || this.postcode.getText().equals("")
-		  || this.city.getText().equals(""))) {
-		   this.saveBO();
-		   
+	   if (this.getBO() != null) {
+		   if (!(this.pname.getText().equals("")
+			  || this.sname.getText().equals("")
+			  || this.street.getText().equals("")
+			  || this.postcode.getText().equals("")
+			  || this.city.getText().equals(""))) {
+			   this.saveBO();
+			   
+		   } else {
+			   Window.alert("Bitte alle Felder ausfüllen.");
+		   }
 	   } else {
-		   Window.alert("Bitte alle Felder ausfüllen.");
+		   Window.alert("Bitte Neuen Kunden anlegen");
 	   }
    }
 
@@ -225,7 +229,6 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    
    @Override
    public void refresh() {
-	   saveBO();
       this.refreshCustomers();
       this.refreshCreditContracts();
       super.refresh();
