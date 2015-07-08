@@ -23,7 +23,8 @@ public class DateHandler {
 		long msLater = laterDate.getTime();
 		long msEarlier = earlierDate.getTime();
 		long milliSecondsBetween = msLater - msEarlier;
-		return milliSecondsBetween / 24 / 60 / 60 / 1000;
+		double daysBetweenExact= milliSecondsBetween / 24 / 60 / 60 / 1000 + 1;
+		return (long)daysBetweenExact;
 	}
 	
 	public boolean isAAfterOrEqualsBAndBeforeC(Date A, Date B, Date C) {

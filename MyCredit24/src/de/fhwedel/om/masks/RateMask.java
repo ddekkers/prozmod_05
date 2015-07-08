@@ -51,7 +51,7 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
    // Alle Felder zur Vertragsdetail anzeige
    @Ignore @UiField IntegerBox contractRuntime;
    @Ignore @UiField IntegerBox contractAmount;
-   @Ignore @UiField DatePicker contractBegin;
+   @Path("contract.contractBegin") @Ignore @UiField DatePicker contractBegin;
    
    // Alle Felder zum Tarif
    @Path("rateNumber") @UiField TextBox rateNumber;

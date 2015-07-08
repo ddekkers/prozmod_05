@@ -134,7 +134,7 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	}
 	
 	public SelfDisclosure() {
-		this(null, "Imker", null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null, null);
 	}
 	
 	public SelfDisclosure(Date registration, String occupation, ModeOfEmployment mode_of_employment, Boolean terminable, String employer, Integer month_net, Date classification, Integer credit_limit, ValidityLevel validity, Customer customer) {

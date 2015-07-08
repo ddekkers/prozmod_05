@@ -44,6 +44,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @Ignore @UiField TextBox search_sname;
    @Ignore @UiField TextBox search_pname;
    @Ignore @UiField BOSelectListBox<Customer, Integer> customers;
+   @Ignore @UiField BOSelectListBox<CreditContract, Integer> creditContracts;
    
    @Path("customerNumber") @UiField IntegerBox cust_number;
    @Path("prename") @UiField TextBox pname;
@@ -53,7 +54,6 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @UiField TextBox city;
    
    @UiField CaptionPanel selfDisclosure;
-//   @UiField BOSelectListBox<CreditContract, Integer> creditContracts;
    
    //Buttons
    @UiField Button search_customer;   
@@ -92,6 +92,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.save_customer.setVisible(!show_only);
       this.edit_selfDisclosure.setVisible(!show_only);
       this.new_creditContract.setVisible(!show_only);
+      this.creditContracts.setVisible(!show_only);
    }
     
    public void setBO(Customer c) {
@@ -132,14 +133,18 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    }
    
    protected void refreshCreditContracts() {
-//	      if(this.getBO() != null)
-//	          creditContracts.setAcceptableValues(this.getBO().getCreditContracts());
-//	       else 
-//	          creditContracts.clear();
+	      if(this.getBO() != null && this.cust_number.getValue() != null)
+	          creditContracts.setAcceptableValues(this.getBO().getCreditContracts());
+	       else
+	          creditContracts.clear();
    }
    
    @UiHandler("select_customer")
    protected void onSelectCustomerClick(ClickEvent event) {
+	   List<CreditContract> contracts = this.getBO().getCreditContracts();
+	   for (CreditContract creditContract : contracts) {
+		Window.alert(creditContract.getCaption());
+	}
       this.setBO(this.customers.getValue());
    }
 
@@ -209,13 +214,18 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 	   }
    @UiHandler("new_creditContract")
    protected void onNewCreditContractClick(ClickEvent event) {
-      CreditContract creditContract = new CreditContract();
-      creditContract.setCustomer(this.getBO());
-      this.getFlowControl().forward(new CreditContractMask(creditContract, transactionType));         
+	   if (!(this.cust_number.getValue() == null || this.transactionType == null)) {
+		   CreditContract creditContract = new CreditContract();
+		   creditContract.setCustomer(this.getBO());
+		   this.getFlowControl().forward(new CreditContractMask(creditContract, transactionType));  
+	   } else {
+		   Window.alert("Neu anlegen eines Vertrags nicht möglich. Bitte Kunden wählen.");
+	   }
    }
    
    @Override
    public void refresh() {
+	   saveBO();
       this.refreshCustomers();
       this.refreshCreditContracts();
       super.refresh();

@@ -93,13 +93,10 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   
 	   @UiHandler("save_selfDisclosure")
 	   protected void onSaveSelfDisclosureClick(ClickEvent event) {
-		   if (getBO().getValidity() == ValidityLevel.X) {
-
-			  
-		   } else {
+		   if (getBO().getValidity() != ValidityLevel.X) {
+			   this.saveBO();			  
+		   };
 			   
-			   this.saveBO();
-		   }
 	   }
 	   
 	   @UiHandler("eval_validity")
@@ -137,7 +134,6 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 					   validity.setValue(ValidityLevel.X);
 					   
 				   }
-				   refreshModeOfEmployment();
 			   }
 			   @Override
 			   public void onFailure (Throwable caught) {

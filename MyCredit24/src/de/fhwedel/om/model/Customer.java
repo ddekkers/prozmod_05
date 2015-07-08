@@ -42,7 +42,7 @@ public class Customer implements BusinessObject<Integer> {
    
 	private String city;
 	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="customer", cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH})
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="customer", orphanRemoval=true, cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH})
 	private List<CreditContract> creditContracts;
 	
 	@OneToOne(fetch=FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.PERSIST)
