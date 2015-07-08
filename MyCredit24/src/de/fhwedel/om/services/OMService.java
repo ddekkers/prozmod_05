@@ -20,6 +20,7 @@ public interface OMService extends RemoteService {
    public <TYPE extends BusinessObject<?>> List<TYPE> getQuery(String query);
    public List<Customer> getAllCustomers(); 
    public List<CreditContract> getAllCreditContracts();
+   public List<CreditContract> getCreditContractsOf(Customer cust);
    public List<Customer> searchCustomersBy(Integer cust_number, String prename, String surname);
    public List<CreditContract> searchCreditContractBy(String credit_contract_number);
    

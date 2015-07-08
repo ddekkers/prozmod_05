@@ -199,13 +199,21 @@ implements OMService {
 	   Collections.sort(allCreditContracts, (CreditContract cc1, CreditContract cc2) -> cc1.getContractNumber().compareTo(cc2.getContractNumber()));
 	   return allCreditContracts;
    }
+   
+   @Override
+   public List<CreditContract> getCreditContractsOf(Customer cust) {
+	   List<CreditContract> allContracts = getAllCreditContracts();
+	   return allContracts.stream().filter(c -> c.getCustomer().getCustomerNumber() == cust.getCustomerNumber())
+			   .collect(Collectors.toList());
+   }
 
    @Override
    public List<CreditContract> searchCreditContractBy(String credit_contract_number) {
 	   
 	   List<CreditContract> allCreditContracts = getAllCreditContracts();
 	   
-	   List<CreditContract> filteredCreditContracts = allCreditContracts.stream().filter(c -> c.getContractNumber().equals(credit_contract_number)).collect(Collectors.toList());
+	   List<CreditContract> filteredCreditContracts = allCreditContracts.stream().filter(c -> c.getContractNumber().equals(credit_contract_number))
+			   .collect(Collectors.toList());
 	   return filteredCreditContracts;
    }
    	

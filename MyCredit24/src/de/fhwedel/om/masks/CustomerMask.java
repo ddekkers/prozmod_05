@@ -134,7 +134,16 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    
    protected void refreshCreditContracts() {
 	      if(this.getBO() != null && this.cust_number.getValue() != null)
-	          creditContracts.setAcceptableValues(this.getBO().getCreditContracts());
+	    	  this.getService().getCreditContractsOf(this.getBO(),new AsyncCallback<List<CreditContract>>() {         
+	    	         @Override
+	    	         public void onSuccess(List<CreditContract> result) {
+	    		          creditContracts.setAcceptableValues(result);	    	                        
+	    	         }         
+	    	         @Override
+	    	         public void onFailure(Throwable caught) {
+	    	            Window.alert("Fehler beim Laden der Kreditverträge.");        
+	    	         }
+	    	      }); 
 	       else
 	          creditContracts.clear();
    }
