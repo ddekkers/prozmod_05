@@ -9,9 +9,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.fhwedel.om.model.BusinessObject;
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
+import de.fhwedel.om.model.Payment;
 import de.fhwedel.om.model.Rate;
-import de.fhwedel.om.types.ModeOfEmployment;
-import de.fhwedel.om.types.ValidityLevel;
 
 public interface OMServiceAsync {
    
@@ -29,4 +28,5 @@ public interface OMServiceAsync {
    void save(CreditContract cc, AsyncCallback<CreditContract> callback);
    void searchCreditContractBy(String credit_contract_number, AsyncCallback<List<CreditContract>> callback);
    void evaluate(Integer modeOfEmployment, Integer monthNet, AsyncCallback<Integer> callback);
+   void getAllPaymentsByCreditContractId(Integer id, AsyncCallback<List<Payment>> asyncCallback);
 }

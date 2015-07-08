@@ -60,9 +60,6 @@ public class CreditContract implements BusinessObject<Integer> {
 	
 	private String bic;
 	
-//	@OneToMany(fetch=FetchType.EAGER, mappedBy ="creditContract", cascade = CascadeType.PERSIST)
-//	private List<Payment> payments;
-//	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Rate rate;
 	
@@ -70,10 +67,10 @@ public class CreditContract implements BusinessObject<Integer> {
 	private Customer customer;
 
 	public CreditContract() {
-		this(null, CreditContractStatus.proposal, null, null, null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null, null, null);
 	}
 	
-	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, Date contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, List<Payment> payments, Rate rate, Customer customer) {
+	public CreditContract(String contract_number, CreditContractStatus status, Integer runtime, Integer credit_amount, Date contract_begin, Integer annuity_rental, Integer residual_debt, String iban, String bic, Rate rate, Customer customer) {
 		
 		this.contractNumber = contract_number;
 		this.status = status;
@@ -84,8 +81,7 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.residualDebt = residual_debt;
 		this.iban = iban;
 		this.bic = bic;	
-//		this.payments = payments;
-//		this.rate = rate;
+		this.rate = rate;
 		this.customer = customer;
 	}
 
@@ -170,14 +166,6 @@ public class CreditContract implements BusinessObject<Integer> {
 		this.bic = bic;
 	}
 	  
-//	public List<Payment> getPayments() {
-//		return payments;
-//	}
-//
-//	public void setPayments(List<Payment> payments) {
-//		this.payments = payments;
-//	}
-	
 	public Rate getRate() {
 		return rate;
 	}
@@ -201,7 +189,7 @@ public class CreditContract implements BusinessObject<Integer> {
 
 	@Override
 	public String getCaption() {
-		return contractNumber == null ? "" + status.toString() : contractNumber + " " + status.toString();
+		return contractNumber == null ? "" + (status == null ? "" : status.toString()) : contractNumber + " " + (status == null ? "" : status.toString());
 	}
 
 	

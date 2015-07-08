@@ -33,8 +33,6 @@ public class MainMask implements EntryPoint, FlowControl {
    
    @UiField Button customers;
    @UiField Button credit_contract;
-   @UiField Button rate;   
-   @UiField Button payment;   
    @Ignore @UiField EnumSelectListBox<TransactionType> transactionType;
    @UiField Button back;
    @UiField Label history_label;
@@ -58,16 +56,6 @@ public class MainMask implements EntryPoint, FlowControl {
    @UiHandler("credit_contract")
    protected void onCreditContractClick(ClickEvent event) {
 	   this.forward(new CreditContractMask(transactionType.getValue())); 
-   }
-   
-   @UiHandler("rate")
-   protected void onRateClick(ClickEvent event) {
-	   this.forward(new RateMask(transactionType.getValue(), new CreditContract(), false)); 
-   }
-   
-   @UiHandler("payment")
-   protected void onPaymentClick(ClickEvent event) {
-	   this.forward(new PaymentMask(new CreditContract(), new Payment(), false)); 
    }
 
    @UiHandler("back")

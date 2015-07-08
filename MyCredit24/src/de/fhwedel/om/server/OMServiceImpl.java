@@ -122,9 +122,9 @@ implements OMService {
          em.persist( new Rate("R1_2", 10.2, 2, 1000, 1000000, ValidityLevel.C, begin, end));
          em.persist( new Rate("R1_1", 10.2, 1, 1000, 1000000, ValidityLevel.C, begin, end));
          
-         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), test_rate_1, cust));
-         em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), test_rate_1, cust));
-         em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", new ArrayList<Payment>(), test_rate_1, cust));
+         em.persist( new CreditContract("1", CreditContractStatus.proposal, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", test_rate_1, cust));
+         em.persist( new CreditContract("2", CreditContractStatus.revocation, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", test_rate_1, cust));
+         em.persist( new CreditContract("3", CreditContractStatus.disburse, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", test_rate_1, cust));
          
          em.getTransaction().commit();
       }
@@ -207,7 +207,7 @@ implements OMService {
 	   List<CreditContract> filteredCreditContracts = allCreditContracts.stream().filter(c -> c.getContractNumber().equals(credit_contract_number)).collect(Collectors.toList());
 	   return filteredCreditContracts;
    }
-   
+   	
    @Override
    synchronized public <TYPE extends BusinessObject<?>> TYPE save(TYPE entity) {
       EntityManager em = OMServiceImpl.getEM();
@@ -251,11 +251,26 @@ implements OMService {
 			   filteredRates.add(act);
 		   }
 	   }
-	   
-	   
-		return filteredRates;
+	   return filteredRates;
 	}
-   
+
+	@Override
+	public List<Payment> getAllPaymentsByCreditContractId(Integer id) {
+	   EntityManager em = OMServiceImpl.getEM();
+	   List<Payment> allPayments = em.createNamedQuery("getAllPayments").getResultList();
+	   List<Payment> filteredPayments = new ArrayList<Payment>();
+		
+	   for (int i = 0; i < allPayments.size(); ++i) {
+		   
+		   if (id.equals(allPayments.get(i).getCreditContract().getID())) {
+			   
+			   filteredPayments.add(allPayments.get(i));
+		   }
+		   
+	   }
+	   return filteredPayments;
+	}
+	   
 /*   @Override
    synchronized public OrderPosition save(OrderPosition pos) {
       EntityManager em = OMServiceImpl.getEM();

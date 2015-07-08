@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.fhwedel.om.model.BusinessObject;
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
+import de.fhwedel.om.model.Payment;
 import de.fhwedel.om.model.Rate;
-import de.fhwedel.om.types.ModeOfEmployment;
 
 @RemoteServiceRelativePath("services")
 public interface OMService extends RemoteService {
@@ -29,4 +28,6 @@ public interface OMService extends RemoteService {
    public CreditContract save(CreditContract cc);
    public List<Rate> getPossibleRates(Date c_begin, Integer c_runtime, Integer c_amount);
    public Integer evaluate(Integer modeOfEmployment, Integer monthNet);
+   
+   public List<Payment> getAllPaymentsByCreditContractId(Integer id);
 }

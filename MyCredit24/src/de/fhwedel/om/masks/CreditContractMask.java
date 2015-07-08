@@ -25,6 +25,7 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Payment;
 import de.fhwedel.om.types.CreditContractStatus;
+import de.fhwedel.om.types.PaymentType;
 import de.fhwedel.om.types.TransactionType;
 import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.BOSelectListBox;
@@ -142,6 +143,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
       this.setBO(c);
 	  this.setNewContractNumber();
 	  this.refreshValidityLevel();
+	  this.refreshPayments();
 	  setWidgetPropertiesByTransactionType(transactionType);
    }
     
@@ -166,6 +168,40 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
          }
       });
    }
+   
+   	@UiHandler("outpayment")
+   	protected void onOutpaymentClick(ClickEvent event) {
+	   
+	   Payment payment = new Payment(new Date(), this.creditAmount.getValue(), PaymentType.Auszahlung, getBO());
+	   this.getService().save(payment, new AsyncCallback<Payment>() {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Fehler beim Speichern der Auszahlung");
+		}
+
+		@Override
+		public void onSuccess(Payment result) {
+			refreshPayments();
+		}
+		   
+	   });
+	   
+   	}
+   
+	private void refreshPayments() {
+		
+	     this.getService().getAllPaymentsByCreditContractId(getBO().getID(), new AsyncCallback<List<Payment>>() {         
+	         @Override
+	         public void onSuccess(List<Payment> result) {
+	        	 payments.setAcceptableValues(result);
+	         }         
+	         @Override
+	         public void onFailure(Throwable caught) {
+	            Window.alert("Fehler beim Laden der Zahlungen.");        
+	         }
+	      }); 	
+	}
    
    @UiHandler("rejected_deadline")
    protected void onRejectedDeadlineClick(ClickEvent event) {
@@ -192,6 +228,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		this.setBO(this.credit_contracts.getValue());
       	refreshCreditContractStatus();
       	this.status.setValue(getBO().getStatus());
+      	refreshPayments();
 	  }
    }
    
@@ -217,7 +254,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   
 	   if (TransactionType.Kreditangebot_erstellen.equals(getTransactionType())) {	
 		   CreditContract cc = this.getBO();
-		   cc.setContractBegin(new Date());
+		   cc.setContractBegin(this.contractBegin.getValue());
 		   if (cc.getContractBegin() == null) {
 				Window.alert("Geben Sie einen Vertragsbeginn ein.");      
 		   } else {
@@ -238,7 +275,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 						   Window.alert("Geben Sie eine Laufzeit ein.");
 					   else {
 						   if ((contractBegin.getValue() != null)
-							 && dateHandler.daysBetween(new Date(), contractBegin.getValue()) > MIN_DAYS) {
+							 && dateHandler.daysBetween(new Date(), contractBegin.getValue()) >= MIN_DAYS) {
 								   this.getFlowControl().forward(new RateMask(getTransactionType(), this.getBO(), false));
 						   } else {
 							   Window.alert("Bitte einen Vertragsbeginn wählen, der mind. 28 Tage in der Zukunft liegt.");
@@ -297,6 +334,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   		case Kreditangebot_erstellen:
 	   			if (this.getBO().getRate() != null) {
 
+	   				this.getBO().setStatus(CreditContractStatus.proposal);
+	   				this.status.setValue(CreditContractStatus.proposal);			
 					this.getBO().setResidualDebt(this.getBO().getCreditAmount());
 					this.residualDebt.setValue(this.getBO().getCreditAmount());
 	   				this.saveBO();   

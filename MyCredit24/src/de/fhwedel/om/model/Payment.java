@@ -8,10 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import de.fhwedel.om.types.PaymentType;
 
@@ -36,8 +35,9 @@ public class Payment implements BusinessObject<Integer> {
    
    private PaymentType type; 
    
+   @ManyToOne(cascade = CascadeType.PERSIST)
    private CreditContract creditContract;
-
+   
    public Date getDate() {
 	   return date;
    }
@@ -62,24 +62,16 @@ public class Payment implements BusinessObject<Integer> {
 	   this.type = type;
    }
    
-   public CreditContract getCreditContract() {
-	   return creditContract;
-   }
-
-   public void setCreditContract(CreditContract credit_contract) {
-	   this.creditContract = credit_contract;
-   }
-   
    public Payment() {
-	   this(new Date(), 0, PaymentType.rate, new CreditContract());
+	   this(null, null, null, null);
    }
       
-   public Payment(Date date, int amount, PaymentType type, CreditContract credit_contract) {
+   public Payment(Date date, Integer amount, PaymentType type, CreditContract contract) {
 	   
 	   this.date = date;
 	   this.amount = amount;
 	   this.type = type;
-	   this.creditContract = credit_contract;
+	   this.creditContract = contract;
    }
 
    @Override
@@ -96,7 +88,15 @@ public class Payment implements BusinessObject<Integer> {
 
    @Override
    public String getCaption() {
-      return type.toString() + amount.toString() + " EUR";
+      return type.toString() + " " + amount.toString() + " EUR";
    }
+
+	public CreditContract getCreditContract() {
+		return creditContract;
+	}
+	
+	public void setCreditContract(CreditContract creditContract) {
+		this.creditContract = creditContract;
+	}
    
 }
