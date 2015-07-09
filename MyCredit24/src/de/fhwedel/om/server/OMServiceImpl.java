@@ -77,12 +77,12 @@ implements OMService {
       
       //Testdatensätze anlegen
       if(OMServiceImpl.props.getProperty("regenerate", "0").equals("1")) {            
-         Customer cust = new Customer (7, "Jonas", "Hübner", "Straße 1", "78902", "Hamburg", new ArrayList<CreditContract>(), new SelfDisclosure());
+         Customer cust = new Customer (7, "Jonas", "Hübner", "Straße 1", "78902", "Hamburg", new SelfDisclosure());
     	 EntityManager em = OMServiceImpl.getEM();
          em.getTransaction().begin();
-         em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new ArrayList<CreditContract>() , new SelfDisclosure()) );
-         em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) );
-         em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new ArrayList<CreditContract>() , new SelfDisclosure()) ); 
+         em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new SelfDisclosure()) );
+         em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new SelfDisclosure()) );
+         em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new SelfDisclosure()) ); 
          
          GregorianCalendar cal = new GregorianCalendar(2015, 01, 01);
          Date begin = cal.getTime();
@@ -225,9 +225,13 @@ implements OMService {
 
       if(entity.getID() != null) {
          em.merge(entity);
+         
       }
-      else
-         em.persist(entity);         
+      else {
+    	  em.persist(entity);   
+      
+      }
+      
       em.getTransaction().commit();
       return entity;
    }
@@ -236,14 +240,12 @@ implements OMService {
    synchronized public CreditContract save(CreditContract cc) {
       EntityManager em = OMServiceImpl.getEM();
       em.getTransaction().begin();
-
-      if(cc.getID() != null)
+      em.flush();
+      if(cc.getID() != null) {
          cc = em.merge(cc);
+      }
       else {
          em.persist(cc);
-		 Customer c = cc.getCustomer();
-         c.addCreditContract(cc);
-         em.merge(c);
       }
       em.getTransaction().commit();
       return cc;

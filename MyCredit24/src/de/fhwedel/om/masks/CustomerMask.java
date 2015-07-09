@@ -1,6 +1,7 @@
 package de.fhwedel.om.masks;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -15,6 +16,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
+import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -81,9 +84,55 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.refreshCreditContracts();
       this.setBO(c);
       this.transactionType = transactionType;
+      setWidgetPropertiesByTransactionType(transactionType);
    }
    
-   protected void setMode(boolean show_only) {
+   private void setWidgetPropertiesByTransactionType(TransactionType transactionType2) {
+	   setSearchMode(true);
+	   setCustomerDatesMode(false);
+	   
+	   
+	   setWidgetMode(selfDisclosure, false);
+	   
+}
+
+private void setWidgetMode(Widget widget, Boolean bool) {
+		
+//	if (widget instanceof HasWidgets) {
+//	Iterator<Widget> iter = ((HasWidgets)widget).iterator();
+//	   while (iter.hasNext()) {
+//		   Widget next = iter.next();
+//		   setWidgetMode(next, bool);
+//		   Window.alert(next.getStyleName());
+//		   if (next instanceof FocusWidget)
+//           {
+//			   ((FocusWidget)next).setEnabled(bool);
+//           }
+//	   }
+//	}
+}
+
+   private void setCustomerDatesMode(Boolean bool) {
+	   cust_number.setEnabled(bool);
+	   sname.setEnabled(bool);
+	   pname.setEnabled(bool);
+	   street.setEnabled(bool);
+	   postcode.setEnabled(bool);
+	   city.setEnabled(bool);
+	   
+	   save_customer.setEnabled(bool);
+	   edit_selfDisclosure.setEnabled(bool);
+}
+
+private void setSearchMode(boolean bool) {
+	search_cust_number.setEnabled(bool);
+	   search_sname.setEnabled(bool);
+	   search_pname.setEnabled(bool);
+	   search_customer.setEnabled(bool);
+	   customers.setEnabled(bool);
+}
+
+protected void setMode(boolean show_only) {
       this.show_only = show_only;
       
       this.pname.setReadOnly(show_only);

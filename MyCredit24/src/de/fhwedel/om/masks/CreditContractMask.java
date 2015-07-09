@@ -172,7 +172,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
         	CreditContractMask.this.setBO(result);
         	CreditContractMask.this.fireSaved();
      	   	refreshCreditContracts();
-         }         
+         }       
          @Override
          public void onFailure(Throwable caught) {
             Window.alert("Fehler beim Speichern des Kreditvertrags.");        

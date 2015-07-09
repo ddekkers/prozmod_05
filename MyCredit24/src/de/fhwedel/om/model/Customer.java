@@ -42,9 +42,6 @@ public class Customer implements BusinessObject<Integer> {
    
 	private String city;
 	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="customer", orphanRemoval=true, cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH})
-	private List<CreditContract> creditContracts;
-	
 	@OneToOne(fetch=FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.PERSIST)
 	private SelfDisclosure selfDisclosure;
    
@@ -96,17 +93,6 @@ public class Customer implements BusinessObject<Integer> {
 		this.city = city;
 	}
 
-	public List<CreditContract> getCreditContracts() {
-		return creditContracts;
-	}
-
-	public void setCreditContracts(List<CreditContract> creditContracts) {
-		this.creditContracts = creditContracts;
-	}
-	
-	public void addCreditContract(CreditContract creditContract) {
-		this.creditContracts.add(creditContract);
-	}
 
 	public SelfDisclosure getSelfDisclosure() {
 		return selfDisclosure;
@@ -117,17 +103,16 @@ public class Customer implements BusinessObject<Integer> {
 	}
 	   
 	public Customer() {
-		this(null, "", "", "", "", "", new ArrayList<CreditContract>(), null);
+		this(null, "", "", "", "", "", null);
 	}
       
-	public Customer(Integer customer_number, String prename, String surname,  String street, String postcode, String city, List<CreditContract> credit_contracts, SelfDisclosure self_disclosure) {
+	public Customer(Integer customer_number, String prename, String surname,  String street, String postcode, String city, SelfDisclosure self_disclosure) {
 		this.customerNumber = customer_number;
 		this.surname = surname;
 		this.prename = prename;
 		this.street = street;
 		this.postcode = postcode;
 		this.city = city;
-		this.creditContracts = credit_contracts;
 		this.selfDisclosure = self_disclosure;
 	}
 
