@@ -114,7 +114,7 @@
             <g:Button pixelSize="100,50" ui:field="new_creditContract">Neuer Kreditvertrag</g:Button>
          </g:at>
          <g:at top="330" left="1010">
-            <g:Button pixelSize="100,50" ui:field="edit_creditContract">Kreditvertrag bearbeiten</g:Button>
+            <g:Button pixelSize="100,50" ui:field="edit_creditContract">Kreditvertrag öffnen</g:Button>
          </g:at>  
 				
       </g:AbsolutePanel>      

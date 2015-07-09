@@ -221,9 +221,11 @@ implements OMService {
    synchronized public <TYPE extends BusinessObject<?>> TYPE save(TYPE entity) {
       EntityManager em = OMServiceImpl.getEM();
       em.getTransaction().begin();
+      
 
-      if(entity.getID() != null)
+      if(entity.getID() != null) {
          em.merge(entity);
+      }
       else
          em.persist(entity);         
       em.getTransaction().commit();

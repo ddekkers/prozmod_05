@@ -112,6 +112,7 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
    @Override
    protected void saveBO() {
       this.editorDriver.flush();
+      Window.alert(this.getBO().getID() + " " + this.getBO().getCaption());
       this.getService().save(this.getBO(), new AsyncCallback<Customer>() {         
          @Override
          public void onSuccess(Customer result) {
