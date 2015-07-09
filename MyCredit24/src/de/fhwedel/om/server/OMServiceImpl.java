@@ -240,7 +240,6 @@ implements OMService {
    synchronized public CreditContract save(CreditContract cc) {
       EntityManager em = OMServiceImpl.getEM();
       em.getTransaction().begin();
-      System.out.println((cc.getID()!=null)?Integer.toString(cc.getID()):"leer");
       if(cc.getID() != null) {
          cc = em.merge(cc);
       }

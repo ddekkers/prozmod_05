@@ -77,18 +77,23 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       initWidget(uiBinder.createAndBindUi(this));
       this.setMode(show_only);
       this.editorDriver.initialize(this);
+      setWidgetProperties();
       this.refreshCustomers();
       this.refreshCreditContracts();
       this.setBO(c);
    }
    
-   private void setWidgetPropertiesByTransactionType() {
+   private void setWidgetProperties() {
 	   setSearchMode(true);
 	   setCustomerDatesMode(false);
-	   
-	   
-	   setWidgetMode(selfDisclosure, false);
-	   
+	   setContractDatesMode(false);
+	   setWidgetMode(selfDisclosure, false);	   
+}
+
+private void setContractDatesMode(Boolean bool) {
+	creditContracts.setEnabled(bool);
+	   new_creditContract.setEnabled(bool);
+	   edit_creditContract.setEnabled(bool);
 }
 
 private void setWidgetMode(Widget widget, Boolean bool) {
@@ -145,7 +150,7 @@ protected void setMode(boolean show_only) {
       super.setBO(c);
       this.refreshCreditContracts();
       this.selfDisclosure.clear();
-      this.selfDisclosure.add( new SelfDisclosureMask(this.getBO().getSelfDisclosure()) );
+      this.selfDisclosure.add( new SelfDisclosureMask(this.getBO().getSelfDisclosure(), false));
       this.new_creditContract.setEnabled(this.getBO().getID() != null);
       this.edit_creditContract.setEnabled(this.getBO().getID() != null);
       this.creditContracts.setEnabled(this.getBO().getID() != null);
@@ -206,6 +211,8 @@ protected void setMode(boolean show_only) {
 	  } else {
 		  Window.alert("Bitte Kunden auswählen");
 	  }
+	  setCustomerDatesMode(true);
+	  setContractDatesMode(true);
    }
 
    @UiHandler("customers")
@@ -263,6 +270,8 @@ protected void setMode(boolean show_only) {
 	            Window.alert("Fehler beim Laden der neuen Kundennummer.");        
 	         }
 	   });
+	  setCustomerDatesMode(true);
+	  setContractDatesMode(true);
    }
    
    @UiHandler("edit_selfDisclosure")
@@ -274,7 +283,7 @@ protected void setMode(boolean show_only) {
 		    
 	   }
 	   selfDisclosure.setCustomer(this.getBO());
-	   this.getFlowControl().forward(new SelfDisclosureMask(selfDisclosure));
+	   this.getFlowControl().forward(new SelfDisclosureMask(selfDisclosure, true));
 	   }
    
    @UiHandler("new_creditContract")

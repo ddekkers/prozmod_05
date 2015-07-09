@@ -54,12 +54,25 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   @UiField Button save_selfDisclosure;
 	   @UiField Button eval_validity;
 	   	   
-	   public SelfDisclosureMask(SelfDisclosure s) {
+	   public SelfDisclosureMask(SelfDisclosure s, Boolean show_only) {
 		   initWidget(uiBinder.createAndBindUi(this));
+		   setMode(show_only);
 	       this.editorDriver.initialize(this);
 	       this.refreshModeOfEmployment();
 	       this.refreshValidity();
 		   this.setBo(s);
+	   }
+	   
+	   protected void setMode(Boolean show_only) {
+		   this.occupation.setEnabled(show_only);
+		   this.modeOfEmployment.setEnabled(show_only);
+		   this.terminable.setEnabled(show_only);
+		   this.employer.setEnabled(show_only);
+		   this.monthNet.setEnabled(show_only);
+		   this.creditLimit.setEnabled(show_only);
+		   this.validity.setEnabled(show_only);
+		   this.save_selfDisclosure.setVisible(show_only);
+		   this.eval_validity.setVisible(show_only);
 	   }
 	   
 	   protected void refreshModeOfEmployment(){

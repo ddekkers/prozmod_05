@@ -13,16 +13,13 @@
 			<g:at top="0" left="100">
 				<g:Button ui:field="credit_contract" text="Kreditverträge"/>
 			</g:at>
-            <g:at top="170" left="250">
+            <g:at top="0" left="250">
                 <g:Button visible="false" ui:field="back" text="Zurück"/>
             </g:at>
-            <g:at top="50" left="0">
-            	<fhw:EnumSelectListBox visibleItemCount="10" pixelSize="200,200" ui:field="transactionType"/>
-            </g:at>
-            <g:at top="220" left="250">
+            <g:at top="0" left="250">
                 <g:Label ui:field="history_label"/>
             </g:at>
-			<g:at top="300" left="0">
+			<g:at top="50" left="0">
 				<g:FlowPanel width="16000px" height="1000px" ui:field="content"/>
 			</g:at>
 		</g:AbsolutePanel>
