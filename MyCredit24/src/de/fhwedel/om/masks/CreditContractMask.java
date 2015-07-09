@@ -175,7 +175,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
          }         
          @Override
          public void onFailure(Throwable caught) {
-            Window.alert("Fehler beim Speichern des Kunden.");        
+            Window.alert("Fehler beim Speichern des Kreditvertrags.");        
          }
       });
    }
@@ -350,15 +350,19 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 			   List<CreditContract> thisMonthsContracts = new ArrayList<CreditContract>();
 			   
 			   String currYearMonth = dateHandler.getDateAsString(new Date());
+			   Window.alert("aktueller Monat: "+currYearMonth);
+			   Window.alert("Monat: " + result.get(1).getContractNumber().substring(0,4));
 			   for (CreditContract creditContract : result) {
-
-				   if (dateHandler.getDateAsString(creditContract.getContractBegin()).equals(currYearMonth)) {
+				   Window.alert("hier geht er rein");
+				   if (creditContract.getContractNumber().length()>=4
+						   && creditContract.getContractNumber().substring(0, 4).equals(currYearMonth)) {
+					   Window.alert("Vertragsbeginn: "+creditContract.getContractNumber().substring(0, 4));
 					   thisMonthsContracts.add(creditContract);
 				   }
-			}
-			   		numberOfContractsPerDay = thisMonthsContracts.size();
-			   		NumberFormat formatter = NumberFormat.getFormat("000");
-			   		contractNumber.setValue(currYearMonth + formatter.format(numberOfContractsPerDay + 1));
+			   }
+			   numberOfContractsPerDay = thisMonthsContracts.size();
+			   NumberFormat formatter = NumberFormat.getFormat("000");
+			   contractNumber.setValue(currYearMonth + formatter.format(numberOfContractsPerDay + 1));
 
 		   }         
 		   @Override

@@ -123,9 +123,9 @@ implements OMService {
          em.persist( new Rate("R1_2", 0.28, 2, 1000, 1000000, ValidityLevel.C, begin, end));
          em.persist( new Rate("R1_1", 0.29, 1, 1000, 1000000, ValidityLevel.C, begin, end));
          
-         em.persist( new CreditContract("1", CreditContractStatus.Angebot, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", test_rate_1, cust));
-         em.persist( new CreditContract("2", CreditContractStatus.Widerruf, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", test_rate_1, cust));
-         em.persist( new CreditContract("3", CreditContractStatus.Ausgezahlt, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", test_rate_1, cust));
+         em.persist( new CreditContract("1507001", CreditContractStatus.Angebot, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", test_rate_1, cust));
+         em.persist( new CreditContract("1506001", CreditContractStatus.Widerruf, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", test_rate_1, cust));
+         em.persist( new CreditContract("1505001", CreditContractStatus.Ausgezahlt, new Integer(2), new Integer(2), new Date(), new Integer(2), new Integer(2), "meineIBAN", "meineBIC", test_rate_1, cust));
          
          em.getTransaction().commit();
       }
@@ -243,6 +243,7 @@ implements OMService {
          em.persist(cc);
 		 Customer c = cc.getCustomer();
          c.addCreditContract(cc);
+		   Window.alert("Kunde wird gemerged");
          em.merge(c);
       }
       em.getTransaction().commit();
@@ -255,8 +256,10 @@ implements OMService {
 	   em.getTransaction().begin();
 	   
 	   if(cust.getID() != null) {
+		   Window.alert("Kunde wird auch gemerged");
 		   cust = em.merge(cust);
 	   } else {
+		   Window.alert("Kunde wird persistiert");
 		   em.persist(cust);
 	   }
 	   em.getTransaction().commit();
