@@ -87,29 +87,12 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
 	   setSearchMode(true);
 	   setCustomerDatesMode(false);
 	   setContractDatesMode(false);
-	   setWidgetMode(selfDisclosure, false);	   
 }
 
 private void setContractDatesMode(Boolean bool) {
 	creditContracts.setEnabled(bool);
 	   new_creditContract.setEnabled(bool);
 	   edit_creditContract.setEnabled(bool);
-}
-
-private void setWidgetMode(Widget widget, Boolean bool) {
-		
-//	if (widget instanceof HasWidgets) {
-//	Iterator<Widget> iter = ((HasWidgets)widget).iterator();
-//	   while (iter.hasNext()) {
-//		   Widget next = iter.next();
-//		   setWidgetMode(next, bool);
-//		   Window.alert(next.getStyleName());
-//		   if (next instanceof FocusWidget)
-//           {
-//			   ((FocusWidget)next).setEnabled(bool);
-//           }
-//	   }
-//	}
 }
 
    private void setCustomerDatesMode(Boolean bool) {
@@ -218,6 +201,8 @@ protected void setMode(boolean show_only) {
    @UiHandler("customers")
    protected void onSelectCustomerClick(DoubleClickEvent event) {
       this.setBO(this.customers.getValue());
+	  setCustomerDatesMode(true);
+	  setContractDatesMode(true);
    }
 
    
@@ -255,6 +240,7 @@ protected void setMode(boolean show_only) {
 	   } else {
 		   Window.alert("Bitte Neuen Kunden anlegen");
 	   }
+	   edit_selfDisclosure.setEnabled(true);
    }
 
    @UiHandler("new_customer")
@@ -272,6 +258,7 @@ protected void setMode(boolean show_only) {
 	   });
 	  setCustomerDatesMode(true);
 	  setContractDatesMode(true);
+	  edit_selfDisclosure.setEnabled(false);
    }
    
    @UiHandler("edit_selfDisclosure")

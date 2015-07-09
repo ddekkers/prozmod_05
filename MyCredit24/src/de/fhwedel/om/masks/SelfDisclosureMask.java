@@ -9,6 +9,7 @@ import com.gargoylesoftware.htmlunit.WebConsole.Formatter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -65,14 +66,14 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   
 	   protected void setMode(Boolean show_only) {
 		   this.occupation.setEnabled(show_only);
+		   this.monthNet.setEnabled(show_only);			   
 		   this.modeOfEmployment.setEnabled(show_only);
-		   this.terminable.setEnabled(show_only);
-		   this.employer.setEnabled(show_only);
-		   this.monthNet.setEnabled(show_only);
 		   this.creditLimit.setEnabled(show_only);
 		   this.validity.setEnabled(show_only);
 		   this.save_selfDisclosure.setVisible(show_only);
-		   this.eval_validity.setVisible(show_only);
+		   this.employer.setEnabled(show_only && modeOfEmployment.getValue() != null && modeOfEmployment.getValue() == ModeOfEmployment.employee);
+		   this.terminable.setEnabled(show_only && modeOfEmployment.getValue() != null &&  modeOfEmployment.getValue() == ModeOfEmployment.employee);
+		   this.eval_validity.setEnabled(show_only && modeOfEmployment.getValue() != null && monthNet.getValue() != null);
 	   }
 	   
 	   protected void refreshModeOfEmployment(){
@@ -153,5 +154,21 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 				   Window.alert("Fehler beim Bewerten der Bonität.");        
 			   }
 		});
+	   }
+	   
+	   @UiHandler("modeOfEmployment")
+	   protected void onModeOfEmploymentChange(ChangeEvent event) {
+		   employer.setEnabled((modeOfEmployment.getValue() == ModeOfEmployment.employee));
+		   terminable.setEnabled((modeOfEmployment.getValue() == ModeOfEmployment.employee));
+		   if (modeOfEmployment.getValue() == ModeOfEmployment.employee) {
+			   employer.setValue("");
+		   }
+		   
+		   eval_validity.setVisible((monthNet.getValue() != null) && (modeOfEmployment.getValue() != null));
+	   }
+	   
+	   @UiHandler("monthNet")
+	   protected void onMonthNetChange(ChangeEvent event) {
+		   eval_validity.setEnabled((monthNet.getValue() != null) && (modeOfEmployment.getValue() != null));
 	   }
 }
