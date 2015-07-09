@@ -52,6 +52,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @Ignore @UiField BOSelectListBox<CreditContract, Integer> credit_contracts;
    @Ignore @UiField TextBox search_contract_number;
    @UiField Button search;
+   @UiField Button select_credit_contract;
    @UiField Button determine_rate;
    
    // Alle Felder zur Vertragsdetail anzeige
@@ -105,6 +106,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   credit_contracts.setVisible(true);
 		   search_contract_number.setEnabled(false);
 		   search.setEnabled(false);
+		   select_credit_contract.setEnabled(false);
 		   //Vertragsdetails
 		   save_changes.setVisible(true);
 		   discard_changes.setVisible(true);
@@ -127,10 +129,75 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   select_payment.setVisible(false);
 		   outpayment.setVisible(false);
 		   rate.setVisible(false);
-		   
+		   select_credit_contract.setEnabled(true);
+	   } else {
+		   save_changes.setVisible(true);
+		   save_changes.setEnabled(true);
+		   discard_changes.setVisible(true);
+		   discard_changes.setEnabled(true);
+		   contractNumber.setReadOnly(true);
+		   status.setEnabled(false);
+		   search.setEnabled(true);
+		   credit_contracts.setVisible(true);
+		   search_contract_number.setEnabled(true);
+		   determine_rate.setEnabled(false);
+		   runtime.setReadOnly(true);
+		   creditAmount.setReadOnly(true);
+		   annuityRental.setReadOnly(true);
+		   residualDebt.setReadOnly(true);
+		   iban.setReadOnly(true);
+		   bic.setReadOnly(true);	
+		   rejected_deadline.setVisible(false);
+		   rejected_validity.setVisible(false);;
+		   revocation.setVisible(false);
+		   payments.setVisible(true);
+		   select_payment.setVisible(true);
+		   select_payment.setEnabled(true);
+		   outpayment.setVisible(false);
+		   rate.setVisible(false);
+		   validity.setEnabled(false);
+		   if (getBO() == null || getBO().getStatus() == null) {
+			   select_payment.setEnabled(false);
+			   save_changes.setEnabled(false);
+			   discard_changes.setEnabled(false);
+		   } else {
+			   
+			   switch(getBO().getStatus()) {
+				   
+				   case Angebot: {
+					   
+					   rejected_deadline.setVisible(true);
+					   rejected_validity.setVisible(true);
+					   iban.setReadOnly(false);
+					   bic.setReadOnly(false);
+					   break;
+				   }
+				   case Ausgefertigt: {
+					   
+					   revocation.setVisible(true);
+					   outpayment.setVisible(true);
+					   break;
+				   }
+				   case Ausgezahlt: {
+					   
+					   rate.setVisible(true);
+					   break;
+				   }
+				   case Widerruf: {
+			   
+					   select_payment.setEnabled(false);
+					   save_changes.setEnabled(false);
+					   discard_changes.setEnabled(false);
+					   break;
+				   }
+			   
+			   }
+		   }
+   
 	   }
-   }
 
+   }
+   
    private void setWidgetPropertiesByContractStatus(CreditContractStatus status) {
 	   
 	   this.status.setEnabled(false);
@@ -293,12 +360,11 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("select_credit_contract")
    protected void onSelectCreditContractClick(ClickEvent event) {
-	  if (!isNew) {
-		this.setBO(this.credit_contracts.getValue());
-      	refreshCreditContractStatus();
-      	this.status.setValue(getBO().getStatus());
-      	refreshPayments();
-	  }
+	   this.setBO(this.credit_contracts.getValue());
+	   refreshCreditContractStatus();
+	   this.status.setValue(getBO().getStatus());
+	   refreshPayments();
+	   setWidgetPropertiesByIsNew(isNew);;
    }
    
    @UiHandler("search")
