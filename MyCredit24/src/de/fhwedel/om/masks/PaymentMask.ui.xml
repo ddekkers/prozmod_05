@@ -17,11 +17,8 @@
             <g:Label text="Zahlungsdatum:"/>
          </g:at>
          <g:at top="30" left="120">
-            <g:TextBox ui:field="date" />
+            <dp:DatePicker pixelSize="200,10" ui:field="date" />
          </g:at>
- 		 <g:at top="80" left="20">
-              <g:Button ui:field="test" text="test"/>
-          </g:at>
          
          <g:at top="240" left="20">
             <g:Label text="Betrag:"/>
@@ -56,7 +53,7 @@
             <g:IntegerBox readOnly="true" ui:field="residualDebt"/>
          </g:at>
          <g:at top="100" left="400">
-            <g:Label text="Typ:"/>
+            <g:Label text="Status:"/>
          </g:at>
          <g:at top="100" left="520">
             <fhw:EnumSelectListBox visibleItemCount="1" pixelSize="200,20" ui:field="status"/>

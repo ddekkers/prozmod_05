@@ -55,6 +55,7 @@ implements OMService {
                props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_DATABASE_GENERATION); 
             }
             
+            
             EntityManagerFactory emf      = Persistence.createEntityManagerFactory(OMServiceImpl.props.getProperty("persistence_unit", "pu"), props);
             if(emf != null) {
                OMServiceImpl.em           = emf.createEntityManager();
