@@ -44,6 +44,14 @@ public class Payment implements BusinessObject<Integer> {
 	   return date;
    }
 
+   public void setDateAsString(String date) {
+	   this.date = new DateHandler("dd.MM.yyyy").parseStringToDate(date);
+   }
+   
+   public String getDateAsString() {
+	   return new DateHandler("dd.MM.yyyy").getDateAsString(date);
+   }
+   
    public void setDate(Date date) {
 	   this.date = date;
    }
@@ -88,7 +96,9 @@ public class Payment implements BusinessObject<Integer> {
 
    @Override
    public String getCaption() {
-      return type.toString() + " - " + amount.toString() + " EUR - " + (new DateHandler("dd.MM.yyyy").getDateAsString(date));
+      return type == null ? "" : type.toString() + 
+    		  			" - " + amount == null ? "" : amount.toString() + " EUR - " + 
+    		  			(new DateHandler("dd.MM.yyyy").getDateAsString(date));
    }
 
 	public CreditContract getCreditContract() {

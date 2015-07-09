@@ -17,7 +17,7 @@
             <g:Label text="Zahlungsdatum:"/>
          </g:at>
          <g:at top="30" left="120">
-            <dp:DatePicker ui:field="date" />
+            <g:TextBox ui:field="date" />
          </g:at>
          
          <g:at top="240" left="20">

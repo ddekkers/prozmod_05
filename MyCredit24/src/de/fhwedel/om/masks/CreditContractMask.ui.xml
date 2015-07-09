@@ -209,6 +209,10 @@
          	<g:at top="620" left="750">
             	<g:Button ui:field="rate">Rate einziehen</g:Button>
          	</g:at>
+			
+         	<g:at top="660" left="750">
+            	<g:Button ui:field="repayment">Sondertilgung erfassen</g:Button>
+         	</g:at>
          	      	
          	
       </g:AbsolutePanel>      

@@ -90,6 +90,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @UiField Button select_payment;
    @UiField Button outpayment;
    @UiField Button rate;
+   @UiField Button repayment;
            
    public CreditContractMask(boolean isNew) {
 	   this(new CreditContract(), isNew);	   
@@ -114,7 +115,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   status.setEnabled(false);
 		   runtime.setReadOnly(false);
 		   creditAmount.setReadOnly(false);
-		   annuityRental.setReadOnly(false);
+		   annuityRental.setReadOnly(true);
 		   residualDebt.setReadOnly(true);
 		   iban.setReadOnly(true);
 		   bic.setReadOnly(true);	
@@ -129,7 +130,11 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   select_payment.setVisible(false);
 		   outpayment.setVisible(false);
 		   rate.setVisible(false);
+		   repayment.setVisible(false);
+		   
 		   select_credit_contract.setEnabled(true);
+		   
+		   validity.setEnabled(false);
 	   } else {
 		   save_changes.setVisible(true);
 		   save_changes.setEnabled(true);
@@ -155,6 +160,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   select_payment.setEnabled(true);
 		   outpayment.setVisible(false);
 		   rate.setVisible(false);
+		   repayment.setVisible(false);
 		   validity.setEnabled(false);
 		   if (getBO() == null || getBO().getStatus() == null) {
 			   select_payment.setEnabled(false);
@@ -181,6 +187,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 				   case Ausgezahlt: {
 					   
 					   rate.setVisible(true);
+					   repayment.setVisible(true);
 					   break;
 				   }
 				   case Widerruf: 
@@ -195,12 +202,9 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 					}
 					default:
 						break;
-			   
 			   }
 		   }
-   
 	   }
-
    }
    
    public CreditContractMask(CreditContract c, boolean show_only, boolean isNew) {        
@@ -236,6 +240,11 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
             Window.alert("Fehler beim Speichern des Kreditvertrags.");        
          }
       });
+   }
+   
+   @UiHandler("repayment")
+   protected void onRepaymentClick(ClickEvent event) {
+	   this.getFlowControl().forward(new PaymentMask(new Payment(new Date(), new Integer(0), PaymentType.Sondertilgung, getBO()), false));
    }
    
    @UiHandler("rate")
@@ -362,22 +371,17 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 				   Window.alert("Geben Sie eine Kreditsumme ein.");      				   
 			   } else {
 				   
-				   cc.setAnnuityRental(this.annuityRental.getValue());
-				   if (cc.getAnnuityRental() == null) {					   
-					   Window.alert("Geben Sie eine Tilgungsrate ein.");      				   
-					   
-				   } else {					   
-					   
-					   cc.setRuntime(this.runtime.getValue());
-					   if (cc.getRuntime() == null) 
-						   Window.alert("Geben Sie eine Laufzeit ein.");
-					   else {
-						   if ((contractBegin.getValue() != null)
-							 && dateHandler.daysBetween(new Date(), contractBegin.getValue()) >= MIN_DAYS) {
-								   this.getFlowControl().forward(new RateMask(isNew, this.getBO(), false));
-						   } else {
-							   Window.alert("Bitte einen Vertragsbeginn wählen, der mind. 28 Tage in der Zukunft liegt.");
-						   }
+				   cc.setAnnuityRental(this.annuityRental.getValue());   
+				   cc.setRuntime(this.runtime.getValue());
+				   if (cc.getRuntime() == null) 
+					   Window.alert("Geben Sie eine Laufzeit ein.");
+				   else {
+					   if ((contractBegin.getValue() != null)
+							   && dateHandler.daysBetween(new Date(), contractBegin.getValue()) >= MIN_DAYS) {
+						   cc.setAnnuityRental((int) cc.getCreditAmount() / cc.getRuntime());
+						   this.getFlowControl().forward(new RateMask(isNew, this.getBO(), false));
+					   } else {
+						   Window.alert("Bitte einen Vertragsbeginn wählen, der mind. 28 Tage in der Zukunft liegt.");
 					   }
 				   }
 					   
@@ -439,11 +443,11 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   	
 	   		if (this.getBO().getRate() != null) {
 	   				
+	   			isNew = false;
 	   			setStatusAndRefreshWidgets(CreditContractStatus.Angebot);
 	   			this.getBO().setResidualDebt(this.getBO().getCreditAmount());
 	   			this.residualDebt.setValue(this.getBO().getCreditAmount());
 	   			this.saveBO(); 
-	   			setWidgetPropertiesByIsNewAndStatus();
 	   			Window.alert("Kreditangebotsunterlagen versandt!");
 	   		} else
 	   			Window.alert("Sie müssen vorher einen Tarif auswählen");
@@ -451,15 +455,21 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   		
 	   		switch(this.getBO().getStatus()) {
 	   			case Angebot:
-	   				this.getBO().setBic(bic.getValue());
-	   				this.getBO().setIban(iban.getValue());
-	   				if (this.getBO().getBic() != null && !this.getBO().getBic().isEmpty() && this.getBO().getIban() != null && !this.getBO().getIban().isEmpty()) {
+	   				if (getBO().getCustomer() != null && getBO().getCustomer().getSelfDisclosure() != null && getBO().getCustomer().getSelfDisclosure().getValidity() != null) {
+	   					
+	   					this.getBO().setBic(bic.getValue());
+	   					this.getBO().setIban(iban.getValue());
+	   					if (this.getBO().getBic() != null && !this.getBO().getBic().isEmpty() && this.getBO().getIban() != null && !this.getBO().getIban().isEmpty()) {
 	   				
-	   					setStatusAndRefreshWidgets(CreditContractStatus.Ausgefertigt);
-	   					this.saveBO();
-	   					Window.alert("Kreditvertrag ausgefertigt!");	   				
-	   				} else
-	   					Window.alert("Geben Sie eine IBAN und eine BIC ein!");
+	   						setStatusAndRefreshWidgets(CreditContractStatus.Ausgefertigt);
+	   						this.saveBO();
+	   						Window.alert("Kreditvertrag ausgefertigt!");	   				
+	   					} else
+	   						Window.alert("Geben Sie eine IBAN und eine BIC ein!");
+	   				} else {
+	   					
+	   					Window.alert("Sie müssen zuerst die Selbstauskunft des Kunden vollständig erfassen.");
+	   				}
 	   			break;
 	   			
 	   			default:
