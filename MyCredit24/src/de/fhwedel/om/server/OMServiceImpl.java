@@ -231,7 +231,7 @@ implements OMService {
       em.getTransaction().commit();
       return entity;
    }
-   
+
    @Override
    synchronized public CreditContract save(CreditContract cc) {
       EntityManager em = OMServiceImpl.getEM();
@@ -243,7 +243,6 @@ implements OMService {
          em.persist(cc);
 		 Customer c = cc.getCustomer();
          c.addCreditContract(cc);
-		   Window.alert("Kunde wird gemerged");
          em.merge(c);
       }
       em.getTransaction().commit();
@@ -256,10 +255,8 @@ implements OMService {
 	   em.getTransaction().begin();
 	   
 	   if(cust.getID() != null) {
-		   Window.alert("Kunde wird auch gemerged");
 		   cust = em.merge(cust);
 	   } else {
-		   Window.alert("Kunde wird persistiert");
 		   em.persist(cust);
 	   }
 	   em.getTransaction().commit();
