@@ -25,14 +25,13 @@ import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.model.Rate;
 import de.fhwedel.om.types.CreditContractStatus;
-import de.fhwedel.om.types.TransactionType;
 import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.BOSelectListBox;
 import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
 
-   private boolean show_only;
+   private boolean isNew;
    
    // Customer-Editor
    interface CustomerEditorDriver extends SimpleBeanEditorDriver<Rate, RateMask> {}
@@ -63,9 +62,8 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
    @Path("validTo") @UiField TextBox valid_to;
    @Path("validityLevel") @UiField EnumSelectListBox<ValidityLevel> validity;   
    
-   public RateMask(TransactionType transactionType, CreditContract c, boolean show_only) {        
+   public RateMask(boolean isNew, CreditContract c, boolean show_only) {        
       initWidget(uiBinder.createAndBindUi(this));
-      this.setMode(show_only);
       this.editorDriver.initialize(this);
       this.setBO(new Rate());
       this.contractBegin.setValue(c.getContractBegin());
@@ -74,13 +72,9 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
       this.contract = c;
       this.refresh();
       this.refreshRates();
-      setTransactionType(transactionType);
+      this.isNew = isNew;
    }
    
-   protected void setMode(boolean show_only) {
-      this.show_only = show_only;
-   }
-    
    public void setBO(Rate c) {
       super.setBO(c);
       refreshValidityLevel();
@@ -113,7 +107,7 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
    protected void onSafeRateClick(ClickEvent event) {
 	   
 	   this.contract.setRate(rates.getValue());
-	   this.getFlowControl().forward(new CreditContractMask(contract, getTransactionType()));
+	   this.getFlowControl().forward(new CreditContractMask(contract, isNew));
    }
    
    @UiHandler("select_rate")

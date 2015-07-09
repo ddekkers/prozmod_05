@@ -18,7 +18,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Payment;
-import de.fhwedel.om.types.TransactionType;
 import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class MainMask implements EntryPoint, FlowControl {
@@ -33,29 +32,22 @@ public class MainMask implements EntryPoint, FlowControl {
    
    @UiField Button customers;
    @UiField Button credit_contract;
-   @Ignore @UiField EnumSelectListBox<TransactionType> transactionType;
    @UiField Button back;
    @UiField Label history_label;
    @UiField FlowPanel content;
    
 	public void onModuleLoad() {
 	   RootPanel.get().add( uiBinder.createAndBindUi(this) );
-	   this.refreshTransactionType();
 	}
 	
-	    	
-   private void refreshTransactionType() {
-	   this.transactionType.setEnum(TransactionType.class);
+	@UiHandler("customers")
+	protected void onCustomersClick(ClickEvent event) {
+		this.forward( new CustomerMask());
 	}
-
-@UiHandler("customers")
-   protected void onCustomersClick(ClickEvent event) {
-      this.forward( new CustomerMask(transactionType.getValue()));
-   }
    
    @UiHandler("credit_contract")
    protected void onCreditContractClick(ClickEvent event) {
-	   this.forward(new CreditContractMask(transactionType.getValue())); 
+	   this.forward(new CreditContractMask(false)); 
    }
 
    @UiHandler("back")
