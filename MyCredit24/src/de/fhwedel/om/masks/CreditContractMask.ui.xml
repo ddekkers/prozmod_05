@@ -207,6 +207,14 @@
          	</g:at>
 			
          	<g:at top="620" left="750">
+            	<g:Button ui:field="requestResidualDebt">Überweisung der Restschuld anfordern</g:Button>
+         	</g:at>
+			
+         	<g:at top="660" left="750">
+            	<g:Button ui:field="chargeOffResidualDebt">Restschuld abbuchen</g:Button>
+         	</g:at>
+			
+         	<g:at top="620" left="750">
             	<g:Button ui:field="rate">Rate einziehen</g:Button>
          	</g:at>
 			

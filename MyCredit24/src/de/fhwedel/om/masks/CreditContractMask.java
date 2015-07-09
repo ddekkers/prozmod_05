@@ -87,10 +87,13 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    //Zahlungen / Zahlungsfunktionen
    @Ignore @UiField BOSelectListBox<Payment, Integer> payments;
+   List<Payment> ps;
    @UiField Button select_payment;
    @UiField Button outpayment;
    @UiField Button rate;
    @UiField Button repayment;
+   @UiField Button requestResidualDebt;
+   @UiField Button chargeOffResidualDebt;
            
    public CreditContractMask(boolean isNew) {
 	   this(new CreditContract(), isNew);	   
@@ -115,7 +118,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   status.setEnabled(false);
 		   runtime.setReadOnly(false);
 		   creditAmount.setReadOnly(false);
-		   annuityRental.setReadOnly(true);
+		   annuityRental.setReadOnly(false);
 		   residualDebt.setReadOnly(true);
 		   iban.setReadOnly(true);
 		   bic.setReadOnly(true);	
@@ -133,7 +136,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   repayment.setVisible(false);
 		   
 		   select_credit_contract.setEnabled(true);
-		   
+		   requestResidualDebt.setVisible(false);
+		   chargeOffResidualDebt.setVisible(false);
 		   validity.setEnabled(false);
 	   } else {
 		   save_changes.setVisible(true);
@@ -162,6 +166,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   rate.setVisible(false);
 		   repayment.setVisible(false);
 		   validity.setEnabled(false);
+		   requestResidualDebt.setVisible(false);
+		   chargeOffResidualDebt.setVisible(false);
 		   if (getBO() == null || getBO().getStatus() == null) {
 			   select_payment.setEnabled(false);
 			   save_changes.setEnabled(false);
@@ -186,8 +192,11 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 				   }
 				   case Ausgezahlt: {
 					   
-					   rate.setVisible(true);
-					   repayment.setVisible(true);
+					   boolean isRuntimeOver = countRatePayments() == getBO().getRuntime() && this.residualDebt.getValue() > 0;
+					   rate.setVisible(!isRuntimeOver);
+					   repayment.setVisible(!isRuntimeOver);
+					   requestResidualDebt.setVisible(isRuntimeOver);
+					   chargeOffResidualDebt.setVisible(isRuntimeOver);
 					   break;
 				   }
 				   case Widerruf: 
@@ -207,17 +216,31 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   }
    }
    
-   public CreditContractMask(CreditContract c, boolean show_only, boolean isNew) {        
+   private Integer countRatePayments() {
+	   int res = 0;
+	   for (int i = 0; i < ps.size(); ++i) {
+		   
+		   if (ps.get(i).getType().equals(PaymentType.Ratenzahlung)) {
+			   
+			   res = res + 1;
+		   }
+		   
+	   }
+	  
+	return res;
+}
+
+public CreditContractMask(CreditContract c, boolean show_only, boolean isNew) {        
       initWidget(uiBinder.createAndBindUi(this));
       this.editorDriver.initialize(this);
       this.isNew = isNew;
-      setWidgetPropertiesByIsNewAndStatus();
       this.refreshCreditContracts();
       this.refreshCreditContractStatus();
       this.setBO(c);
 	  this.setNewContractNumber();
 	  this.refreshValidityLevel();
 	  this.refreshPayments();
+	  setWidgetPropertiesByIsNewAndStatus();
    }
     
    public void setBO(CreditContract c) {
@@ -242,6 +265,21 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
       });
    }
    
+   @UiHandler("chargeOffResidualDebt")
+   protected void onChargeOffResidualDebtClick(ClickEvent event) {
+	   Payment payment = new Payment(new Date(), this.residualDebt.getValue(), PaymentType.Abloesung, getBO());
+	   this.residualDebt.setValue(0);
+	   setStatusAndRefreshWidgets(CreditContractStatus.Abgeschlossen);
+	   this.savePayment(payment);
+	   this.saveBO();
+	   
+   }
+   
+   @UiHandler("requestResidualDebt")
+   protected void onRequestResidualDebtClick(ClickEvent event) {
+	   Window.alert("Kunden zur Überweisung der Restschuld auffordert");
+   }
+   
    @UiHandler("repayment")
    protected void onRepaymentClick(ClickEvent event) {
 	   this.getFlowControl().forward(new PaymentMask(new Payment(new Date(), new Integer(0), PaymentType.Sondertilgung, getBO()), false));
@@ -253,8 +291,25 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   Integer creditAmount = min_resDebt_anRental + (int) (getBO().getResidualDebt() * getBO().getRate().getInterestRate());
 	   Payment payment = new Payment(new Date(), creditAmount, PaymentType.Ratenzahlung, getBO());
 	   this.residualDebt.setValue(getBO().getResidualDebt() - min_resDebt_anRental);
+	   if (0 > this.residualDebt.getValue()) {
+		   
+		   int dif = this.residualDebt.getValue();
+		   this.residualDebt.setValue(0);
+		   payment.setAmount(payment.getAmount() - dif);
+	   }
+	   if (0 == this.residualDebt.getValue()) {
+		   
+		   setStatusAndRefreshWidgets(CreditContractStatus.Abgeschlossen);
+	   }
+	   		
 	   this.saveBO();
-	   this.getService().save(payment, new AsyncCallback<Payment>() {
+	   savePayment(payment);
+	   setWidgetPropertiesByIsNewAndStatus();
+  
+   }
+
+private void savePayment(Payment payment) {
+	this.getService().save(payment, new AsyncCallback<Payment>() {
 		   
 		   @Override
 		   public void onFailure(Throwable caught) {
@@ -267,8 +322,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 			   refreshPayments();
 		   
 		   }});
-  
-   }
+}
    
    	@UiHandler("outpayment")
    	protected void onOutpaymentClick(ClickEvent event) {
@@ -304,6 +358,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	         @Override
 	         public void onSuccess(List<Payment> result) {
 	        	 payments.setAcceptableValues(result);
+	        	 ps = result;
 	         }         
 	         @Override
 	         public void onFailure(Throwable caught) {
@@ -378,7 +433,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 				   else {
 					   if ((contractBegin.getValue() != null)
 							   && dateHandler.daysBetween(new Date(), contractBegin.getValue()) >= MIN_DAYS) {
-						   cc.setAnnuityRental((int) cc.getCreditAmount() / cc.getRuntime());
+						   cc.setAnnuityRental(cc.getAnnuityRental() == null ? ((int) cc.getCreditAmount() / cc.getRuntime()) : cc.getAnnuityRental());
 						   this.getFlowControl().forward(new RateMask(isNew, this.getBO(), false));
 					   } else {
 						   Window.alert("Bitte einen Vertragsbeginn wählen, der mind. 28 Tage in der Zukunft liegt.");
