@@ -273,8 +273,10 @@ implements OMService {
 	   List<Rate> filteredRates = new ArrayList<Rate>();
 	   for (int i = 0; i < allRates.size(); ++i) {
 		   Rate act = allRates.get(i);
+		   boolean unlimited_begin = act.getDateValidFrom() == null;
+		   boolean unlimited_end = act.getDateValidTo() == null;
 		   if (		act.getRuntime() == c_runtime && 
-				   	act.getDateValidFrom().before(c_begin) &&  c_begin.before(act.getDateValidTo()) &&
+				   	(act.getDateValidFrom().before(c_begin) || unlimited_begin) &&  (c_begin.before(act.getDateValidTo()) || unlimited_end) &&
 				   	act.getCreditAmountFrom() <= c_amount && c_amount < act.getCreditAmountTo() && 
 				   	act.getValidityLevel().equals(ValidityLevel.A)) {
 			   
