@@ -164,7 +164,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 			   employer.setValue("");
 		   }
 		   
-		   eval_validity.setVisible((monthNet.getValue() != null) && (modeOfEmployment.getValue() != null));
+		   eval_validity.setEnabled((monthNet.getValue() != null) && (modeOfEmployment.getValue() != null));
 	   }
 	   
 	   @UiHandler("monthNet")

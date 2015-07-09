@@ -43,6 +43,8 @@ public class PaymentMask extends BusinessMask<Payment> implements Editor<Payment
    @Path("creditContract.contractNumber") @UiField TextBox c_number;
    @Path("creditContract.status") @UiField EnumSelectListBox<CreditContractStatus> status;
    @Path("creditContract.residualDebt") @UiField IntegerBox residualDebt;
+   @UiField Button test;
+   
    
    
    public PaymentMask(Payment p, boolean show_only) {        

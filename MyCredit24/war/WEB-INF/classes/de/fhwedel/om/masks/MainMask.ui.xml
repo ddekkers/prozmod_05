@@ -16,7 +16,7 @@
             <g:at top="0" left="250">
                 <g:Button visible="false" ui:field="back" text="Zurück"/>
             </g:at>
-            <g:at top="0" left="250">
+            <g:at top="0" left="310">
                 <g:Label ui:field="history_label"/>
             </g:at>
 			<g:at top="50" left="0">

@@ -19,6 +19,9 @@
          <g:at top="30" left="120">
             <g:TextBox ui:field="date" />
          </g:at>
+ 		 <g:at top="80" left="20">
+              <g:Button ui:field="test" text="test"/>
+          </g:at>
          
          <g:at top="240" left="20">
             <g:Label text="Betrag:"/>
