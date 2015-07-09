@@ -99,7 +99,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
       this(c, false, isNew);
    }
    
-   private void setWidgetPropertiesByIsNew(boolean isNew) {
+   private void setWidgetPropertiesByIsNewAndStatus() {
 	   
 	   if (isNew) {
 		   // Alle Felder zur Suche 
@@ -183,13 +183,18 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 					   rate.setVisible(true);
 					   break;
 				   }
-				   case Widerruf: {
+				   case Widerruf: 
+				   case Abgelehnt_wegen_Bonitaet:
+				   case Abgelehnt_wegen_Fristablauf: 
+				   case Abgeschlossen: {
 			   
 					   select_payment.setEnabled(false);
 					   save_changes.setEnabled(false);
 					   discard_changes.setEnabled(false);
 					   break;
-				   }
+					}
+					default:
+						break;
 			   
 			   }
 		   }
@@ -198,52 +203,11 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 
    }
    
-   private void setWidgetPropertiesByContractStatus(CreditContractStatus status) {
-	   
-	   this.status.setEnabled(false);
-	   validity.setEnabled(false);
-	   rejected_deadline.setVisible(false);
-	   rejected_validity.setVisible(false);
-	   revocation.setVisible(false);
-	   outpayment.setVisible(false);
-	   rate.setVisible(false);
-	   
-	   runtime.setReadOnly(true);
-	   creditAmount.setReadOnly(true);
-	   annuityRental.setReadOnly(true);
-	   residualDebt.setReadOnly(true);
-	   iban.setReadOnly(true);
-	   bic.setReadOnly(true);
-	   outpayment.setVisible(getBO().getStatus().equals(CreditContractStatus.Ausgefertigt));
-	   revocation.setVisible(getBO().getStatus().equals(CreditContractStatus.Ausgefertigt));
-	   rate.setVisible(this.residualDebt.getValue() != 0 && CreditContractStatus.Ausgezahlt.equals(getBO().getStatus()));
-
-	   
-	   switch (status) {
-		   case Angebot: {
-		   		runtime.setReadOnly(false);
-		   		creditAmount.setReadOnly(false);
-		   		annuityRental.setReadOnly(false);
-		   		residualDebt.setReadOnly(false);			   
-			   break;
-		   }
-		   case Ausgefertigt: {
-			   iban.setReadOnly(false);
-			   bic.setReadOnly(false);
-			   rejected_deadline.setVisible(true);
-			   rejected_validity.setVisible(true);
-			   break;
-		   }
-	default:
-		break;
-	   }
-   }
-   
    public CreditContractMask(CreditContract c, boolean show_only, boolean isNew) {        
       initWidget(uiBinder.createAndBindUi(this));
       this.editorDriver.initialize(this);
       this.isNew = isNew;
-      setWidgetPropertiesByIsNew(isNew);
+      setWidgetPropertiesByIsNewAndStatus();
       this.refreshCreditContracts();
       this.refreshCreditContractStatus();
       this.setBO(c);
@@ -313,7 +277,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 			@Override
 			public void onSuccess(Payment result) {
 				if (result != null) {
-					status.setValue(CreditContractStatus.Ausgezahlt);
+					setStatusAndRefreshWidgets(CreditContractStatus.Ausgezahlt);
 					refreshPayments();
 					saveBO();
 				} else {
@@ -341,20 +305,19 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("rejected_deadline")
    protected void onRejectedDeadlineClick(ClickEvent event) {
-
-	   this.status.setValue(CreditContractStatus.Abgelehnt_wegen_Fristablauf);
+	   setStatusAndRefreshWidgets(CreditContractStatus.Abgelehnt_wegen_Fristablauf);
 	   this.saveBO();
    }
    
    @UiHandler("rejected_deadline")
    protected void onRejectedValidityClick(ClickEvent event) {
-	   this.status.setValue(CreditContractStatus.Abgelehnt_wegen_Bonitaet);
+	   setStatusAndRefreshWidgets(CreditContractStatus.Abgelehnt_wegen_Bonitaet);
 	   this.saveBO();
    }
    
    @UiHandler("revocation")
    protected void onRevocationClick(ClickEvent event) {
-	   this.status.setValue(CreditContractStatus.Widerruf);
+	   setStatusAndRefreshWidgets(CreditContractStatus.Widerruf);
 	   this.saveBO();
    }
    
@@ -364,7 +327,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   refreshCreditContractStatus();
 	   this.status.setValue(getBO().getStatus());
 	   refreshPayments();
-	   setWidgetPropertiesByIsNew(isNew);;
+	   setWidgetPropertiesByIsNewAndStatus();
    }
    
    @UiHandler("search")
@@ -426,12 +389,12 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("discard_changes")
    protected void onDiscardCreditContractClick(ClickEvent event) {
-	   if (isNew) {
-		   CreditContract cc = new CreditContract();
-		   cc.setCustomer(this.getBO().getCustomer());
-		   this.setBO(cc);
-		   setNewContractNumber();
-	   }
+		setStatusAndRefreshWidgets(null);
+		CreditContract cc = new CreditContract();
+		cc.setCustomer(this.getBO().getCustomer());
+		this.setBO(cc);
+		setNewContractNumber();
+		   
    }
 
    private void setNewContractNumber() {
@@ -462,21 +425,28 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 
    }
    
+   private void setStatusAndRefreshWidgets(CreditContractStatus status) {
+
+		this.getBO().setStatus(status);
+		this.status.setValue(status);	
+		setWidgetPropertiesByIsNewAndStatus();
+   }
+   
    @UiHandler("save_changes")
    protected void onSaveCreditContractClick(ClickEvent event) {
 	   	getFlowControl().update(this);
 	   	if (isNew) {
 	   	
 	   		if (this.getBO().getRate() != null) {
-	   			
-	   			this.getBO().setStatus(CreditContractStatus.Angebot);
-	   			this.status.setValue(CreditContractStatus.Angebot);			
+	   				
+	   			setStatusAndRefreshWidgets(CreditContractStatus.Angebot);
 	   			this.getBO().setResidualDebt(this.getBO().getCreditAmount());
 	   			this.residualDebt.setValue(this.getBO().getCreditAmount());
-	   			this.saveBO();   
+	   			this.saveBO(); 
+	   			setWidgetPropertiesByIsNewAndStatus();
 	   			Window.alert("Kreditangebotsunterlagen versandt!");
 	   		} else
-	   			Window.alert("Sie müssen vorher einen Tarisaf auswählen");
+	   			Window.alert("Sie müssen vorher einen Tarif auswählen");
 	   	} else {
 	   		
 	   		switch(this.getBO().getStatus()) {
@@ -485,8 +455,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   				this.getBO().setIban(iban.getValue());
 	   				if (this.getBO().getBic() != null && !this.getBO().getBic().isEmpty() && this.getBO().getIban() != null && !this.getBO().getIban().isEmpty()) {
 	   				
-	   					this.getBO().setStatus(CreditContractStatus.Ausgefertigt);
-	   					this.status.setValue(CreditContractStatus.Ausgefertigt);
+	   					setStatusAndRefreshWidgets(CreditContractStatus.Ausgefertigt);
 	   					this.saveBO();
 	   					Window.alert("Kreditvertrag ausgefertigt!");	   				
 	   				} else
