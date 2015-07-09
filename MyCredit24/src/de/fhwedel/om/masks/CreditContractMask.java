@@ -218,7 +218,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    private Integer countRatePayments() {
 	   int res = 0;
-	   for (int i = 0; i < ps.size(); ++i) {
+	   
+	   for (int i = 0; ps != null && i < ps.size(); ++i) {
 		   
 		   if (ps.get(i).getType().equals(PaymentType.Ratenzahlung)) {
 			   
