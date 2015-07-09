@@ -383,7 +383,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   				this.saveBO();   
 	   				Window.alert("Kreditangebotsunterlagen versandt!");
 	 		   } else
-	 			   	Window.alert("Sie müssen vorher einen Tarif auswählen");
+	 			   	Window.alert("Sie müssen vorher einen Tarisaf auswählen");
 	   			break;
 	   		case Kreditantrag_pruefen:
 	   			this.getBO().setBic(bic.getValue());

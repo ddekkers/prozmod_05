@@ -249,6 +249,20 @@ implements OMService {
       return cc;
    }
    
+   @Override
+   synchronized public Customer save(Customer cust) {
+	   EntityManager em = OMServiceImpl.getEM();
+	   em.getTransaction().begin();
+	   
+	   if(cust.getID() != null) {
+		   cust = em.merge(cust);
+	   } else {
+		   em.persist(cust);
+	   }
+	   em.getTransaction().commit();
+	   return cust;
+   }
+   
    @SuppressWarnings("unchecked")
    	@Override
 	public List<Rate> getPossibleRates(Date c_begin, Integer c_runtime, Integer c_amount) {

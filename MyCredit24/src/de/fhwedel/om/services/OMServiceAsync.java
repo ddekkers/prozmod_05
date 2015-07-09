@@ -27,6 +27,7 @@ public interface OMServiceAsync {
    <TYPE extends BusinessObject<?>> void save(TYPE entity, AsyncCallback<TYPE> callback);
    void getNextCustumerNumber(AsyncCallback<Integer> callback);
    void save(CreditContract cc, AsyncCallback<CreditContract> callback);
+   void save(Customer cust, AsyncCallback<Customer> callback);
    void searchCreditContractBy(String credit_contract_number, AsyncCallback<List<CreditContract>> callback);
    void evaluate(Integer modeOfEmployment, Integer monthNet, AsyncCallback<Integer> callback);
    void getAllPaymentsByCreditContractId(Integer id, AsyncCallback<List<Payment>> asyncCallback);
