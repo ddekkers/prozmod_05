@@ -350,13 +350,10 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 			   List<CreditContract> thisMonthsContracts = new ArrayList<CreditContract>();
 			   
 			   String currYearMonth = dateHandler.getDateAsString(new Date());
-			   Window.alert("aktueller Monat: "+currYearMonth);
-			   Window.alert("Monat: " + result.get(1).getContractNumber().substring(0,4));
 			   for (CreditContract creditContract : result) {
 				   Window.alert("hier geht er rein");
 				   if (creditContract.getContractNumber().length()>=4
 						   && creditContract.getContractNumber().substring(0, 4).equals(currYearMonth)) {
-					   Window.alert("Vertragsbeginn: "+creditContract.getContractNumber().substring(0, 4));
 					   thisMonthsContracts.add(creditContract);
 				   }
 			   }
