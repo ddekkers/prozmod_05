@@ -71,10 +71,11 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 		   this.creditLimit.setEnabled(show_only);
 		   this.validity.setEnabled(show_only);
 		   this.save_selfDisclosure.setVisible(show_only);
-		   this.employer.setEnabled(show_only && modeOfEmployment.getValue() != null && modeOfEmployment.getValue() == ModeOfEmployment.employee);
-		   this.terminable.setEnabled(show_only && modeOfEmployment.getValue() != null &&  modeOfEmployment.getValue() == ModeOfEmployment.employee);
+		   this.employer.setEnabled(show_only || (modeOfEmployment.getValue() != null && modeOfEmployment.getValue() == ModeOfEmployment.employee));
+		   this.terminable.setEnabled(show_only || (modeOfEmployment.getValue() != null &&  modeOfEmployment.getValue() == ModeOfEmployment.employee));
 		   this.eval_validity.setEnabled(show_only || modeOfEmployment.getValue() != null && monthNet.getValue() != null);
 	   }
+	   
 	   
 	   protected void refreshModeOfEmployment(){
 		   this.modeOfEmployment.setEnum(ModeOfEmployment.class);     
@@ -104,14 +105,16 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	            Window.alert("Fehler beim Speichern (" + SelfDisclosureMask.this.getBO().getClass().getSimpleName() + ").");        
 	         }
 	      });
+	      this.getBO().getCustomer().setSelfDisclosure(this.getBO());
 	   }
 	   
 	   @UiHandler("save_selfDisclosure")
 	   protected void onSaveSelfDisclosureClick(ClickEvent event) {
-		   if (getBO().getValidity() != ValidityLevel.X) {
+		   if (validity.getValue() != ValidityLevel.X) {
 			   this.saveBO();	
-		   };
-			   
+		   } else {
+			   Window.alert("Selbstauskunft nicht gespeichert (Bonitätslevel=X).");
+		   }			   
 	   }
 	   
 	   @UiHandler("eval_validity")
