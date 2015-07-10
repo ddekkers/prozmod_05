@@ -1,7 +1,6 @@
 package de.fhwedel.om.masks;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -16,8 +15,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
-import com.google.gwt.user.client.ui.FocusWidget;
-import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -271,7 +268,7 @@ protected void setMode(boolean show_only) {
 	   }
 	   selfDisclosure.setCustomer(this.getBO());
 	   this.getFlowControl().forward(new SelfDisclosureMask(selfDisclosure, true));
-	   }
+   }
    
    @UiHandler("new_creditContract")
    protected void onNewCreditContractClick(ClickEvent event) {

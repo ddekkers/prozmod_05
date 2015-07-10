@@ -309,6 +309,7 @@ public CreditContractMask(CreditContract c, boolean show_only, boolean isNew) {
   
    }
 
+   
 private void savePayment(Payment payment) {
 	this.getService().save(payment, new AsyncCallback<Payment>() {
 		   
@@ -525,6 +526,7 @@ private void savePayment(Payment payment) {
 	   				} else {
 	   					
 	   					Window.alert("Sie müssen zuerst die Selbstauskunft des Kunden vollständig erfassen.");
+	   					
 	   				}
 	   			break;
 	   			

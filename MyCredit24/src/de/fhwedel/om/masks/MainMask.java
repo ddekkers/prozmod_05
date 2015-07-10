@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.editor.client.Editor.Ignore;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -15,10 +14,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-
-import de.fhwedel.om.model.CreditContract;
-import de.fhwedel.om.model.Payment;
-import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class MainMask implements EntryPoint, FlowControl {
    
@@ -84,6 +79,18 @@ public class MainMask implements EntryPoint, FlowControl {
          content.clear();
          content.add(mask);
       }
+   }
+   
+   @Override
+   public void backward(BusinessMask<?> mask) {
+	   if(this.history.size() > 1) {
+		   mask.setFlowControl(this);
+	       this.history.remove(this.history.size()-1);
+	       this.updateHistoryUI();
+	       mask.refresh();
+	       content.clear();
+	       content.add(mask);
+	   }
    }
    
    protected String createHistoryLabel() {

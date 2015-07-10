@@ -96,7 +96,8 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	         @Override
 	         public void onSuccess(SelfDisclosure result) {
 	        	SelfDisclosureMask.this.setBO(result);
-	        	SelfDisclosureMask.this.fireSaved();            
+	        	SelfDisclosureMask.this.fireSaved();
+	        	Window.alert("Selbstauskunft erfolgreich gespeichert.");
 	         }         
 	         @Override
 	         public void onFailure(Throwable caught) {
@@ -108,7 +109,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   @UiHandler("save_selfDisclosure")
 	   protected void onSaveSelfDisclosureClick(ClickEvent event) {
 		   if (getBO().getValidity() != ValidityLevel.X) {
-			   this.saveBO();			  
+			   this.saveBO();	
 		   };
 			   
 	   }

@@ -8,5 +8,7 @@ public interface FlowControl {
    public void forward(BusinessMask<?> mask);
     
    public void backward();
+   
+   public void backward(BusinessMask<?> mask);
 
 }

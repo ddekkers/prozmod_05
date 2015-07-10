@@ -93,10 +93,10 @@
             	<g:Button ui:field="save_changes">Speichern</g:Button>
          	</g:at>
          	
-         	<g:at top="450" left="560">
+         	<g:at top="450" left="520">
             	<g:Button ui:field="discard_changes">Verwerfen</g:Button>
          	</g:at>
-
+         	
 			<!-- Sonstige Funktionen -->
 			
 			<g:at top="500" left="350">

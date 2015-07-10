@@ -105,9 +105,12 @@ public class RateMask extends BusinessMask<Rate> implements Editor<Rate> {
    
    @UiHandler("safe_rate")
    protected void onSafeRateClick(ClickEvent event) {
-	   
-	   this.contract.setRate(rates.getValue());
-	   this.getFlowControl().forward(new CreditContractMask(contract, isNew));
+	   if (rates.getValue()!=null) {
+		   this.contract.setRate(rates.getValue());
+		   this.getFlowControl().backward(new CreditContractMask(contract, isNew));
+	   } else {
+		   Window.alert("Bitte Rate auswählen.");
+	   }
    }
    
    @UiHandler("select_rate")
