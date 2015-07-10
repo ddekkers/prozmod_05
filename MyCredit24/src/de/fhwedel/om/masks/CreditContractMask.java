@@ -238,7 +238,8 @@ public CreditContractMask(CreditContract c, boolean show_only, boolean isNew) {
       this.refreshCreditContracts();
       this.refreshCreditContractStatus();
       this.setBO(c);
-	  this.setNewContractNumber();
+	  if (this.getBO().getContractNumber() == null)
+		  this.setNewContractNumber();
 	  this.refreshValidityLevel();
 	  this.refreshPayments();
 	  setWidgetPropertiesByIsNewAndStatus();
@@ -305,6 +306,7 @@ public CreditContractMask(CreditContract c, boolean show_only, boolean isNew) {
 	   		
 	   this.saveBO();
 	   savePayment(payment);
+	   refreshPayments();
 	   setWidgetPropertiesByIsNewAndStatus();
   
    }
@@ -361,7 +363,15 @@ private void savePayment(Payment payment) {
 	         public void onSuccess(List<Payment> result) {
 	        	 payments.setAcceptableValues(result);
 	        	 ps = result;
-	         }         
+	        	 if (getBO() != null && CreditContractStatus.Ausgezahlt.equals(getBO().getStatus())) {
+	        		 
+	        		 boolean isRuntimeOver = countRatePayments() == getBO().getRuntime() && residualDebt.getValue() > 0;
+	        		 rate.setVisible(!isRuntimeOver);
+	        		 repayment.setVisible(!isRuntimeOver);
+	        		 requestResidualDebt.setVisible(isRuntimeOver);
+	        		 chargeOffResidualDebt.setVisible(isRuntimeOver);
+	        	 }         
+	        	 }
 	         @Override
 	         public void onFailure(Throwable caught) {
 	            Window.alert("Fehler beim Laden der Zahlungen.");        
