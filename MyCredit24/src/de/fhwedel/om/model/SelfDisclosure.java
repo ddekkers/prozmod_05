@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 
 import de.fhwedel.om.types.ModeOfEmployment;
 import de.fhwedel.om.types.ValidityLevel;
@@ -166,7 +165,6 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 
 	@Override
 	public String getCaption() {
-		// TODO Auto-generated method stub
 		return "Selbstauskunft von " + this.getCustomer().getCaption() ;
 	}
 	

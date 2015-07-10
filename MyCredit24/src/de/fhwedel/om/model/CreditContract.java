@@ -1,38 +1,33 @@
 package de.fhwedel.om.model;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import de.fhwedel.om.types.CreditContractStatus;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="creditcontract")
 @NamedQueries({
    @NamedQuery(
            name="getAllCreditContracts",
            query="SELECT a FROM CreditContract a"
    )
 })
+@Table(name="creditcontract",
+uniqueConstraints=@UniqueConstraint(columnNames={"credit_contract_id", "contractNumber"}))
 public class CreditContract implements BusinessObject<Integer> {
 
 	@Id

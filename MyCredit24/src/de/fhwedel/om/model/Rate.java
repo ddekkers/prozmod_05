@@ -1,9 +1,7 @@
 package de.fhwedel.om.model;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import de.fhwedel.om.types.ValidityLevel;
 
@@ -23,6 +22,8 @@ import de.fhwedel.om.types.ValidityLevel;
            query="SELECT a FROM Rate a"
    )
 })
+@Table(name="rate",
+uniqueConstraints=@UniqueConstraint(columnNames={"rate_id", "rateNumber"}))
 public class Rate implements BusinessObject<Integer> {
 
 	@Id
