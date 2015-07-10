@@ -296,6 +296,7 @@ protected void setMode(boolean show_only) {
 		  || this.creditContracts.getItemCount() == 0
 		  || this.creditContracts.getValue() == null)) {
 		   CreditContract creditContract = this.creditContracts.getValue();
+		   creditContract.setCustomer(getBO());
 		   this.getFlowControl().forward(new CreditContractMask(creditContract, false));  
 	   } else {
 		   Window.alert("Bitte Vertrag auswählen.");
