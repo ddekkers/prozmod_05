@@ -78,14 +78,19 @@ implements OMService {
       
       //Testdatensätze anlegen
       if(OMServiceImpl.props.getProperty("regenerate", "0").equals("1")) {            
-         SelfDisclosure sd1 = new SelfDisclosure(new Date(), "Student", ModeOfEmployment.employee, false, "FH Wedel", 1000, null, null, null);
-         SelfDisclosure sd2 = new SelfDisclosure(new Date(), "Marketing - Experte", ModeOfEmployment.employee, false, "otto", 10000, null, null, null);
-         SelfDisclosure sd3 = new SelfDisclosure(new Date(), "Anwendungsentwickler", ModeOfEmployment.employee, false, "innovas", 5000, null, null, null);
+         SelfDisclosure sd1 = new SelfDisclosure(new Date(), "Student", ModeOfEmployment.employee, false, "FH Wedel", 1000, null, null, null, null);
+         SelfDisclosure sd2 = new SelfDisclosure(new Date(), "Marketing - Experte", ModeOfEmployment.employee, false, "otto", 10000, null, null, null, null);
+         SelfDisclosure sd3 = new SelfDisclosure(new Date(), "Anwendungsentwickler", ModeOfEmployment.employee, false, "innovas", 5000, null, null, null, null);
     	 EntityManager em = OMServiceImpl.getEM();
          em.getTransaction().begin();
          Customer c1 = new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", sd1);
          Customer c2 = new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", sd2);
          Customer c3 = new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", sd3); 
+         
+         c1.setSelfDisclosure(sd1);         
+         c2.setSelfDisclosure(sd2);         
+         c3.setSelfDisclosure(sd3);
+         
          em.persist( c1 );
          em.persist( c2 );
          em.persist( c3 ); 
@@ -249,9 +254,7 @@ implements OMService {
       else {
          em.persist(cc);
       }
-
       em.getTransaction().commit();
-
       return cc;
    }
    
@@ -267,6 +270,19 @@ implements OMService {
 	   }
 	   em.getTransaction().commit();
 	   return cust;
+   }
+   
+   @Override
+   synchronized public SelfDisclosure save(SelfDisclosure sd) {
+	   EntityManager em = OMServiceImpl.getEM();
+	   em.getTransaction().begin();
+	   if(sd.getID() != null) {
+		   sd = em.merge(sd);
+	   } else {
+		   em.persist(sd);
+	   }
+	   em.getTransaction().commit();
+	   return sd;
    }
    
    @SuppressWarnings("unchecked")

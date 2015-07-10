@@ -12,6 +12,7 @@ import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.model.Payment;
 import de.fhwedel.om.model.Rate;
+import de.fhwedel.om.model.SelfDisclosure;
 
 @RemoteServiceRelativePath("services")
 public interface OMService extends RemoteService {
@@ -27,7 +28,8 @@ public interface OMService extends RemoteService {
    public <TYPE extends BusinessObject<?>> TYPE save(TYPE entity);
    public Integer getNextCustumerNumber();
    public CreditContract save(CreditContract cc);
-public Customer save(Customer cust);
+   public Customer save(Customer cust);
+   public SelfDisclosure save(SelfDisclosure sd);
    public List<Rate> getPossibleRates(Date c_begin, Integer c_runtime, Integer c_amount);
    public Integer evaluate(Integer modeOfEmployment, Integer monthNet);
    

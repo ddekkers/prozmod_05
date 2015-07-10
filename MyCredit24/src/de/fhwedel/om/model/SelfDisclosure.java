@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 import de.fhwedel.om.types.ModeOfEmployment;
 import de.fhwedel.om.types.ValidityLevel;
@@ -58,7 +59,7 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	@Column(nullable=true) 
 	private ValidityLevel validity;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@OneToOne
 	private Customer customer;
 	
 	public Date getRegistration() {
@@ -142,10 +143,10 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	}
 	
 	public SelfDisclosure() {
-		this(null, null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null, null);
 	}
 	
-	public SelfDisclosure(Date registration, String occupation, ModeOfEmployment mode_of_employment, Boolean terminable, String employer, Integer month_net, Date classification, Integer credit_limit, ValidityLevel validity) {
+	public SelfDisclosure(Date registration, String occupation, ModeOfEmployment mode_of_employment, Boolean terminable, String employer, Integer month_net, Date classification, Integer credit_limit, ValidityLevel validity, Customer cust) {
 		
 		this.registration = registration;
 		this.occupation = occupation;
@@ -156,6 +157,7 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 		this.classification = classification;
 		this.creditLimit = credit_limit;
 		this.validity = validity;
+		this.customer = cust;
 	}
 
 	@Override

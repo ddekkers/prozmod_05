@@ -11,6 +11,7 @@ import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.model.Payment;
 import de.fhwedel.om.model.Rate;
+import de.fhwedel.om.model.SelfDisclosure;
 
 public interface OMServiceAsync {
    
@@ -28,6 +29,7 @@ public interface OMServiceAsync {
    void getNextCustumerNumber(AsyncCallback<Integer> callback);
    void save(CreditContract cc, AsyncCallback<CreditContract> callback);
    void save(Customer cust, AsyncCallback<Customer> callback);
+   void save(SelfDisclosure sd, AsyncCallback<SelfDisclosure> callback);
    void searchCreditContractBy(String credit_contract_number, AsyncCallback<List<CreditContract>> callback);
    void evaluate(Integer modeOfEmployment, Integer monthNet, AsyncCallback<Integer> callback);
    void getAllPaymentsByCreditContractId(Integer id, AsyncCallback<List<Payment>> asyncCallback);

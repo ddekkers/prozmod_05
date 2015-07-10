@@ -45,7 +45,7 @@ public class Customer implements BusinessObject<Integer> {
 	@Column(nullable=false) 
 	private String city;
 	
-	@OneToOne(fetch=FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.PERSIST)
+	@OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST)
 	private SelfDisclosure selfDisclosure;
    
 	public Integer getCustomerNumber() {

@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.Widget;
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.model.SelfDisclosure;
+import de.fhwedel.om.types.ModeOfEmployment;
 import de.fhwedel.om.widgets.BOSelectListBox;
 
 public class CustomerMask extends BusinessMask<Customer> implements Editor<Customer> {
@@ -260,13 +261,15 @@ protected void setMode(boolean show_only) {
    
    @UiHandler("edit_selfDisclosure")
    protected void onEditSelfDisclosureClick(ClickEvent event) {
+	   System.out.println(this.getBO().getSelfDisclosure()!= null?this.getBO().getSelfDisclosure().getOccupation():"Leere SD");
 		SelfDisclosure selfDisclosure = this.getBO().getSelfDisclosure();
 		if (selfDisclosure == null) {
-			selfDisclosure = new SelfDisclosure(new Date(), "ITler", null, null, "", null, 
-												new Date(), null, null);
-		    
+			selfDisclosure = new SelfDisclosure(new Date(), "", ModeOfEmployment.employee, null, "", 0, 
+												new Date(), null, null, this.getBO());
 	   }
+		
 	   selfDisclosure.setCustomer(this.getBO());
+	   this.getBO().setSelfDisclosure(selfDisclosure);
 	   this.getFlowControl().forward(new SelfDisclosureMask(selfDisclosure, true));
    }
    
