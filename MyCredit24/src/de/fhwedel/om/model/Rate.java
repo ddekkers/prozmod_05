@@ -25,130 +25,137 @@ import de.fhwedel.om.types.ValidityLevel;
 })
 public class Rate implements BusinessObject<Integer> {
 
-   @Id
-   @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CUST_SEQ")
-   @Column(name="rate_id")
-   private Integer rate_id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CUST_SEQ")
+	@Column(name="rate_id")
+	private Integer rate_id;
    
-   private String rateNumber;
+	@Column(nullable=false) 
+	private String rateNumber;
    
-   private Double interestRate;
+	@Column(nullable=false) 
+	private Double interestRate;
    
-   private Integer runtime;
+	@Column(nullable=false) 
+	private Integer runtime;
    
-   private Integer creditAmountFrom;
+	@Column(nullable=false) 
+	private Integer creditAmountFrom;
    
-   private Integer creditAmountTo;
+	@Column(nullable=false) 
+	private Integer creditAmountTo;
    
-   private ValidityLevel validityLevel;
+	@Column(nullable=false) 
+	private ValidityLevel validityLevel;
    
-   private Date validFrom;
+	@Column(nullable=true) 
+	private Date validFrom;
    
-   private Date validTo;
+	@Column(nullable=true) 
+	private Date validTo;
    
-   public String getRateNumber() {
-	return rateNumber;
-   }
+	public String getRateNumber() {
+		return rateNumber;
+	}
 
-   public void setRateNumber(String rate_number) {
-	   this.rateNumber = rate_number;
-   }
+	public void setRateNumber(String rate_number) {
+		this.rateNumber = rate_number;
+	}
 
-   public Double getInterestRate() {
-	   return interestRate;
-   }
-	
-   public void setInterestRate(Double interest_rate) {
-	   this.interestRate = interest_rate;
-   }
-	
-   public Integer getRuntime() {
-	   return runtime;
-   }
-	
-   public void setRuntimeInYears(int runtime) {
-		this.runtime = runtime;
-   }
-	
-   public Integer getCreditAmountFrom() {
-	   return creditAmountFrom;
-   }
-	
-   public void setCreditAmountFrom(int credit_amount_from) {
-	   this.creditAmountFrom = credit_amount_from;
-   }
-	
-   public Integer getCreditAmountTo() {
-	   return creditAmountTo;
-   }
-	
-   public void setCreditAmountTo(int credit_amount_to) {
-	   this.creditAmountTo = credit_amount_to;
-   }
-	
-   public ValidityLevel getValidityLevel() {
-	   return validityLevel;
+	public Double getInterestRate() {
+		return interestRate;
 	}
 	
-   public void setValidityLevel(ValidityLevel validity_level) {
-	   this.validityLevel = validity_level;
-   }
+	public void setInterestRate(Double interest_rate) {
+		this.interestRate = interest_rate;
+	}
 	
-   public String getValidFrom() {
-	   return validFrom == null ? "" : validFrom.toString();
-	   
-   }
+	public Integer getRuntime() {
+		return runtime;
+	}
 	
-   public void setValidFrom(String valid_from) {
-   }
+	public void setRuntimeInYears(int runtime) {
+		this.runtime = runtime;
+	}
+	
+	public Integer getCreditAmountFrom() {
+		return creditAmountFrom;
+	}
+	
+	public void setCreditAmountFrom(int credit_amount_from) {
+		this.creditAmountFrom = credit_amount_from;
+	}
+	
+	public Integer getCreditAmountTo() {
+		return creditAmountTo;
+	}
+	
+	public void setCreditAmountTo(int credit_amount_to) {
+		this.creditAmountTo = credit_amount_to;
+	}
+	
+	public ValidityLevel getValidityLevel() {
+		return validityLevel;
+	}
+	
+	public void setValidityLevel(ValidityLevel validity_level) {
+		this.validityLevel = validity_level;
+	}
+	
+	public String getValidFrom() {
+		return validFrom == null ? "" : validFrom.toString();
+	}
+	
+	public void setValidFrom(String valid_from) {
+	}
    
-   public Date getDateValidFrom() {
-	   return validFrom;
-   }
+	public Date getDateValidFrom() {
+		return validFrom;
+	}
    
-   public Date getDateValidTo() {
-	   return validTo;
-   }
+	public Date getDateValidTo() {
+		return validTo;
+	}
 	
-   public String getValidTo() {
-	   return validTo == null ? "" : validTo.toString();
-   }
+	public String getValidTo() {
+		return validTo == null ? "" : validTo.toString();
+	}
 	
-   public void setValidTo(String valid_to) {
-   }
+	public void setValidTo(String valid_to) {
+	}
 
-   public Rate() {
-	   this(null, null, null, null, null, null, null, null);
-   }
+	public Rate() {
+		this(null, null, null, null, null, null, null, null);
+	}
       
-   public Rate(String rate_number, Double interest_rate, Integer runtime, Integer credit_amount_from, Integer credit_amount_to, ValidityLevel validity_level, Date valid_from, Date valid_to) {
-	   this.rateNumber = rate_number;
-	   this.interestRate = interest_rate;
-	   this.runtime = runtime;
-	   this.creditAmountFrom = credit_amount_from;
-	   this.creditAmountTo = credit_amount_to;
-	   this.validityLevel = validity_level;
-	   this.validFrom = valid_from;
-	   this.validTo = valid_to;
-   }
+	public Rate(String rate_number, Double interest_rate, Integer runtime, Integer credit_amount_from, Integer credit_amount_to, ValidityLevel validity_level, Date valid_from, Date valid_to) {
+		this.rateNumber = rate_number;
+		this.interestRate = interest_rate;
+		this.runtime = runtime;
+		this.creditAmountFrom = credit_amount_from;
+		this.creditAmountTo = credit_amount_to;
+		this.validityLevel = validity_level;
+		this.validFrom = valid_from;
+		this.validTo = valid_to;
+	}
 
-   // Object-Methoden
+	// Object-Methoden
 
-   @Override
-   public String toString() {
-      return this.getCaption();
-   }
+	@Override
+	public String toString() {
+		return this.getCaption();
+	}
    
-   // BusinessObject-Methoden 
+	// BusinessObject-Methoden 
    
-   @Override
-   public Integer getID() {
-      return this.rate_id;
-   }
+	@Override
+	public Integer getID() {
+		return this.rate_id;
+	}
 
-   @Override
-   public String getCaption() {
-      return rateNumber;
-   }
+	@Override
+	public String getCaption() {
+		return rateNumber;
+	}
    
 }

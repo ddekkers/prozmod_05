@@ -32,22 +32,31 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	@Column(name="self_disclosure_id")
 	private Integer self_disclosure_id;
 
+	@Column(nullable=false) 
 	private Date registration;
 	
+	@Column(nullable=false) 
 	private String occupation;
 	
+	@Column(nullable=false) 
 	private ModeOfEmployment modeEfEmployment;
 	
+	@Column(nullable=true) 
 	private Boolean terminable;
 	
+	@Column(nullable=true) 
 	private String employer;
 	
+	@Column(nullable=false) 
 	private Integer monthNet;
 	
+	@Column(nullable=true) 
 	private Date classification;
 	
+	@Column(nullable=true) 
 	private Integer creditLimit;
 	
+	@Column(nullable=true) 
 	private ValidityLevel validity;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
@@ -134,10 +143,10 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 	}
 	
 	public SelfDisclosure() {
-		this(null, null, null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null);
 	}
 	
-	public SelfDisclosure(Date registration, String occupation, ModeOfEmployment mode_of_employment, Boolean terminable, String employer, Integer month_net, Date classification, Integer credit_limit, ValidityLevel validity, Customer customer) {
+	public SelfDisclosure(Date registration, String occupation, ModeOfEmployment mode_of_employment, Boolean terminable, String employer, Integer month_net, Date classification, Integer credit_limit, ValidityLevel validity) {
 		
 		this.registration = registration;
 		this.occupation = occupation;
@@ -148,7 +157,6 @@ public class SelfDisclosure implements BusinessObject<Integer>{
 		this.classification = classification;
 		this.creditLimit = credit_limit;
 		this.validity = validity;
-		this.customer = customer;
 	}
 
 	@Override

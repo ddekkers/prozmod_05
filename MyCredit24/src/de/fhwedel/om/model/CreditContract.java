@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,29 +39,38 @@ public class CreditContract implements BusinessObject<Integer> {
    	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CUST_SEQ")
    	@Column(name="credit_contract_id")
    	private Integer credit_contract_id;
-   
+	
+	@Column(nullable=false) 
    	private String contractNumber;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable=false) 
 	private CreditContractStatus status;
 	
+    @Column(nullable=false) 
 	private Integer runtime;
   
+	@Column(nullable=false) 
 	private Integer creditAmount;
   
+	@Column(nullable=false) 
 	private Date contractBegin;
   
 	// Tilgungsrate
+	@Column(nullable=false) 
 	private Integer annuityRental;
   
 	// Restschuld
+	@Column(nullable=false) 
 	private Integer residualDebt;
   
+	@Column(nullable=true) 
 	private String iban;
-	
+
+	@Column(nullable=true)
 	private String bic;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne()
 	private Rate rate;
 	
 	@ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})

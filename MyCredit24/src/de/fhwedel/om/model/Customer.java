@@ -30,16 +30,22 @@ public class Customer implements BusinessObject<Integer> {
 	@Column(name="customer_id")
 	private int customer_id;
 	   
+	@Column(nullable=false) 
 	private Integer customerNumber;
 	   
+	@Column(nullable=false) 
 	private String surname;
    
+	@Column(nullable=false) 
 	private String prename;
    
+	@Column(nullable=false) 
 	private String street;
    
+	@Column(nullable=false) 
 	private String postcode;
    
+	@Column(nullable=false) 
 	private String city;
 	
 	@OneToOne(fetch=FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.PERSIST)

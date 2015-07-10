@@ -26,80 +26,83 @@ import de.fhwedel.om.types.PaymentType;
 })
 public class Payment implements BusinessObject<Integer> {
 
-   @Id
-   @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CUST_SEQ")
-   @Column(name="payment_id")
-   private int payment_id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CUST_SEQ")
+	@Column(name="payment_id")
+	private int payment_id;
    
-   private Date date;
+	@Column(nullable=false) 
+	private Date date;
 
-   private Integer amount;
+	@Column(nullable=false) 
+	private Integer amount;
    
-   private PaymentType type; 
+	@Column(nullable=false) 
+	private PaymentType type;
    
-   @ManyToOne(cascade = CascadeType.PERSIST)
-   private CreditContract creditContract;
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private CreditContract creditContract;
    
-   public Date getDate() {
-	   return date;
-   }
+	public Date getDate() {
+		return date;
+	}
 
-   public void setDateAsString(String date) {
-	   this.date = new DateHandler("dd.MM.yyyy").parseStringToDate(date);
-   }
+	public void setDateAsString(String date) {
+		this.date = new DateHandler("dd.MM.yyyy").parseStringToDate(date);
+	}
    
-   public String getDateAsString() {
-	   return new DateHandler("dd.MM.yyyy").getDateAsString(date);
-   }
+	public String getDateAsString() {
+		return new DateHandler("dd.MM.yyyy").getDateAsString(date);
+	}
    
-   public void setDate(Date date) {
-	   this.date = date;
-   }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	
-   public Integer getAmount() {
-	   return amount;
-   }
+	public Integer getAmount() {
+		return amount;
+	}
 	
-   public void setAmount(Integer amount) {
-	   this.amount = amount;
-   }
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
 	
-   public PaymentType getType() {
-	   return type;
-   }
+	public PaymentType getType() {
+		return type;
+	}
 	
-   public void setType(PaymentType type) {
-	   this.type = type;
-   }
+	public void setType(PaymentType type) {
+		this.type = type;
+	}
    
-   public Payment() {
-	   this(null, null, null, null);
-   }
+	public Payment() {
+		this(null, null, null, null);
+	}
       
-   public Payment(Date date, Integer amount, PaymentType type, CreditContract contract) {
+	public Payment(Date date, Integer amount, PaymentType type, CreditContract contract) {
 	   
-	   this.date = date;
-	   this.amount = amount;
-	   this.type = type;
-	   this.creditContract = contract;
-   }
+		this.date = date;
+		this.amount = amount;
+		this.type = type;
+		this.creditContract = contract;
+	}
 
-   @Override
-   public String toString() {
-      return this.getCaption();
-   }
+	@Override
+	public String toString() {
+		return this.getCaption();
+	}
    
-   @Override
-   public Integer getID() {
-      return this.payment_id;
-   }
+	@Override
+	public Integer getID() {
+		return this.payment_id;
+	}
 
-   @Override
-   public String getCaption() {
-      return type == null ? "" : type.toString() + 
-    		  			" - " + amount == null ? "" : amount.toString() + " EUR - " + 
-    		  			(new DateHandler("dd.MM.yyyy").getDateAsString(date));
-   }
+	@Override
+	public String getCaption() {
+		return type == null ? "" : type.toString() + 
+				" - " + amount == null ? "" : amount.toString() + " EUR - " + 
+						(new DateHandler("dd.MM.yyyy").getDateAsString(date));
+	}
 
 	public CreditContract getCreditContract() {
 		return creditContract;

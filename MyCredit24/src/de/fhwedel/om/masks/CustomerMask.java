@@ -263,7 +263,7 @@ protected void setMode(boolean show_only) {
 		SelfDisclosure selfDisclosure = this.getBO().getSelfDisclosure();
 		if (selfDisclosure == null) {
 			selfDisclosure = new SelfDisclosure(new Date(), "ITler", null, null, "", null, 
-												new Date(), null, null, null);
+												new Date(), null, null);
 		    
 	   }
 	   selfDisclosure.setCustomer(this.getBO());

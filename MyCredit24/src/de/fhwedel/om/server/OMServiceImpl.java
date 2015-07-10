@@ -78,12 +78,17 @@ implements OMService {
       
       //Testdatensätze anlegen
       if(OMServiceImpl.props.getProperty("regenerate", "0").equals("1")) {            
-         Customer cust = new Customer (7, "Jonas", "Hübner", "Straße 1", "78902", "Hamburg", new SelfDisclosure());
+         SelfDisclosure sd1 = new SelfDisclosure(new Date(), "Student", ModeOfEmployment.employee, false, "FH Wedel", 1000, null, null, null);
+         SelfDisclosure sd2 = new SelfDisclosure(new Date(), "Marketing - Experte", ModeOfEmployment.employee, false, "otto", 10000, null, null, null);
+         SelfDisclosure sd3 = new SelfDisclosure(new Date(), "Anwendungsentwickler", ModeOfEmployment.employee, false, "innovas", 5000, null, null, null);
     	 EntityManager em = OMServiceImpl.getEM();
          em.getTransaction().begin();
-         em.persist( new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", new SelfDisclosure()) );
-         em.persist( new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", new SelfDisclosure()) );
-         em.persist( new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", new SelfDisclosure()) ); 
+         Customer c1 = new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", sd1);
+         Customer c2 = new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", sd2);
+         Customer c3 = new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", sd3); 
+         em.persist( c1 );
+         em.persist( c2 );
+         em.persist( c3 ); 
          
          GregorianCalendar cal = new GregorianCalendar(2015, 01, 01);
          Date begin = cal.getTime();
