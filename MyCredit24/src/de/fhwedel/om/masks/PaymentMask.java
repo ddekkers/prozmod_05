@@ -47,13 +47,26 @@ public class PaymentMask extends BusinessMask<Payment> implements Editor<Payment
    @Path("creditContract.residualDebt") @UiField IntegerBox residualDebt;
    
    
+   
    public PaymentMask(Payment p, boolean show_only) {        
       initWidget(uiBinder.createAndBindUi(this));
       this.editorDriver.initialize(this);
       this.setBO(p);
+      this.status.setValue(getBO().getCreditContract().getStatus());
+      this.type.setValue(getBO().getType());
+      this.setMode(show_only);
+      this.refreshCreditContractStatus();
+      this.refreshType();
    }
    
-   public void setBO(Payment p) {
+   private void setMode(boolean show_only) {
+
+	   amount.setReadOnly(show_only);
+	   type.setEnabled(show_only);
+	   status.setEnabled(show_only);
+}
+
+public void setBO(Payment p) {
 	      super.setBO(p);
 	      this.editorDriver.edit(p);
    }
@@ -73,10 +86,6 @@ public class PaymentMask extends BusinessMask<Payment> implements Editor<Payment
    protected void refreshType() {
 		  this.type.setEnum(PaymentType.class);
 	  }
-   @UiHandler("back")
-   protected void onBackClick(ClickEvent event) {
-      this.getFlowControl().backward();
-   }
    
 //   @UiHandler("amount")
 //   protected void onAmountChange(ChangeEvent event) {

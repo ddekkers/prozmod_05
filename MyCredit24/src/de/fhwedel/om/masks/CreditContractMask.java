@@ -202,9 +202,14 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 				   case Widerruf: 
 				   case Abgelehnt_wegen_Bonitaet:
 				   case Abgelehnt_wegen_Fristablauf: 
+					   select_payment.setEnabled(false);
+					   save_changes.setEnabled(false);
+					   discard_changes.setEnabled(false);
+					   break;
+					   
 				   case Abgeschlossen: {
 			   
-					   select_payment.setEnabled(false);
+					   select_payment.setEnabled(true);
 					   save_changes.setEnabled(false);
 					   discard_changes.setEnabled(false);
 					   break;
@@ -229,9 +234,9 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   }
 	  
 	return res;
-}
+   }
 
-public CreditContractMask(CreditContract c, boolean show_only, boolean isNew) {        
+   public CreditContractMask(CreditContract c, boolean show_only, boolean isNew) {        
       initWidget(uiBinder.createAndBindUi(this));
       this.editorDriver.initialize(this);
       this.isNew = isNew;
@@ -280,6 +285,11 @@ public CreditContractMask(CreditContract c, boolean show_only, boolean isNew) {
    @UiHandler("requestResidualDebt")
    protected void onRequestResidualDebtClick(ClickEvent event) {
 	   Window.alert("Kunden zur Überweisung der Restschuld auffordert");
+   }
+   
+   @UiHandler("select_payment")
+   protected void onSelectPaymentClick(ClickEvent event) {
+	   this.getFlowControl().forward(new PaymentMask(this.payments.getValue(), false));
    }
    
    @UiHandler("repayment")

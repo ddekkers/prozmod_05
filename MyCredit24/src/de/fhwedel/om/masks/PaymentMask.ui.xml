@@ -59,9 +59,5 @@
             <fhw:EnumSelectListBox visibleItemCount="1" pixelSize="200,20" ui:field="status"/>
          </g:at>
          
-          <g:at top="315" left="20">
-              <g:Button ui:field="back" text="Zurück"/>
-          </g:at>
- 
       </g:AbsolutePanel>      
 </ui:UiBinder> 

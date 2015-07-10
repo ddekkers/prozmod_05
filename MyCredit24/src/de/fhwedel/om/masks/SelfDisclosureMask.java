@@ -73,7 +73,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 		   this.save_selfDisclosure.setVisible(show_only);
 		   this.employer.setEnabled(show_only && modeOfEmployment.getValue() != null && modeOfEmployment.getValue() == ModeOfEmployment.employee);
 		   this.terminable.setEnabled(show_only && modeOfEmployment.getValue() != null &&  modeOfEmployment.getValue() == ModeOfEmployment.employee);
-		   this.eval_validity.setEnabled(show_only && modeOfEmployment.getValue() != null && monthNet.getValue() != null);
+		   this.eval_validity.setEnabled(show_only || modeOfEmployment.getValue() != null && monthNet.getValue() != null);
 	   }
 	   
 	   protected void refreshModeOfEmployment(){
