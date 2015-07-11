@@ -61,7 +61,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	       this.editorDriver.initialize(this);
 	       this.refreshModeOfEmployment();
 	       this.refreshValidity();
-		   this.setBo(s);
+	       this.setBo(s);
 	   }
 	   
 	   protected void setMode(Boolean show_only) {
@@ -99,6 +99,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	        	SelfDisclosureMask.this.setBO(result);
 	        	SelfDisclosureMask.this.fireSaved();
 	        	Window.alert("Selbstauskunft erfolgreich gespeichert.");
+	        	getFlowControl().backward();
 
 	         }         
 	         @Override
@@ -115,7 +116,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	   @UiHandler("save_selfDisclosure")
 	   protected void onSaveSelfDisclosureClick(ClickEvent event) {
 		   if (validity.getValue() != ValidityLevel.X) {
-			   this.saveBO();	
+			   this.saveBO();
 		   } else {
 			   Window.alert("Selbstauskunft nicht gespeichert (Bonitätslevel=X).");
 		   }			   

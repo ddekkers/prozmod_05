@@ -8,6 +8,7 @@ import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -261,7 +262,6 @@ protected void setMode(boolean show_only) {
    
    @UiHandler("edit_selfDisclosure")
    protected void onEditSelfDisclosureClick(ClickEvent event) {
-	   System.out.println(this.getBO().getSelfDisclosure()!= null?this.getBO().getSelfDisclosure().getOccupation():"Leere SD");
 		SelfDisclosure selfDisclosure = this.getBO().getSelfDisclosure();
 		if (selfDisclosure == null) {
 			selfDisclosure = new SelfDisclosure(new Date(), "", ModeOfEmployment.employee, null, "", 0, 
@@ -309,7 +309,25 @@ protected void setMode(boolean show_only) {
    public void refresh() {
       this.refreshCustomers();
       this.refreshCreditContracts();
+//      this.refreshSelfDisclosure();
       super.refresh();
    }
+
+//   private void refreshSelfDisclosure() {
+//
+//	   if (getBO() != null) {
+//		   
+//		   this.getService().getSelfDisclosureByCustNumber(this.getBO(),new AsyncCallback<List<CreditContract>>() {         
+//  	         @Override
+//  	         public void onSuccess(List<CreditContract> result) {
+//  		          creditContracts.setAcceptableValues(result);	    	                        
+//  	         }         
+//  	         @Override
+//  	         public void onFailure(Throwable caught) {
+//  	            Window.alert("Fehler beim Laden der Kreditverträge.");        
+//  	         }
+//  	      }
+//	   }
+//   }
       
 }

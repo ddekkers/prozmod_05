@@ -51,12 +51,12 @@ public class PaymentMask extends BusinessMask<Payment> implements Editor<Payment
    public PaymentMask(Payment p, boolean show_only) {        
       initWidget(uiBinder.createAndBindUi(this));
       this.editorDriver.initialize(this);
+      this.refreshCreditContractStatus();
+      this.refreshType();
       this.setBO(p);
       this.status.setValue(getBO().getCreditContract().getStatus());
       this.type.setValue(getBO().getType());
       this.setMode(show_only);
-      this.refreshCreditContractStatus();
-      this.refreshType();
    }
    
    private void setMode(boolean show_only) {

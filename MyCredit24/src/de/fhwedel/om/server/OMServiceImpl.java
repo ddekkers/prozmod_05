@@ -146,6 +146,7 @@ implements OMService {
       List<Customer> allCustomers = em.createNamedQuery("getAllCustomers").getResultList();      
       Collections.sort(allCustomers, 
 			   (Customer cust1, Customer cust2) -> cust1.getCustomerNumber().compareTo(cust2.getCustomerNumber()));
+      
       return allCustomers;
    }
    
@@ -282,6 +283,9 @@ implements OMService {
 		   em.persist(sd);
 	   }
 	   em.getTransaction().commit();
+	   Customer c = sd.getCustomer();
+	   c.setSelfDisclosure(sd);
+	   save(c);
 	   return sd;
    }
    

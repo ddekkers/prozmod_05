@@ -39,7 +39,7 @@ public class Payment implements BusinessObject<Integer> {
 	@Column(nullable=false) 
 	private PaymentType type;
    
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne()
 	private CreditContract creditContract;
    
 	public Date getDate() {
