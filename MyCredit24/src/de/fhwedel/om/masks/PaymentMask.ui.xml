@@ -52,12 +52,27 @@
          <g:at top="65" left="520">
             <g:IntegerBox readOnly="true" ui:field="residualDebt"/>
          </g:at>
+         
          <g:at top="100" left="400">
-            <g:Label text="Status:"/>
+            <g:Label text="Kreditbetrag:"/>
          </g:at>
          <g:at top="100" left="520">
+            <g:IntegerBox readOnly="true" ui:field="creditAmount"/>
+         </g:at>
+         <g:at top="135" left="400">
+            <g:Label text="Status:"/>
+         </g:at>
+         <g:at top="135" left="520">
             <fhw:EnumSelectListBox visibleItemCount="1" pixelSize="200,20" ui:field="status"/>
          </g:at>
+         
+		<!-- Sonstige Funktionen -->         
+         <g:at top="200" left="400">
+            <g:Label text="Sonstige Funktionen:"/>
+         </g:at>
+       	<g:at top="235" left="400">
+          	<g:Button ui:field="save">Sondertilgung speichern</g:Button>
+       	</g:at>
          
       </g:AbsolutePanel>      
 </ui:UiBinder> 

@@ -8,7 +8,6 @@ import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
-import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -28,7 +27,6 @@ import de.fhwedel.om.widgets.BOSelectListBox;
 
 public class CustomerMask extends BusinessMask<Customer> implements Editor<Customer> {
 
-   private boolean show_only;
    
    // Customer-Editor
    interface CustomerEditorDriver extends SimpleBeanEditorDriver<Customer, CustomerMask> {}
@@ -115,8 +113,6 @@ private void setSearchMode(boolean bool) {
 }
 
 protected void setMode(boolean show_only) {
-      this.show_only = show_only;
-      
       this.pname.setReadOnly(show_only);
       this.sname.setReadOnly(show_only);
       this.search_customer.setVisible(!show_only);

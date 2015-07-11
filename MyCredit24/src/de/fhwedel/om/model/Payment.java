@@ -39,7 +39,7 @@ public class Payment implements BusinessObject<Integer> {
 	@Column(nullable=false) 
 	private PaymentType type;
    
-	@ManyToOne()
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private CreditContract creditContract;
    
 	public Date getDate() {
@@ -98,9 +98,10 @@ public class Payment implements BusinessObject<Integer> {
 
 	@Override
 	public String getCaption() {
-		return type == null ? "" : type.toString() + 
-				" - " + amount == null ? "" : amount.toString() + " EUR - " + 
-						(new DateHandler("dd.MM.yyyy").getDateAsString(date));
+		String typeStr = type == null ? "" : type.toString();
+		String amountStr = amount == null ? "" : amount.toString() + " EUR";
+		String dateStr = (new DateHandler("dd.MM.yyyy").getDateAsString(date)); 
+		return  typeStr + " - " + amountStr + " - " + dateStr;
 	}
 
 	public CreditContract getCreditContract() {

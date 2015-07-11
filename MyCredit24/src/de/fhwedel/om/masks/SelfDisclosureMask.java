@@ -3,15 +3,11 @@ package de.fhwedel.om.masks;
 
 
 
-import java.sql.Date;
-
-import com.gargoylesoftware.htmlunit.WebConsole.Formatter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -20,8 +16,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.IntegerBox;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.fhwedel.om.model.SelfDisclosure;
@@ -30,7 +26,6 @@ import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.EnumSelectListBox;
 
 public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements Editor<SelfDisclosure> {
-	   private boolean show_only;
 	   
 	   // SelfDisclosure-Editor
 	   interface SelfDisclosureEditorDriver extends SimpleBeanEditorDriver<SelfDisclosure, SelfDisclosureMask> {}
@@ -108,9 +103,6 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	         }
 	      });
 		   this.editorDriver.edit(this.getBO());
-	      this.getBO().getCustomer().setSelfDisclosure(this.getBO());
-		   this.getFlowControl().forward(new CustomerMask(this.getBO().getCustomer(), false));
-
 	   }
 	   
 	   @UiHandler("save_selfDisclosure")

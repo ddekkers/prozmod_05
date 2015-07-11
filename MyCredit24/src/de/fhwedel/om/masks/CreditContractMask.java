@@ -24,7 +24,9 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.fhwedel.om.model.CreditContract;
 import de.fhwedel.om.model.Payment;
+import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.types.CreditContractStatus;
+import de.fhwedel.om.types.ModeOfEmployment;
 import de.fhwedel.om.types.PaymentType;
 import de.fhwedel.om.types.ValidityLevel;
 import de.fhwedel.om.widgets.BOSelectListBox;
@@ -79,6 +81,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    //Buttons
    @UiField Button save_changes;
    @UiField Button discard_changes;
+   @UiField Button customer;
+   @UiField Button self_disclosure;
    
    //Sonstige Funktionen
    @UiField Button rejected_deadline;
@@ -105,6 +109,8 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    private void setWidgetPropertiesByIsNewAndStatus() {
 	   
+	   customer.setVisible(this.getBO() != null && this.getBO().getCustomer() != null);
+	   self_disclosure.setVisible(this.getBO() != null && this.getBO().getCustomer() != null);
 	   if (isNew) {
 		   // Alle Felder zur Suche 
 		   credit_contracts.setVisible(true);
@@ -282,6 +288,22 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 	   
    }
    
+   @UiHandler("customer")
+   protected void onCustomerClick(ClickEvent event) {
+	   this.getFlowControl().forward(new CustomerMask(getBO().getCustomer()));
+   }
+
+	@UiHandler("self_disclosure")
+	protected void onSelfDisclosureClick(ClickEvent event) {
+		SelfDisclosure sd = getBO().getCustomer().getSelfDisclosure();
+		if (sd == null) {
+			
+			sd = new SelfDisclosure(new Date(), "", ModeOfEmployment.employee, null, "", 0, new Date(), null, null, this.getBO().getCustomer());
+			getBO().getCustomer().setSelfDisclosure(sd);
+		}
+		this.getFlowControl().forward(new SelfDisclosureMask(sd, true));
+	}
+   
    @UiHandler("requestResidualDebt")
    protected void onRequestResidualDebtClick(ClickEvent event) {
 	   Window.alert("Kunden zur Überweisung der Restschuld auffordert");
@@ -289,7 +311,7 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("select_payment")
    protected void onSelectPaymentClick(ClickEvent event) {
-	   this.getFlowControl().forward(new PaymentMask(this.payments.getValue(), false));
+	   this.getFlowControl().forward(new PaymentMask(this.payments.getValue(), true));
    }
    
    @UiHandler("repayment")
@@ -310,15 +332,14 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
 		   payment.setAmount(payment.getAmount() - dif);
 	   }
 	   if (0 == this.residualDebt.getValue()) {
-		   
+
 		   setStatusAndRefreshWidgets(CreditContractStatus.Abgeschlossen);
 	   }
-	   		
+
 	   this.saveBO();
 	   savePayment(payment);
 	   refreshPayments();
 	   setWidgetPropertiesByIsNewAndStatus();
-  
    }
 
    
@@ -579,7 +600,9 @@ private void savePayment(Payment payment) {
   }
    @Override
    public void refresh() {
+	   this.refreshCreditContracts();
+	   this.refreshPayments();
       super.refresh();
    }
-      
+
 }
