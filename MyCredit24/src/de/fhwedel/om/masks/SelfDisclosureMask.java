@@ -99,13 +99,17 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	        	SelfDisclosureMask.this.setBO(result);
 	        	SelfDisclosureMask.this.fireSaved();
 	        	Window.alert("Selbstauskunft erfolgreich gespeichert.");
+
 	         }         
 	         @Override
 	         public void onFailure(Throwable caught) {
 	            Window.alert("Fehler beim Speichern (" + SelfDisclosureMask.this.getBO().getClass().getSimpleName() + ").");        
 	         }
 	      });
+		   this.editorDriver.edit(this.getBO());
 	      this.getBO().getCustomer().setSelfDisclosure(this.getBO());
+		   this.getFlowControl().forward(new CustomerMask(this.getBO().getCustomer(), false));
+
 	   }
 	   
 	   @UiHandler("save_selfDisclosure")
