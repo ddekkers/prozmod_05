@@ -106,11 +106,41 @@
             	<g:Button ui:field="customer">Kunde</g:Button>
          	</g:at>
 			<g:at top="500" left="450">
-            	<g:Label text="Kunde:"/>
+            	<g:Label text="Selbstauskunft:"/>
          	</g:at>
          	<g:at top="530" left="450">
             	<g:Button ui:field="self_disclosure">Selbstauskunft</g:Button>
          	</g:at>
+			
+			<!-- Kunde -->
+         	<g:at top="600" left="350">
+            	<g:Label text="Kundendetails:"/>
+         	</g:at>	
+         	
+	    	<g:at top="640" left="350">
+	    		<g:Label text="Kundennummer:"/>
+	    	</g:at>   	
+	    	
+	    	<g:at top="680" left="350">
+	    		<g:Label text="Name:"/>
+	    	</g:at>   	
+	    	
+	    	<g:at top="720" left="350">
+	    		<g:Label text="Vorname:"/>
+	    	</g:at>   	
+	    	
+	    	<g:at top="640" left="450">
+	    		<g:IntegerBox pixelSize="200,10" readOnly="true" ui:field="cust_number"/>
+	    	</g:at>   	
+	    	
+	    	<g:at top="680" left="450">
+	    		<g:TextBox pixelSize="200,10" readOnly="true" ui:field="cust_sname"/>
+	    	</g:at>   	
+	    	
+	    	<g:at top="720" left="450">
+	    		<g:TextBox pixelSize="200,10" readOnly="true" ui:field="cust_pname"/>
+	    	</g:at>   	
+			
 			
 			<!-- Sonstige Funktionen -->
 			
@@ -160,7 +190,7 @@
 	    		<g:Label text="Bonitätsstufe:"/>
 	    	</g:at>   	
 	    	
-	    	<g:at top="180" left="750">
+	    	<g:at top="180" left="750">	
 	    		<g:Label text="Gültig von:"/>
 	    	</g:at>   	
 	    	
@@ -236,7 +266,7 @@
          	<g:at top="960" left="750">
             	<g:Button ui:field="repayment">Sondertilgung erfassen</g:Button>
          	</g:at>
-         	      	
+         	      		    	
          	
       </g:AbsolutePanel>      
 </ui:UiBinder> 
