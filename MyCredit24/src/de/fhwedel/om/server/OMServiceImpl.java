@@ -84,8 +84,8 @@ implements OMService {
     	 EntityManager em = OMServiceImpl.getEM();
          em.getTransaction().begin();
          Customer c1 = new Customer(4, "Daniel", "Dekkers", "Malzweg 21" , "20535", "Hamburg", sd1);
-         Customer c2 = new Customer(5, "Daniel", "Hübner", "Blink 128", "12345", "Hetlingen", sd2);
-         Customer c3 = new Customer(6, "Daniel", "Terrabusen", "Blink 129", "12345", "Hetlingen", sd3); 
+         Customer c2 = new Customer(5, "Jonas", "Hübner", "Blink 128", "12345", "Hetlingen", sd2);
+         Customer c3 = new Customer(6, "Peter", "Silie", "Blink 129", "12345", "Hetlingen", sd3); 
          
          c1.setSelfDisclosure(sd1);         
          c2.setSelfDisclosure(sd2);         

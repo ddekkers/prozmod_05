@@ -80,17 +80,17 @@ public class CustomerMask extends BusinessMask<Customer> implements Editor<Custo
       this.setBO(c);
    }
    
-   private void setWidgetProperties() {
-	   setSearchMode(true);
-	   setCustomerDatesMode(false);
-	   setContractDatesMode(false);
-}
-
-private void setContractDatesMode(Boolean bool) {
-	creditContracts.setEnabled(bool);
-	   new_creditContract.setEnabled(bool);
-	   edit_creditContract.setEnabled(bool);
-}
+	private void setWidgetProperties() {
+		setSearchMode(true);
+		setCustomerDatesMode(false);
+		setContractDatesMode(false);
+	}
+	
+	private void setContractDatesMode(Boolean bool) {
+		creditContracts.setEnabled(bool);
+		new_creditContract.setEnabled(bool);
+		edit_creditContract.setEnabled(bool);
+	}
 
    private void setCustomerDatesMode(Boolean bool) {
 	   cust_number.setEnabled(bool);
@@ -129,9 +129,9 @@ protected void setMode(boolean show_only) {
       this.refreshCreditContracts();
       this.selfDisclosure.clear();
       this.selfDisclosure.add( new SelfDisclosureMask(this.getBO().getSelfDisclosure(), false));
-      this.new_creditContract.setEnabled(this.getBO().getID() != null);
-      this.edit_creditContract.setEnabled(this.getBO().getID() != null);
-      this.creditContracts.setEnabled(this.getBO().getID() != null);
+//      this.new_creditContract.setEnabled(this.getBO().getID() != null);
+//      this.edit_creditContract.setEnabled(this.getBO().getID() != null);
+//      this.creditContracts.setEnabled(this.getBO().getID() != null);
       this.selfDisclosure.setVisible(this.getBO().getID() != null);
       this.editorDriver.edit(c);
    }
@@ -271,7 +271,7 @@ protected void setMode(boolean show_only) {
    
    @UiHandler("new_creditContract")
    protected void onNewCreditContractClick(ClickEvent event) {
-	   if (!(this.cust_number.getValue() == null)) {
+	   if (!(this.cust_number.getValue() == null || this.pname.getValue() == "")) {
 		   CreditContract creditContract = new CreditContract();
 		   creditContract.setCustomer(this.getBO());
 		   this.getFlowControl().forward(new CreditContractMask(creditContract, true));  

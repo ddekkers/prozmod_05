@@ -80,6 +80,11 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
     @Path("rate.validTo") @UiField TextBox valid_to;
     @Path("rate.validityLevel") @UiField EnumSelectListBox<ValidityLevel> validity;
 
+    //Alle Felder zum Kunden
+   	@Path("customer.customerNumber") @UiField IntegerBox cust_number;
+   	@Path("customer.surname") @UiField TextBox cust_sname;
+   	@Path("customer.prename") @UiField TextBox cust_pname;
+   	
    //Buttons
    @UiField Button save_changes;
    @UiField Button discard_changes;
@@ -300,12 +305,16 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("customer")
    protected void onCustomerClick(ClickEvent event) {
-	   boolean show_only = getBO().getStatus().equals(CreditContractStatus.Abgeschlossen);
-	   show_only |= getBO().getStatus().equals(CreditContractStatus.Widerruf);
-	   show_only |= getBO().getStatus().equals(CreditContractStatus.Abgelehnt_wegen_Bonitaet);
-	   show_only |= getBO().getStatus().equals(CreditContractStatus.Abgelehnt_wegen_Fristablauf);
-	   
-	   this.getFlowControl().forward(new CustomerMask(getBO().getCustomer(), show_only));
+	   if (this.getBO().getStatus() != null) {
+		   boolean show_only = getBO().getStatus().equals(CreditContractStatus.Abgeschlossen);
+		   show_only |= getBO().getStatus().equals(CreditContractStatus.Widerruf);
+		   show_only |= getBO().getStatus().equals(CreditContractStatus.Abgelehnt_wegen_Bonitaet);
+		   show_only |= getBO().getStatus().equals(CreditContractStatus.Abgelehnt_wegen_Fristablauf);
+		   
+		   this.getFlowControl().forward(new CustomerMask(getBO().getCustomer(), show_only));
+	   } else {
+		   Window.alert("Bitte erst Vertrag speichern.");
+	   }
    }
 
 	@UiHandler("self_disclosure")
