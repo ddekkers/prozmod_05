@@ -252,7 +252,8 @@ implements OMService {
          cc = em.merge(cc);
       }
       else {
-         em.persist(cc);
+    	  
+    	  em.persist(cc);
       }
       em.getTransaction().commit();
       return cc;
@@ -334,22 +335,27 @@ implements OMService {
 				return null;
 		return save(payment);
 	}
-	   
-/*   @Override
-   synchronized public OrderPosition save(OrderPosition pos) {
-      EntityManager em = OMServiceImpl.getEM();
-      em.getTransaction().begin();
 
-      if(pos.getID() != null)
-         pos = em.merge(pos);
-      else {
-         em.persist(pos);
-         Order o = pos.getOrder();
-         o.getPositions().add(pos);
-         em.merge(o);
-      }
-      em.getTransaction().commit();
-      return pos;
-   }*/
-   
+	@Override
+	public Customer getCustomerByCustomerId(Integer customerNumber) {
+		List<Customer> cs = getAllCustomers();
+		for (int i = 0; i < cs.size(); ++i) {
+			
+			if (cs.get(i).getCustomerNumber().equals(customerNumber))
+				return cs.get(i);
+		}
+		return null;
+	}
+
+	@Override
+	public CreditContract getContractByNumber(String contractNumber) {
+		List<CreditContract> ccs = getAllCreditContracts();
+		for (int i = 0; i < ccs.size(); ++i) {
+			
+			if (ccs.get(i).getContractNumber().equals(contractNumber))
+				return ccs.get(i);
+		}
+		return null;
+	}
+	  
 }

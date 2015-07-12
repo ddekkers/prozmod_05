@@ -94,7 +94,6 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 	        	SelfDisclosureMask.this.setBO(result);
 	        	SelfDisclosureMask.this.fireSaved();
 	        	Window.alert("Selbstauskunft erfolgreich gespeichert.");
-	        	getFlowControl().backward();
 
 	         }         
 	         @Override

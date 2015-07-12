@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.fhwedel.om.model.CreditContract;
+import de.fhwedel.om.model.Customer;
 import de.fhwedel.om.model.Payment;
 import de.fhwedel.om.model.SelfDisclosure;
 import de.fhwedel.om.types.CreditContractStatus;
@@ -37,14 +38,15 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    final static int MIN_DAYS = 28;
    
    private DateHandler dateHandler = new DateHandler();
+   private List<CreditContract> contracts;
    
    private Integer numberOfContractsPerDay = 0;
    
    private boolean isNew;
 
    // Customer-Editor
-   interface CustomerEditorDriver extends SimpleBeanEditorDriver<CreditContract, CreditContractMask> {}
-   private final CustomerEditorDriver editorDriver = GWT.create(CustomerEditorDriver.class);
+   interface CreditContractEditorDriver extends SimpleBeanEditorDriver<CreditContract, CreditContractMask> {}
+   private final CreditContractEditorDriver editorDriver = GWT.create(CreditContractEditorDriver.class);
 
    // UiBinder    
    interface CreditContractMaskUiBinder extends UiBinder<Widget, CreditContractMask> {}
@@ -109,8 +111,12 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    private void setWidgetPropertiesByIsNewAndStatus() {
 	   
-	   customer.setVisible(this.getBO() != null && this.getBO().getCustomer() != null);
-	   self_disclosure.setVisible(this.getBO() != null && this.getBO().getCustomer() != null);
+	   if (this.getBO() != null)  {
+		   
+		   self_disclosure.setVisible(this.getBO() != null && this.getBO().getCustomer() != null);
+		   customer.setVisible(this.getBO() != null && this.getBO().getCustomer() != null);
+		   isNew = isNew && this.getBO().getStatus() == null;
+	   }
 	   if (isNew) {
 		   // Alle Felder zur Suche 
 		   credit_contracts.setVisible(true);
@@ -264,6 +270,10 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    @Override
    protected void saveBO() {
       this.editorDriver.flush();
+      if (this.getBO().getContractNumber() == null) {
+
+    	  setNewContractNumber();
+      }
       this.getService().save(this.getBO(), new AsyncCallback<CreditContract>() {         
          @Override
          public void onSuccess(CreditContract result) {
@@ -290,18 +300,26 @@ public class CreditContractMask extends BusinessMask<CreditContract> implements 
    
    @UiHandler("customer")
    protected void onCustomerClick(ClickEvent event) {
-	   this.getFlowControl().forward(new CustomerMask(getBO().getCustomer()));
+	   boolean show_only = getBO().getStatus().equals(CreditContractStatus.Abgeschlossen);
+	   show_only |= getBO().getStatus().equals(CreditContractStatus.Widerruf);
+	   show_only |= getBO().getStatus().equals(CreditContractStatus.Abgelehnt_wegen_Bonitaet);
+	   show_only |= getBO().getStatus().equals(CreditContractStatus.Abgelehnt_wegen_Fristablauf);
+	   
+	   this.getFlowControl().forward(new CustomerMask(getBO().getCustomer(), show_only));
    }
 
 	@UiHandler("self_disclosure")
 	protected void onSelfDisclosureClick(ClickEvent event) {
-		SelfDisclosure sd = getBO().getCustomer().getSelfDisclosure();
-		if (sd == null) {
+		   boolean show_only = !getBO().getStatus().equals(CreditContractStatus.Angebot);
+		   
+		   SelfDisclosure sd = getBO().getCustomer().getSelfDisclosure();
+		   if (sd == null) {
 			
-			sd = new SelfDisclosure(new Date(), "", ModeOfEmployment.employee, null, "", 0, new Date(), null, null, this.getBO().getCustomer());
-			getBO().getCustomer().setSelfDisclosure(sd);
-		}
-		this.getFlowControl().forward(new SelfDisclosureMask(sd, true));
+			   sd = new SelfDisclosure(new Date(), "", ModeOfEmployment.employee, null, "", 0, new Date(), null, null, this.getBO().getCustomer());
+			   getBO().getCustomer().setSelfDisclosure(sd);
+		   }
+		   sd.setCustomer(getBO().getCustomer());
+		   this.getFlowControl().forward(new SelfDisclosureMask(sd, !show_only));
 	}
    
    @UiHandler("requestResidualDebt")
@@ -517,6 +535,7 @@ private void savePayment(Payment payment) {
 			   numberOfContractsPerDay = thisMonthsContracts.size();
 			   NumberFormat formatter = NumberFormat.getFormat("000");
 			   contractNumber.setValue(currYearMonth + formatter.format(numberOfContractsPerDay + 1));
+			   getBO().setContractNumber(currYearMonth + formatter.format(numberOfContractsPerDay + 1));
 
 		   }         
 		   @Override
@@ -537,6 +556,7 @@ private void savePayment(Payment payment) {
    @UiHandler("save_changes")
    protected void onSaveCreditContractClick(ClickEvent event) {
 	   	getFlowControl().update(this);
+	   	this.refreshCustomer();
 	   	if (isNew) {
 	   	
 	   		if (this.getBO().getRate() != null) {
@@ -582,7 +602,8 @@ private void savePayment(Payment payment) {
      this.getService().getAllCreditContracts(new AsyncCallback<List<CreditContract>>() {         
         @Override
         public void onSuccess(List<CreditContract> result) {
-           credit_contracts.setAcceptableValues(result);            
+           credit_contracts.setAcceptableValues(result);          
+           contracts = result;
         }         
         @Override
         public void onFailure(Throwable caught) {
@@ -594,15 +615,72 @@ private void savePayment(Payment payment) {
   protected void refreshCreditContractStatus() {
 	  this.status.setEnum(CreditContractStatus.class);
   }
+  
+  protected void refreshCustomer() {
+	  if (getBO().getCustomer() != null) {
+		  
+		  this.getService().getCustomerByCustomerId(getBO().getCustomer().getCustomerNumber(), new AsyncCallback<Customer>() {         
+		        @Override
+		        public void onSuccess(Customer result) {
+		           getBO().setCustomer(result);;            
+		        }         
+		        @Override
+		        public void onFailure(Throwable caught) {
+		           Window.alert("Fehler beim Aktualisieren des Kunden.");        
+		        }
+		     });      
+	  }
+  }
 
   protected void refreshValidityLevel() {
 	   this.validity.setEnum(ValidityLevel.class);
   }
+  
+  public void refreshThis() {
+      if(this.getBO().getID() != null) {
+         this.getService().get(this.getBO().getClass().getName(), this.getBO().getID(), new AsyncCallback<CreditContract>() {         
+            @Override
+            public void onSuccess(CreditContract result) {
+               CreditContractMask.this.setBO(result);  
+        	   editorDriver.edit(CreditContractMask.this.getBO());
+        	   CreditContractMask.this.setWidgetPropertiesByIsNewAndStatus();
+        	   }         
+            @Override
+            public void onFailure(Throwable caught) {
+               Window.alert("Fehler beim Neuladen (" + CreditContractMask.this.getBO().getClass().getSimpleName() + ").");
+            }
+         });
+      } else {
+    	  // Wenn ich aus der Selbstauskunft komme und dadrin gespeichert habe, verliert er die ID des Vertrags (???)
+    	  // Deshalb hole ich mir den Datensatz aus der aktuellen Liste...
+    	  if(this.getBO().getContractNumber() != null && this.getBO().getStatus() == CreditContractStatus.Angebot) {
+
+    		  this.getService().getContractByNumber(getBO().getContractNumber(), new AsyncCallback<CreditContract>() {         
+    	            @Override
+    	            public void onSuccess(CreditContract result) {
+    	            	Customer c = getBO().getCustomer();
+    	               CreditContractMask.this.setBO(result);
+    	               CreditContractMask.this.getBO().setCustomer(c);
+    	        	   editorDriver.edit(CreditContractMask.this.getBO());
+    	        	   CreditContractMask.this.setWidgetPropertiesByIsNewAndStatus();
+    	        	   }         
+    	            @Override
+    	            public void onFailure(Throwable caught) {
+    	               Window.alert("Fehler beim Neuladen (" + CreditContractMask.this.getBO().getClass().getSimpleName() + ").");
+    	            }
+    	         });
+    	  }
+      }
+   }
+  
    @Override
    public void refresh() {
 	   this.refreshCreditContracts();
 	   this.refreshPayments();
-      super.refresh();
+	   CreditContractMask.this.refreshCustomer();
+	   editorDriver.edit(this.getBO());
+	   setWidgetPropertiesByIsNewAndStatus();
+	   this.refreshThis();
    }
 
 }

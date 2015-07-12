@@ -35,4 +35,6 @@ public interface OMService extends RemoteService {
    public List<Payment> getAllPaymentsByCreditContractId(Integer id);
    public Payment saveOutpayment(Payment id);
    public SelfDisclosure save(SelfDisclosure sd);
+   public Customer getCustomerByCustomerId(Integer customerNumber);
+   public CreditContract getContractByNumber(String contractNumber);
 }

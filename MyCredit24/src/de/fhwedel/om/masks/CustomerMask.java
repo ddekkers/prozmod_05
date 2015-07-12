@@ -305,25 +305,6 @@ protected void setMode(boolean show_only) {
    public void refresh() {
       this.refreshCustomers();
       this.refreshCreditContracts();
-//      this.refreshSelfDisclosure();
       super.refresh();
-   }
-
-//   private void refreshSelfDisclosure() {
-//
-//	   if (getBO() != null) {
-//		   
-//		   this.getService().getSelfDisclosureByCustNumber(this.getBO(),new AsyncCallback<List<CreditContract>>() {         
-//  	         @Override
-//  	         public void onSuccess(List<CreditContract> result) {
-//  		          creditContracts.setAcceptableValues(result);	    	                        
-//  	         }         
-//  	         @Override
-//  	         public void onFailure(Throwable caught) {
-//  	            Window.alert("Fehler beim Laden der Kreditverträge.");        
-//  	         }
-//  	      }
-//	   }
-//   }
-      
+   }      
 }
