@@ -119,6 +119,7 @@ public class SelfDisclosureMask extends BusinessMask<SelfDisclosure> implements 
 		   this.getService().evaluate(modeOfEmployment.getValue().getEvaluation(), monthNet.getValue(), new AsyncCallback<Integer>() {
 			   @Override
 			   public void onSuccess (Integer result) {
+				   Window.alert("Die Prüfung hat " + result + " ergeben!");
 				   if (result < 200) {
 					   creditLimit.setValue(new Integer(1000000));
 					   validity.setValue(ValidityLevel.A);
