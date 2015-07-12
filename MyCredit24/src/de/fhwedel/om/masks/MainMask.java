@@ -37,11 +37,13 @@ public class MainMask implements EntryPoint, FlowControl {
 	
 	@UiHandler("customers")
 	protected void onCustomersClick(ClickEvent event) {
+		history = new LinkedList<BusinessMask<?>>();
 		this.forward( new CustomerMask());
 	}
    
    @UiHandler("credit_contract")
    protected void onCreditContractClick(ClickEvent event) {
+	   history = new LinkedList<BusinessMask<?>>();
 	   this.forward(new CreditContractMask(false)); 
    }
 
