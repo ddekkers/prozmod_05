@@ -19,9 +19,9 @@
 				<g:Button visible="true" ui:field="search" text="Suche"/>
 			</g:at>
 			<g:at top="105" left ="20">
-				<fhw:BOSelectListBox pixelSize="250,330" ui:field="credit_contracts" />
+				<fhw:BOSelectListBox pixelSize="250,730" ui:field="credit_contracts" />
 			</g:at>
-            <g:at top="450" left="20">
+            <g:at top="850" left="20">
             	<g:Button ui:field="select_credit_contract">Vertrag auswählen</g:Button>
          	</g:at>
             
@@ -97,21 +97,36 @@
             	<g:Button ui:field="discard_changes">Verwerfen</g:Button>
          	</g:at>
          	
-			<!-- Sonstige Funktionen -->
+			<!-- Kunde / Selbstauskunft -->
 			
 			<g:at top="500" left="350">
+            	<g:Label text="Kunde:"/>
+         	</g:at>
+         	<g:at top="530" left="350">
+            	<g:Button ui:field="customer">Kunde</g:Button>
+         	</g:at>
+			<g:at top="500" left="450">
+            	<g:Label text="Kunde:"/>
+         	</g:at>
+         	<g:at top="530" left="450">
+            	<g:Button ui:field="self_disclosure">Selbstauskunft</g:Button>
+         	</g:at>
+			
+			<!-- Sonstige Funktionen -->
+			
+			<g:at top="800" left="350">
             	<g:Label text="Sonstige Funktionen:"/>
          	</g:at>
 
-         	<g:at top="540" left="350">
+         	<g:at top="840" left="350">
             	<g:Button ui:field="rejected_deadline">Abgelehnen wegen Fristablauf</g:Button>
          	</g:at>
 
-         	<g:at top="580" left="350">
+         	<g:at top="880" left="350">
             	<g:Button ui:field="rejected_validity">Abgelehnen wegen Bonität</g:Button>
          	</g:at>
 
-         	<g:at top="540" left="350">
+         	<g:at top="840" left="350">
             	<g:Button ui:field="revocation">Widerruf</g:Button>
          	</g:at> 
          	
@@ -195,30 +210,30 @@
             	<g:Label text="Zahlungen:"/>
          	</g:at>	
 			<g:at top="360" left="750">
-				<fhw:BOSelectListBox pixelSize="320,200" ui:field="payments" />
+				<fhw:BOSelectListBox pixelSize="320,500" ui:field="payments" />
 			</g:at>
 			
-         	<g:at top="580" left="750">
+         	<g:at top="880" left="750">
             	<g:Button ui:field="select_payment">Zahlung auswählen</g:Button>
          	</g:at>
 			
-         	<g:at top="620" left="750">
+         	<g:at top="920" left="750">
             	<g:Button ui:field="outpayment">Auszahlung</g:Button>
          	</g:at>
 			
-         	<g:at top="620" left="750">
+         	<g:at top="920" left="750">
             	<g:Button ui:field="requestResidualDebt">Überweisung der Restschuld anfordern</g:Button>
          	</g:at>
 			
-         	<g:at top="660" left="750">
+         	<g:at top="960" left="750">
             	<g:Button ui:field="chargeOffResidualDebt">Restschuld abbuchen</g:Button>
          	</g:at>
 			
-         	<g:at top="620" left="750">
+         	<g:at top="920" left="750">
             	<g:Button ui:field="rate">Rate einziehen</g:Button>
          	</g:at>
 			
-         	<g:at top="660" left="750">
+         	<g:at top="960" left="750">
             	<g:Button ui:field="repayment">Sondertilgung erfassen</g:Button>
          	</g:at>
          	      	
